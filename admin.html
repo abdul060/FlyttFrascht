@@ -8,7 +8,7 @@
 <label for="password">Lösenord</label><input id="password" type="password" autocomplete="current-password" required>
 <button id="loginBtn" type="submit">Logga in</button><p id="loginError" role="alert"></p></form></section>
 <section id="dashboard" hidden><div class="topline"><div><h1>Adminpanel</h1><p>Hantera kundförfrågningar och skicka offerter.</p></div><button id="logoutBtn" class="outline">Logga ut</button></div>
-<nav class="tabs" aria-label="Adminfunktioner"><button type="button" class="active" data-tab="requests">Förfrågningar <span id="tabNew"></span></button><button type="button" data-tab="customers">Kundregister</button><button type="button" data-tab="offers">Skapa offerter</button></nav>
+<nav class="tabs" aria-label="Adminfunktioner"><button type="button" class="active" data-tab="requests">Förfrågningar <span id="tabNew"></span></button><button type="button" data-tab="customers">Kundregister</button><button type="button" data-tab="offers">Skapa offerter</button><button type="button" data-tab="bookings">Bokningskalender</button></nav>
 <div class="stats"><div><strong id="total">0</strong><small>Förfrågningar</small></div><div><strong id="newCount">0</strong><small>Nya</small></div><div><strong id="customerCount">0</strong><small>Kunder</small></div><div><strong id="sentCount">0</strong><small>Skickade offerter</small></div></div>
 <div class="notificationbar"><label><input type="checkbox" id="enableAlerts"> Webbläsarnotiser när adminpanelen är öppen</label><small>Kontrollerar nya förfrågningar var 30:e sekund. Ingen bevakning när sidan är stängd.</small></div>
 <p id="notice" role="status" aria-live="polite"></p>
@@ -22,5 +22,23 @@
 <div class="two"><div><label for="offerPrice">Pris inklusive moms, kr *</label><input id="offerPrice" type="number" min="1" max="100000000" step="0.01" required></div><div><label for="offerValid">Giltig till *</label><input id="offerValid" type="date" required></div></div>
 <div class="actions"><button type="submit" id="saveOfferBtn">Spara offert</button><button type="button" id="clearOfferBtn" class="outline">Rensa</button></div><p id="offerError" role="alert"></p></form></div>
 <div><h2>Sparade offerter</h2><p class="minor">Mejl skickas med en säker Supabase-funktion när den har aktiverats.</p><div id="offers" class="quote-list"></div></div></div></section>
+<section class="tab-content" id="bookingsPanel" hidden>
+  <div class="calendar-header"><div><h2>Bokningskalender</h2><p class="minor">Planera uppdrag, tilldela personal och håll koll på bokningar. Endast administratören ser uppgifterna.</p></div>
+  <div class="calendar-controls"><button type="button" class="outline" id="calendarPrev" aria-label="Föregående månad">‹</button><strong id="calendarTitle" aria-live="polite"></strong><button type="button" class="outline" id="calendarNext" aria-label="Nästa månad">›</button><button type="button" class="outline" id="calendarToday">Idag</button></div></div>
+  <div class="calendar-layout"><div><div class="calendar-grid" id="calendarGrid" aria-label="Månadskalender"></div><h3>Uppdrag under vald månad</h3><div id="bookingList" class="quote-list"></div></div>
+  <div class="panel" id="bookingEditor"><h2 id="bookingFormTitle">Lägg till uppdrag</h2><form id="bookingForm">
+  <label for="bookingRequest">Koppla till offertförfrågan</label><select id="bookingRequest"><option value="">Ingen – boka manuellt</option></select>
+  <label for="bookingCustomer">Kundens namn *</label><input id="bookingCustomer" required maxlength="150" autocomplete="off">
+  <div class="two"><div><label for="bookingPhone">Telefon</label><input id="bookingPhone" type="tel" maxlength="50"></div><div><label for="bookingEmail">E-post</label><input id="bookingEmail" type="email" maxlength="254"></div></div>
+  <label for="bookingService">Tjänst *</label><select id="bookingService"><option>Flyttstädning</option><option>Hemstädning</option><option>Fönsterputs</option><option>Bärhjälp &amp; packning</option><option>Flera tjänster</option><option>Annat</option></select>
+  <label for="bookingAddress">Adress/område</label><input id="bookingAddress" maxlength="300">
+  <div class="two"><div><label for="bookingDate">Datum *</label><input id="bookingDate" type="date" required></div><div><label for="bookingStaff">Tilldelad personal</label><input id="bookingStaff" maxlength="150" placeholder="t.ex. Arsi och Omar"></div></div>
+  <div class="two"><div><label for="bookingStart">Starttid *</label><input id="bookingStart" type="time" required value="09:00"></div><div><label for="bookingEnd">Sluttid *</label><input id="bookingEnd" type="time" required value="12:00"></div></div>
+  <label for="bookingStatus">Status</label><select id="bookingStatus"><option value="planerad">Planerad</option><option value="bekraftad">Bekräftad</option><option value="utford">Utförd</option><option value="avbokad">Avbokad</option></select>
+  <label for="bookingNotes">Anteckningar (bara admin)</label><textarea id="bookingNotes" maxlength="2000" rows="3"></textarea>
+  <p id="bookingError" role="alert"></p><div class="actions"><button id="bookingSave" type="submit">Spara bokning</button><button id="bookingReset" type="button" class="outline">Rensa</button></div><button id="bookingDelete" type="button" class="danger" hidden>Ta bort bokning</button>
+  </form></div></div>
+  <p class="minor">Bokningar sparas i Supabase. Kalendern skickar inte automatiska bekräftelsemejl ännu. Kontrollera tillgänglighet med personal och kund innan du bekräftar.</p>
+</section>
 </section></main>
 <script src="config.js"></script><script src="admin.js"></script></body></html>
