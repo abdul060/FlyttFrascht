@@ -18,26 +18,41 @@ c.addEventListener('pointerleave',function(){c.style.transform=''});});}}
 var m=$('m');
 function sl(){$('mv').textContent=m.value;m.style.setProperty('--p',((m.value-m.min)/(m.max-m.min)*100)+'%')}
 m.addEventListener('input',sl);sl();
-var msg='';
-$('f').addEventListener('submit',function(ev){
-ev.preventDefault();
-var n=$('n').value.trim(),p=$('p').value.trim(),e=$('e').value.trim();
-var er=$('err');er.textContent='';
-if(!n||!p){er.textContent='Fyll i namn och telefonnummer så att vi kan nå dig.';(!n?$('n'):$('p')).focus();return}
-var rm=document.querySelector('input[name=r]:checked'),a=$('a').value.trim(),d=$('d').value,k=$('k').value.trim(),g=$('g').value.trim();
-var L=['Hej Flytt & Fräscht!','','Jag vill gärna ha en offert.','','Tjänst: '+$('s').value,'Bostadens storlek: '+m.value+' m²'+(rm?', '+rm.value+' rum':'')];
-if(a)L.push('Adress/område: '+a);if(d)L.push('Önskat datum: '+d);if(k)L.push('Pris jag tycker är rimligt: '+k+' kr');if(g)L.push('Meddelande: '+g);
-L.push('','Namn: '+n,'Telefon: '+p);if(e)L.push('E-post: '+e);L.push('','Jag vill ha erbjudandet 20 % rabatt.');
-msg=L.join('\n');
-$('pre').textContent=msg;
-var sub='Offertförfrågan – '+$('s').value;
-$('mail').href='mailto:flyttfrascht@gmail.com?subject='+encodeURIComponent(sub)+'&body='+encodeURIComponent(msg);
-$('sms').href='sms:0793596556?&body='+encodeURIComponent(msg);
-var r=$('res');r.classList.add('on');r.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
-});
-$('cp').addEventListener('click',function(){var b=$('cp');
-function ok(){b.textContent='Kopierat ✓'}
-try{navigator.clipboard.writeText(msg).then(ok,function(){fb()})}catch(x){fb()}
-function fb(){var t=document.createElement('textarea');t.value=msg;document.body.appendChild(t);t.select();try{document.execCommand('copy');ok()}catch(x){b.textContent='Markera texten ovan och kopiera'}t.remove()}
+var form=$('f');
+var sendBtn=$('sendBtn');
+var originalButton=sendBtn.textContent;
+form.addEventListener('submit',async function(ev){
+ ev.preventDefault();
+ var n=$('n').value.trim(),p=$('p').value.trim(),e=$('e').value.trim();
+ var er=$('err');er.textContent='';$('res').classList.remove('on');
+ if(!n||!p){er.textContent='Fyll i namn och telefonnummer så att vi kan nå dig.';(!n?$('n'):$('p')).focus();return;}
+ if(e&&!$('e').checkValidity()){er.textContent='Skriv en giltig e-postadress eller lämna fältet tomt.';$('e').focus();return;}
+ if($('website').value){return;}
+ var rm=document.querySelector('input[name=r]:checked');
+ var fields=new FormData();
+ fields.append('Namn',n);
+ fields.append('Telefon',p);
+ fields.append('E-post',e||'Ej angiven');
+ fields.append('Tjänst',$('s').value);
+ fields.append('Bostadens storlek',m.value+' m²');
+ fields.append('Antal rum',rm?rm.value:'Ej angivet');
+ fields.append('Adress eller område',$('a').value.trim()||'Ej angivet');
+ fields.append('Önskat datum',$('d').value||'Ej angivet');
+ fields.append('Rimligt pris',$('k').value.trim()?$('k').value.trim()+' kr':'Ej angivet');
+ fields.append('Meddelande',$('g').value.trim()||'Inget meddelande');
+ fields.append('Erbjudande','20 % rabatt');
+ fields.append('_subject','Ny offertförfrågan – '+$('s').value);
+ fields.append('_gotcha',$('website').value);
+ sendBtn.disabled=true;sendBtn.textContent='Skickar…';
+ try{
+  var response=await fetch(form.action,{method:'POST',body:fields,headers:{'Accept':'application/json'}});
+  if(!response.ok){throw new Error('Formulärtjänsten svarade med status '+response.status);}
+  form.reset();sl();
+  $('res').classList.add('on');
+  $('res').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+ }catch(error){
+  er.textContent='Det gick inte att skicka just nu. Försök igen om en stund eller mejla oss på flyttfrascht@gmail.com.';
+  er.scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
+ }finally{sendBtn.disabled=false;sendBtn.textContent=originalButton;}
 });
 })();

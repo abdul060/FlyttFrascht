@@ -75,11 +75,11 @@
 <h2 class="h rv">Be om din offert</h2>
 <p class="lead rv">Fyll i några uppgifter, så skickar du förfrågan direkt till oss. Det tar bara en minut.</p>
 <div class="item rv"><i>1</i><div><b>Ange storlek och pris</b><span>Dra i reglaget för bostadens storlek och skriv vad du tycker är rimligt.</span></div></div>
-<div class="item rv"><i>2</i><div><b>Skicka till oss</b><span>Förfrågan öppnas i din mejl eller SMS, färdigskriven och adresserad till oss.</span></div></div>
+<div class="item rv"><i>2</i><div><b>Skicka till oss</b><span>Din offertförfrågan skickas direkt till oss utan att du behöver öppna mejl eller SMS.</span></div></div>
 <div class="item rv"><i>%</i><div><b>20 % rabatt</b><span>Erbjudandet gäller när du skriver till oss.</span></div></div>
 </div>
 <div class="rv">
-<form id="f" novalidate>
+<form id="f" action="https://formspree.io/f/mdeevnkb" method="POST" novalidate>
 <div class="r2"><div><label for="n">Namn *</label><input id="n" autocomplete="name" required></div><div><label for="p">Telefon *</label><input id="p" type="tel" autocomplete="tel" inputmode="tel" required></div></div>
 <div><label for="e">E-post (valfritt)</label><input id="e" type="email" autocomplete="email"></div>
 <div><label for="s">Vad behöver du hjälp med?</label><select id="s"><option>Flyttstädning</option><option>Hemstädning</option><option>Fönsterputs</option><option>Bärhjälp &amp; packning</option><option>Flera tjänster</option></select></div>
@@ -89,10 +89,10 @@
 <div class="r2"><div><label for="a">Adress eller område</label><input id="a" autocomplete="address-level2"></div><div><label for="d">Önskat datum</label><input id="d" type="date"></div></div>
 <div><label for="k">Vad ser du som ett rimligt pris?</label><div class="kr"><input id="k" type="number" min="0" step="100" inputmode="numeric" placeholder="t.ex. 2500"><span>kr</span></div><p class="hint">Det hjälper oss att ge en offert som passar dig.</p></div>
 <div><label for="g">Något mer vi bör veta? (valfritt)</label><textarea id="g"></textarea></div>
-<button class="btn" type="submit">Skicka offertförfrågan ✦</button>
+<div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+<button class="btn" id="sendBtn" type="submit">Skicka offertförfrågan ✦</button>
 <p class="hint" id="err" role="alert" style="color:var(--ortext);margin:0"></p>
-<div id="res" aria-live="polite"><b>Din förfrågan är klar!</b><p class="hint" style="margin:4px 0 10px">Skicka den till oss med ett av valen nedan. Om inget öppnas, kopiera texten och skicka den själv.</p><pre id="pre"></pre>
-<div class="acts"><a class="btn sm" id="mail" href="#">Skicka via mejl</a><a class="btn sm" id="sms" href="#">Skicka via SMS</a><button class="btn sm o" type="button" id="cp">Kopiera text</button></div></div>
+<div id="res" role="status" aria-live="polite"><b>✓ Tack för din offertförfrågan!</b><p class="hint" style="margin:8px 0 0">Vi har tagit emot din förfrågan och kommer att behandla den så snart som möjligt. Vi återkommer till dig via dina kontaktuppgifter.</p></div>
 </form></div>
 </div></section>
 </main>

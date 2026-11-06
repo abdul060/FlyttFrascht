@@ -124,3 +124,8 @@ footer small{display:block;margin-top:30px;opacity:.65}
 .rv.in{opacity:1;transform:none}
 @media (max-width:860px){nav a.l{display:none}.grid,.fgrid{grid-template-columns:1fr}.badge{width:min(300px,76vw);margin-top:16px}.r2{grid-template-columns:1fr}section{padding:64px 0}form{padding:22px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* Offert: skickas via Formspree */
+.spam-field{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+#sendBtn:disabled{opacity:.65;cursor:wait;transform:none;box-shadow:none}
+#res b{font-size:22px;color:var(--text)}
