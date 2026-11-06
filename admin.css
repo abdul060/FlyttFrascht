@@ -3,3 +3,19 @@
 
 /* Bokningskalender */
 .calendar-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;margin-top:24px}.calendar-controls{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.calendar-controls strong{min-width:140px;text-align:center;text-transform:capitalize}.calendar-controls button{padding:8px 14px}.calendar-layout{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(300px,0.85fr);gap:22px;margin:20px 0}.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));border:1px solid #dce0ed;background:#fff;border-radius:14px;overflow:hidden}.calendar-weekday{text-align:center;font-size:13px;font-weight:700;color:#53617b;padding:12px 0;background:#f2f5fa}.calendar-day{min-height:94px;border:0;border-top:1px solid #e9edf4;border-right:1px solid #e9edf4;border-radius:0;background:#fff;color:#0b1b3f;text-align:left;display:flex;align-items:flex-start;flex-direction:column;gap:4px;padding:8px;font-weight:500;min-width:0}.calendar-day:hover{background:#f4f7fc}.calendar-day.today{box-shadow:inset 0 0 0 2px #ff8a1f}.calendar-day.muted{background:#f7f8fa;color:#8290a7}.calendar-day.selected{background:#fff1e2}.day-num{font-size:13px;font-weight:800}.day-event{display:block;font-size:11px;background:#eaf0fb;border-radius:5px;padding:2px 4px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.day-event.cancelled{opacity:.5;text-decoration:line-through}.calendar-month-date{font-weight:700;color:#0b1b3f}.booking-card{border-left:5px solid #ff8a1f}.booking-card.cancelled{border-left-color:#a7aec0}.booking-card .footer button{padding:9px 13px}.danger{background:#fff2f1;color:#a72319;border:1px solid #d4a29d;margin-top:12px;width:100%}#bookingError{color:#b33315;margin-bottom:0}.calendar-layout .panel{height:max-content}.calendar-layout .panel label{margin-top:13px}.calendar-layout .panel input,.calendar-layout .panel select{width:100%}@media(max-width:850px){.calendar-layout{grid-template-columns:1fr}.calendar-day{min-height:68px;padding:4px}.day-event{font-size:10px}.calendar-weekday{font-size:11px}}
+
+/* Kontroll av tillgänglighet i bokningskalendern */
+.availability-panel{padding:17px;background:#f5f8ff;border:1px solid #cfdaf0;border-radius:14px;margin:14px 0}
+.availability-title{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.availability-title h3{margin:0;font-size:17px}
+.availability-title button{padding:8px 12px}
+.availability-list{display:grid;gap:7px;margin-top:12px}
+.availability-staff{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:10px;border-radius:10px;background:#fff;border:1px solid #e2e8f5}
+.availability-staff strong{font-size:15px}
+.availability-staff small{display:block;color:#59657a;margin-top:2px;font-size:12px}
+.availability-staff .avail-tag{font-size:12px;font-weight:800;text-align:right;white-space:nowrap}
+.availability-staff.conflict{border-color:#f2b3a5;background:#fff4f2}
+.availability-staff.conflict .avail-tag{color:#a52c16}
+.availability-staff.available .avail-tag{color:#166534}
+.availability-staff.unknown .avail-tag{color:#89601a}
+#availabilityStatus{font-size:13px;color:#465b7a;margin-top:9px}

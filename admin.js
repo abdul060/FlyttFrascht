@@ -19,7 +19,7 @@ async function login(username,password){if(username.trim().toLowerCase()!==(cfg.
 function saveSession(){sessionStorage.setItem('flytt_admin_session',JSON.stringify({token,refreshToken}));}
 async function refresh(){if(!refreshToken)return false;try{const r=await fetch(authUrl('refresh_token'),{method:'POST',headers:headers(),body:JSON.stringify({refresh_token:refreshToken})});if(!r.ok)return false;const j=await r.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();return true;}catch{return false;}}
 async function api(path,method='GET',body,retry=true){const r=await fetch(url+'/rest/v1/'+path,{method,headers:{...headers(token),...(method==='POST'?{'Prefer':'return=representation'}:{}),...(method==='PATCH'?{'Prefer':'return=minimal'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});if(r.status===401&&retry&&await refresh())return api(path,method,body,false);if(!r.ok){if(r.status===401)showLogin();const info=await r.json().catch(()=>({}));throw Error(info.message||'Databasen svarade med HTTP '+r.status+'. Kontrollera SQL-reglerna.');}return method==='GET'||method==='POST'?r.json():null;}
-function switchTab(tab){currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['requests','customers','offers','bookings'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
+function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['requests','customers','offers','bookings'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
 function render(){const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();}
 function drawRequests(){const search=$('search').value.toLocaleLowerCase('sv').trim(),f=$('filter').value,root=$('quotes');root.replaceChildren();const list=records.filter(r=>(f==='alla'||r.status===f)&&[r.namn,r.telefon,r.epost,r.tjanst,r.adress].some(v=>String(v||'').toLocaleLowerCase('sv').includes(search)));if(!list.length){root.append(el('p','Inga förfrågningar matchar sökningen.','empty'));return;}
 for(const r of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',r.namn),el('strong',r.tjanst));card.append(h,el('p','Inkommen: '+dateFormat(r.skapad),'meta'));const dl=el('dl');[['Telefon',r.telefon],['E-post',r.epost],['Adress',r.adress],['Önskat datum',r.onskat_datum],['Storlek',r.storlek_kvm+' m²'],['Rum',r.rum],['Prisförslag',r.rimligt_pris===null?'–':money(r.rimligt_pris)],['Meddelande',r.meddelande]].forEach(([l,v])=>field(dl,l,v));card.append(dl);const ft=el('div',undefined,'footer'),status=el('select');[['ny','Ny'],['kontaktad','Kontaktad'],['klar','Avslutad']].forEach(([v,t])=>{const o=el('option',t);o.value=v;status.append(o);});status.value=r.status;status.addEventListener('change',async()=>{status.disabled=true;const next=status.value;try{await api('offertforfragningar?id=eq.'+encodeURIComponent(r.id),'PATCH',{status:next});r.status=next;render();notice('Status uppdaterad.');}catch(e){status.value=r.status;notice(e.message);}finally{status.disabled=false;}});ft.append(el('span','Status:'),status);if(r.telefon)addLink(ft,'Ring','tel:'+r.telefon.replace(/[^+\d]/g,''));if(r.epost)addLink(ft,'Mejla','mailto:'+encodeURIComponent(r.epost));const make=el('button','Skapa offert','outline');make.addEventListener('click',()=>{switchTab('offers');$('relatedRequest').value=r.id;prefill(r);$('offerName').focus();});ft.append(make);card.append(ft);root.append(card);}}
@@ -56,14 +56,75 @@ else if(b.status==='bekraftad'){
  retry.addEventListener('click',async()=>{if(!confirm('Skicka bokningsbekräftelse till '+b.epost+'?'))return;retry.disabled=true;retry.textContent='Skickar…';try{const r=await sendBookingConfirmation(b.id);await reload(false);notice(r.already_sent?'Bekräftelsen hade redan skickats.':'Bokningsbekräftelsen skickades till '+b.epost+'.');}catch(e){notice('Bokningen finns kvar, men mejlet gick inte iväg: '+e.message);}finally{retry.disabled=false;retry.textContent='Skicka bokningsbekräftelse';}});ft.append(retry);
 }
 card.append(ft);root.append(card);}}
-function resetBooking(){editingBookingId=null;$('bookingForm').reset();$('bookingFormTitle').textContent='Lägg till uppdrag';$('bookingSave').textContent='Spara bokning';$('bookingDelete').hidden=true;$('bookingError').textContent='';$('bookingDate').value=selectedBookingDate||ymd(new Date());$('bookingStart').value='09:00';$('bookingEnd').value='12:00';}
-function openBooking(b){editingBookingId=b.id;const values={bookingRequest:b.forfragan_id||'',bookingCustomer:b.kundnamn,bookingPhone:b.telefon||'',bookingEmail:b.epost||'',bookingService:b.tjanst,bookingAddress:b.adress||'',bookingDate:b.datum,bookingStaff:b.personal||'',bookingStart:b.starttid.slice(0,5),bookingEnd:b.sluttid.slice(0,5),bookingStatus:b.status,bookingNotes:b.anteckningar||''};for(const [id,value] of Object.entries(values))$(id).value=value;$('bookingFormTitle').textContent='Redigera bokning';$('bookingSave').textContent='Spara ändringar';$('bookingDelete').hidden=false;$('bookingError').textContent='';$('bookingEditor').scrollIntoView({behavior:'smooth',block:'start'});}
+function resetBooking(){editingBookingId=null;setTimeout(scheduleAvailability,0);$('bookingForm').reset();$('bookingFormTitle').textContent='Lägg till uppdrag';$('bookingSave').textContent='Spara bokning';$('bookingDelete').hidden=true;$('bookingError').textContent='';$('bookingDate').value=selectedBookingDate||ymd(new Date());$('bookingStart').value='09:00';$('bookingEnd').value='12:00';}
+function openBooking(b){editingBookingId=b.id;setTimeout(scheduleAvailability,0);const values={bookingRequest:b.forfragan_id||'',bookingCustomer:b.kundnamn,bookingPhone:b.telefon||'',bookingEmail:b.epost||'',bookingService:b.tjanst,bookingAddress:b.adress||'',bookingDate:b.datum,bookingStaff:b.personal||'',bookingStart:b.starttid.slice(0,5),bookingEnd:b.sluttid.slice(0,5),bookingStatus:b.status,bookingNotes:b.anteckningar||''};for(const [id,value] of Object.entries(values))$(id).value=value;$('bookingFormTitle').textContent='Redigera bokning';$('bookingSave').textContent='Spara ändringar';$('bookingDelete').hidden=false;$('bookingError').textContent='';$('bookingEditor').scrollIntoView({behavior:'smooth',block:'start'});}
 $('calendarPrev').addEventListener('click',()=>{calendarDate=new Date(calendarDate.getFullYear(),calendarDate.getMonth()-1,1);selectedBookingDate='';drawCalendar();});
 $('calendarNext').addEventListener('click',()=>{calendarDate=new Date(calendarDate.getFullYear(),calendarDate.getMonth()+1,1);selectedBookingDate='';drawCalendar();});
 $('calendarToday').addEventListener('click',()=>{calendarDate=new Date();selectedBookingDate=ymd(new Date());if(!editingBookingId)$('bookingDate').value=selectedBookingDate;drawCalendar();});
 $('bookingRequest').addEventListener('change',()=>{const r=records.find(r=>r.id===$('bookingRequest').value);if(!r)return;$('bookingCustomer').value=r.namn||'';$('bookingPhone').value=r.telefon||'';$('bookingEmail').value=r.epost||'';$('bookingService').value=[...$('bookingService').options].some(o=>o.value===r.tjanst)?r.tjanst:'Annat';$('bookingAddress').value=r.adress||'';if(r.onskat_datum)$('bookingDate').value=r.onskat_datum;});
 $('bookingReset').addEventListener('click',resetBooking);
+
+// Ledighetskontroll. Hämtning sker via en skyddad Supabase Edge Function,
+// aldrig direkt från webbsidan med en Firebase-servicekontonyckel.
+const STAFF_NAMES=['Arsi','Omar','Naji','Taher','Adel','Ammar','Abdul','Baraa'];
+let availabilitySequence=0,latestAvailability=null,availabilityTimer=null;
+const splitStaff=s=>String(s||'').split(/\s*(?:,|;|\+|&|\/|\boch\b)\s*/i).map(x=>x.trim().toLocaleLowerCase('sv-SE')).filter(Boolean);
+const minutes=s=>{const m=/^(\d{2}):(\d{2})/.exec(String(s||''));return m?Number(m[1])*60+Number(m[2]):NaN;};
+const overlaps=(a,b,c,d)=>minutes(a)<minutes(d)&&minutes(b)>minutes(c);
+function bookingConflicts(date,start,end){
+ return bookings.filter(b=>b.id!==editingBookingId && b.datum===date && b.status!=='avbokad' && overlaps(start,end,b.starttid,b.sluttid));
+}
+async function loadAvailability(date,force=false){
+ if(!date)return null;
+ if(!force&&latestAvailability?.date===date&&Date.now()-latestAvailability.at<30000)return latestAvailability;
+ let r=await fetch(url+'/functions/v1/kontrollera-ledighet?date='+encodeURIComponent(date),{method:'GET',headers:headers(token),cache:'no-store'});
+ if(r.status===401&&await refresh())r=await fetch(url+'/functions/v1/kontrollera-ledighet?date='+encodeURIComponent(date),{method:'GET',headers:headers(token),cache:'no-store'});
+ const j=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(j.error||'Kan inte kontrollera ledigheten i Timerflytt.');
+ if(!Array.isArray(j.staff))throw Error('Felaktigt svar från ledighetskontrollen.');
+ latestAvailability={date,at:Date.now(),staff:j.staff};return latestAvailability;
+}
+function statusForStaff(person,date,start,end,unavailable){
+ const name=person.toLocaleLowerCase('sv-SE');
+ const absence=unavailable.find(s=>s.name?.toLocaleLowerCase('sv-SE')===name)?.blocks||[];
+ const absences=absence.filter(x=>overlaps(start,end,x.start,x.end));
+ const assigned=bookingConflicts(date,start,end).filter(b=>splitStaff(b.personal).includes(name));
+ const reasons=[];
+ if(absences.length)reasons.push('Ledig: '+absences.map(x=>x.start+'–'+x.end).join(', '));
+ if(assigned.length)reasons.push('Redan bokad: '+assigned.map(b=>b.starttid.slice(0,5)+'–'+b.sluttid.slice(0,5)).join(', '));
+ return {person,conflict:reasons.length>0,reasons};
+}
+async function updateAvailability(force=false){
+ const date=$('bookingDate').value,start=$('bookingStart').value,end=$('bookingEnd').value;
+ const box=$('availabilityList'),status=$('availabilityStatus'),run=++availabilitySequence;
+ box.replaceChildren();
+ if(!date||!start||!end||minutes(start)>=minutes(end)){status.textContent='Välj ett giltigt datum och arbetstid.';return;}
+ status.textContent='Kontrollerar personalens ledighet…';
+ try{
+  const snapshot=await loadAvailability(date,force);
+  if(run!==availabilitySequence)return;
+  const names=Array.from(new Set([...STAFF_NAMES,...snapshot.staff.map(s=>s.name).filter(Boolean)]));
+  const statuses=names.map(n=>statusForStaff(n,date,start,end,snapshot.staff)).sort((a,b)=>Number(a.conflict)-Number(b.conflict));
+  for(const s of statuses){const card=el('div',undefined,'availability-staff '+(s.conflict?'conflict':'available'));
+   const info=el('div');info.append(el('strong',s.person),el('small',s.reasons.join(' · ')||( 'Ingen registrerad frånvaro eller överlappande bokning')));
+   card.append(info,el('span',s.conflict?'Upptagen':'Inget hinder hittat','avail-tag'));box.append(card);}
+  status.textContent='Kontrollerat '+new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'})+'. Uppgifterna är en ögonblicksbild.';
+ }catch(err){if(run!==availabilitySequence)return;status.textContent='⚠ '+err.message+' Kontrollera serverinställningarna innan du bokar.';}
+}
+function scheduleAvailability(){clearTimeout(availabilityTimer);availabilityTimer=setTimeout(()=>updateAvailability(),300);}
+['bookingDate','bookingStart','bookingEnd','bookingStaff'].forEach(id=>$(id).addEventListener('change',scheduleAvailability));
+$('availabilityRefresh').addEventListener('click',()=>{latestAvailability=null;updateAvailability(true);});
+
 $('bookingForm').addEventListener('submit',async ev=>{ev.preventDefault();const btn=$('bookingSave');btn.disabled=true;$('bookingError').textContent='';try{const data={forfragan_id:$('bookingRequest').value||null,kundnamn:$('bookingCustomer').value.trim(),telefon:$('bookingPhone').value.trim()||null,epost:$('bookingEmail').value.trim()||null,tjanst:$('bookingService').value,adress:$('bookingAddress').value.trim()||null,datum:$('bookingDate').value,starttid:$('bookingStart').value,sluttid:$('bookingEnd').value,personal:$('bookingStaff').value.trim()||null,status:$('bookingStatus').value,anteckningar:$('bookingNotes').value.trim()||null};if(!data.kundnamn||!data.datum||!data.starttid||!data.sluttid||data.starttid>=data.sluttid)throw Error('Kontrollera namn, datum och att sluttiden är efter starttiden.');
+// Gör om kontrollen precis före sparning så senaste ledigheten används.
+if(data.status!=='avbokad' && data.personal){
+ const selected=splitStaff(data.personal),known=new Set(STAFF_NAMES.map(x=>x.toLocaleLowerCase('sv-SE')));
+ const unknown=selected.filter(x=>!known.has(x));
+ if(unknown.length)throw Error('Okänt personnamn: '+unknown.join(', ')+'. Använd namnen som finns i Timerflytt.');
+ const check=await loadAvailability(data.datum,true);
+ const conflict=selected.map(n=>statusForStaff(STAFF_NAMES.find(x=>x.toLocaleLowerCase('sv-SE')===n),data.datum,data.starttid,data.sluttid,check.staff)).filter(x=>x.conflict);
+ if(conflict.length&&!confirm('VARNING: Följande personal har registrerad frånvaro eller annat uppdrag:\n\n'+conflict.map(x=>x.person+': '+x.reasons.join(', ')).join('\n')+'\n\nVill du spara bokningen ändå?'))return;
+}
 const overlap=bookings.find(b=>b.id!==editingBookingId&&b.datum===data.datum&&b.status!=='avbokad'&&data.status!=='avbokad'&&data.starttid<b.sluttid.slice(0,5)&&data.sluttid>b.starttid.slice(0,5));if(overlap&&!confirm('Det finns redan ett uppdrag som överlappar den här tiden ('+overlap.kundnamn+'). Vill du spara ändå?'))return;
 const original=editingBookingId?bookings.find(b=>b.id===editingBookingId):null;
 let bookingId=editingBookingId;
