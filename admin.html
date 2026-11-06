@@ -38,7 +38,7 @@
   <label for="bookingNotes">Anteckningar (bara admin)</label><textarea id="bookingNotes" maxlength="2000" rows="3"></textarea>
   <p id="bookingError" role="alert"></p><div class="actions"><button id="bookingSave" type="submit">Spara bokning</button><button id="bookingReset" type="button" class="outline">Rensa</button></div><button id="bookingDelete" type="button" class="danger" hidden>Ta bort bokning</button>
   </form></div></div>
-  <p class="minor">Bokningar sparas i Supabase. Kalendern skickar inte automatiska bekräftelsemejl ännu. Kontrollera tillgänglighet med personal och kund innan du bekräftar.</p>
+  <p class="minor">När du sparar en bokning som Bekräftad skickas ett mejl automatiskt till kundens e-postadress. Planerade bokningar skickar inga mejl. Kontrollera kundens uppgifter innan du bekräftar. Vid ändring av en redan bekräftad bokning behöver du kontakta kunden separat.</p>
 </section>
 </section></main>
 <script src="config.js"></script><script src="admin.js"></script></body></html>
