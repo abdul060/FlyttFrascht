@@ -1,14 +1,26 @@
 <!doctype html>
-<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Admin – Flytt & Fräscht</title><meta name="robots" content="noindex,nofollow">
+<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Admin – Flytt &amp; Fräscht</title><meta name="robots" content="noindex,nofollow">
 <link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"></head>
-<body><header><a href="index.html" class="brand">Flytt & <span>Fräscht</span></a><span>Administratör</span></header>
+<body><header><a href="index.html" class="brand">Flytt &amp; <span>Fräscht</span></a><span>Administration</span></header>
 <main><section id="loginPanel" class="panel small"><h1>Logga in</h1><p>Endast behörig administratör.</p>
 <form id="loginForm"><label for="username">Användarnamn</label><input id="username" autocomplete="username" required placeholder="abdul">
 <label for="password">Lösenord</label><input id="password" type="password" autocomplete="current-password" required>
 <button id="loginBtn" type="submit">Logga in</button><p id="loginError" role="alert"></p></form></section>
-<section id="dashboard" hidden><div class="topline"><div><h1>Offertförfrågningar</h1><p>Endast förfrågningar sparade efter att adminlösningen aktiverats visas här.</p></div><button id="logoutBtn" class="outline">Logga ut</button></div>
-<div class="stats"><div><strong id="total">0</strong><small>Totalt</small></div><div><strong id="newCount">0</strong><small>Nya</small></div><div><strong id="doneCount">0</strong><small>Avslutade</small></div></div>
-<div class="toolbar"><input id="search" type="search" placeholder="Sök namn, telefon eller tjänst"><select id="filter"><option value="alla">Alla statusar</option><option value="ny">Nya</option><option value="kontaktad">Kontaktade</option><option value="klar">Avslutade</option></select><button id="refreshBtn" class="outline">Uppdatera</button></div>
-<p id="notice" role="status"></p><div id="quotes" class="quote-list"></div></section></main>
+<section id="dashboard" hidden><div class="topline"><div><h1>Adminpanel</h1><p>Hantera kundförfrågningar och skicka offerter.</p></div><button id="logoutBtn" class="outline">Logga ut</button></div>
+<nav class="tabs" aria-label="Adminfunktioner"><button type="button" class="active" data-tab="requests">Förfrågningar <span id="tabNew"></span></button><button type="button" data-tab="customers">Kundregister</button><button type="button" data-tab="offers">Skapa offerter</button></nav>
+<div class="stats"><div><strong id="total">0</strong><small>Förfrågningar</small></div><div><strong id="newCount">0</strong><small>Nya</small></div><div><strong id="customerCount">0</strong><small>Kunder</small></div><div><strong id="sentCount">0</strong><small>Skickade offerter</small></div></div>
+<div class="notificationbar"><label><input type="checkbox" id="enableAlerts"> Webbläsarnotiser när adminpanelen är öppen</label><small>Kontrollerar nya förfrågningar var 30:e sekund. Ingen bevakning när sidan är stängd.</small></div>
+<p id="notice" role="status" aria-live="polite"></p>
+<section class="tab-content" id="requestsPanel"><div class="toolbar"><input id="search" type="search" placeholder="Sök namn, telefon, tjänst eller mejl"><select id="filter"><option value="alla">Alla statusar</option><option value="ny">Nya</option><option value="kontaktad">Kontaktade</option><option value="klar">Avslutade</option></select><button id="refreshBtn" class="outline">Uppdatera</button></div><div id="quotes" class="quote-list"></div></section>
+<section class="tab-content" id="customersPanel" hidden><div class="toolbar"><input id="customerSearch" type="search" placeholder="Sök kund, telefon eller mejl"></div><p class="minor">Kundregistret sammanställs automatiskt från inkomna förfrågningar, inte från en offentlig kundlista.</p><div id="customers" class="quote-list"></div></section>
+<section class="tab-content" id="offersPanel" hidden><div class="split"><div class="panel"><h2>Ny offert</h2><p>Välj en förfrågan eller fyll i manuellt. Belopp anges inklusive moms.</p><form id="offerForm"><label for="relatedRequest">Utgå från förfrågan</label><select id="relatedRequest"><option value="">Ingen – skapa manuellt</option></select>
+<label for="offerName">Kundens namn *</label><input id="offerName" maxlength="150" required>
+<label for="offerEmail">Kundens e-post *</label><input id="offerEmail" type="email" required maxlength="254">
+<label for="offerService">Tjänst *</label><input id="offerService" maxlength="180" required>
+<label for="offerDescription">Offertens omfattning *</label><textarea id="offerDescription" required maxlength="4000" rows="5" placeholder="Beskriv vad som ingår, villkor och förutsättningar."></textarea>
+<div class="two"><div><label for="offerPrice">Pris inklusive moms, kr *</label><input id="offerPrice" type="number" min="1" max="100000000" step="0.01" required></div><div><label for="offerValid">Giltig till *</label><input id="offerValid" type="date" required></div></div>
+<div class="actions"><button type="submit" id="saveOfferBtn">Spara offert</button><button type="button" id="clearOfferBtn" class="outline">Rensa</button></div><p id="offerError" role="alert"></p></form></div>
+<div><h2>Sparade offerter</h2><p class="minor">Mejl skickas med en säker Supabase-funktion när den har aktiverats.</p><div id="offers" class="quote-list"></div></div></div></section>
+</section></main>
 <script src="config.js"></script><script src="admin.js"></script></body></html>
