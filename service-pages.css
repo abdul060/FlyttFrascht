@@ -1,0 +1,36 @@
+/* SEO-tjanstesidor: separat CSS, påverkar inte befintlig offertfunktion */
+:root{--svc-navy:#0b1b3f;--svc-bg:#081126;--svc-panel:#13244b;--svc-border:#2a3e70;--svc-orange:#ff7a00;--svc-white:#f5f7ff;--svc-muted:#c6d1eb}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body.service-page{margin:0;background:var(--svc-bg);color:var(--svc-white);font-family:Barlow,Arial,sans-serif;line-height:1.58}
+.service-page a{color:inherit}
+.service-header{background:#0b1b3f;border-bottom:1px solid #24345b;position:sticky;top:0;z-index:10}
+.service-container{width:min(1120px,calc(100% - 40px));margin:0 auto}
+.service-nav{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:76px}
+.service-brand{font-size:23px;font-weight:800;text-decoration:none;white-space:nowrap}.service-brand span{color:var(--svc-orange)}
+.service-links{display:flex;flex-wrap:wrap;align-items:center;justify-content:flex-end;gap:18px}.service-links a{text-decoration:none;font-weight:600;font-size:15px}
+.service-links a:hover,.service-footer a:hover{text-decoration:underline}
+.service-hero{padding:80px 0 70px;background:radial-gradient(circle at 80% 10%,#18335e,transparent 45%),#0b1b3f}
+.service-eyebrow{color:#ff9a40;text-transform:uppercase;font-size:14px;letter-spacing:.14em;font-weight:800}
+.service-hero h1{font-family:'Barlow Condensed',Barlow,Arial,sans-serif;line-height:1.04;font-size:clamp(42px,6.4vw,80px);margin:16px 0 22px;max-width:850px}
+.service-hero p{max-width:710px;font-size:clamp(17px,2vw,22px);color:#e0e7f9;margin:0 0 30px}
+.service-actions{display:flex;gap:12px;flex-wrap:wrap}
+.service-button{display:inline-flex;justify-content:center;align-items:center;min-height:52px;padding:12px 23px;border-radius:999px;background:var(--svc-orange);color:#09152e!important;text-decoration:none;font-weight:800;white-space:normal;text-align:center}
+.service-button.secondary{background:transparent;border:1px solid #8392b3;color:white!important}
+.service-trust{margin-top:26px;color:#cbd5ed;font-size:15px}
+.service-section{padding:68px 0}.service-section.alt{background:#101e3c}
+.service-section h2{font-family:'Barlow Condensed',Barlow,Arial,sans-serif;font-size:clamp(33px,4.2vw,48px);line-height:1.1;margin:0 0 14px}
+.service-lead{color:var(--svc-muted);font-size:18px;max-width:740px;margin:0 0 30px}
+.service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.service-card{background:var(--svc-panel);border:1px solid var(--svc-border);border-radius:18px;padding:25px;min-width:0}
+.service-card .num{display:inline-block;color:var(--svc-orange);font-weight:800;margin-bottom:13px}
+.service-card h3{font-size:22px;line-height:1.2;margin:0 0 12px}.service-card p{margin:0;color:#cfdaef}
+.service-faq{display:grid;gap:12px;max-width:830px}
+.service-faq details{background:var(--svc-panel);border:1px solid var(--svc-border);border-radius:14px;padding:18px 20px}
+.service-faq summary{cursor:pointer;font-weight:750;font-size:18px}.service-faq p{color:#cbd7ee;margin:10px 0 0}
+.service-other{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.service-other a{display:block;padding:17px 19px;border:1px solid #35507a;border-radius:12px;text-decoration:none;font-weight:700;background:#152547}
+.service-other a:hover{border-color:var(--svc-orange)}
+.service-cta{background:#142853;border:1px solid #354f83;border-radius:22px;padding:38px}
+.service-cta p{max-width:650px;font-size:18px;color:#d7e0f5}
+.service-footer{padding:34px 0;background:#09142d;border-top:1px solid #273b65}.service-footer-inner{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}.service-footer p{color:#cbd6ed;margin:8px 0}.service-footer a{text-decoration:none}
+@media(max-width:700px){.service-container{width:min(100% - 28px,1120px)}.service-nav{padding:12px 0;align-items:flex-start;flex-direction:column}.service-links{justify-content:flex-start;gap:10px 18px}.service-links a{font-size:14px}.service-hero{padding:56px 0}.service-grid{grid-template-columns:1fr}.service-other{grid-template-columns:1fr}.service-section{padding:48px 0}.service-cta{padding:25px}.service-brand{font-size:21px}}

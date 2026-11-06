@@ -16,3 +16,7 @@
 .guide-size-row { display:flex; align-items:center; min-width:0; }
 .guide-size-row input[type="range"] { flex:1 1 auto; min-width:0; width:100%; touch-action:pan-y; cursor:pointer; }
 .guide-size-row output { flex:0 0 auto; }
+
+/* Tjanstesidor lanhkar under respektive tjanstkort */
+.service-card-link{display:inline-block;margin-top:16px;font-weight:800;color:#ff8a1f;text-decoration:underline;text-underline-offset:4px;}
+.service-card-link:focus-visible{outline:3px solid #ff7a00;outline-offset:4px;}
