@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin – Flytt & Fräscht</title><meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"></head>
+<body><header><a href="index.html" class="brand">Flytt & <span>Fräscht</span></a><span>Administratör</span></header>
+<main><section id="loginPanel" class="panel small"><h1>Logga in</h1><p>Endast behörig administratör.</p>
+<form id="loginForm"><label for="username">Användarnamn</label><input id="username" autocomplete="username" required placeholder="abdul">
+<label for="password">Lösenord</label><input id="password" type="password" autocomplete="current-password" required>
+<button id="loginBtn" type="submit">Logga in</button><p id="loginError" role="alert"></p></form></section>
+<section id="dashboard" hidden><div class="topline"><div><h1>Offertförfrågningar</h1><p>Endast förfrågningar sparade efter att adminlösningen aktiverats visas här.</p></div><button id="logoutBtn" class="outline">Logga ut</button></div>
+<div class="stats"><div><strong id="total">0</strong><small>Totalt</small></div><div><strong id="newCount">0</strong><small>Nya</small></div><div><strong id="doneCount">0</strong><small>Avslutade</small></div></div>
+<div class="toolbar"><input id="search" type="search" placeholder="Sök namn, telefon eller tjänst"><select id="filter"><option value="alla">Alla statusar</option><option value="ny">Nya</option><option value="kontaktad">Kontaktade</option><option value="klar">Avslutade</option></select><button id="refreshBtn" class="outline">Uppdatera</button></div>
+<p id="notice" role="status"></p><div id="quotes" class="quote-list"></div></section></main>
+<script src="config.js"></script><script src="admin.js"></script></body></html>

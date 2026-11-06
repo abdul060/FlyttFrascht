@@ -47,7 +47,24 @@ form.addEventListener('submit',async function(ev){
  try{
   var response=await fetch(form.action,{method:'POST',body:fields,headers:{'Accept':'application/json'}});
   if(!response.ok){throw new Error('Formulärtjänsten svarade med status '+response.status);}
+  // Formspree har bekräftat att mejlförfrågan togs emot.
+  // Spara separat i Supabase för adminpanelen. Historiska Formspree-svar importeras inte.
+  var stored=false;
+  var cfg=window.FLYTT_CONFIG||{};
+  if(cfg.supabaseUrl && cfg.supabaseAnonKey && !cfg.supabaseUrl.includes('DITT-PROJEKT')){
+   try {
+    var record={namn:n,telefon:p,epost:e||null,tjanst:$('s').value,
+     storlek_kvm:Number(m.value),rum:rm?rm.value:'',adress:$('a').value.trim(),
+     onskat_datum:$('d').value||null,rimligt_pris:$('k').value?Number($('k').value):null,
+     meddelande:$('g').value.trim(),status:'ny'};
+    var saved=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/rest/v1/offertforfragningar',{
+     method:'POST',headers:{'apikey':cfg.supabaseAnonKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(record)});
+    stored=saved.ok;
+   }catch(ignore){}
+  }
   form.reset();sl();
+  var note=$('saveNote');
+  if(note) note.textContent=stored?'':'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.';
   $('res').classList.add('on');
   $('res').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
  }catch(error){
