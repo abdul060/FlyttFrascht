@@ -20,7 +20,11 @@
   }
 })();
 </script>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<!-- Favicons för Google och mobil -->
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta property="og:title" content="Flyttfirma Stockholm | Flytt &amp; Fräscht">
 <meta property="og:description" content="Kompletta flyttar med flyttbil, transport och bärhjälp i Stockholm. Även flyttstädning och hemstädning. Begär offert hos Flytt &amp; Fräscht.">
 <meta property="og:type" content="website">
@@ -146,6 +150,7 @@
 }
 </style>
 <link rel="stylesheet" href="design-refresh.css">
+<link rel="stylesheet" href="offert-dynamiskt.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -309,6 +314,18 @@
 <div class="r2"><div><label for="n">Namn *</label><input id="n" autocomplete="name" required></div><div><label for="p">Telefon *</label><input id="p" type="tel" autocomplete="tel" inputmode="tel" required></div></div>
 <div><label for="e">E-post (valfritt)</label><input id="e" type="email" autocomplete="email"></div>
 <div><label for="s">Vad behöver du hjälp med?</label><select id="s"><option>Komplett flytt &amp; transport</option><option>Flyttstädning</option><option>Hemstädning</option><option>Fönsterputs</option><option>Bärhjälp &amp; packning</option><option>Flera tjänster</option></select></div>
+<p id="service-help" class="service-help" aria-live="polite">Frågorna anpassas efter tjänsten du väljer.</p>
+<fieldset id="multi-details" class="adaptive-panel" hidden>
+  <legend>Vilka tjänster vill du kombinera?</legend>
+  <p class="panel-intro">Välj minst två tjänster. Du får bara frågor som passar dina val.</p>
+  <div class="service-choice-list">
+    <label><input type="checkbox" id="multi-flytt"> Komplett flytt &amp; transport</label>
+    <label><input type="checkbox" id="multi-flyttstad"> Flyttstädning</label>
+    <label><input type="checkbox" id="multi-hemstad"> Hemstädning</label>
+    <label><input type="checkbox" id="multi-fonster"> Fönsterputs</label>
+    <label><input type="checkbox" id="multi-bar"> Bärhjälp &amp; packning</label>
+  </div>
+</fieldset>
 <fieldset id="move-details" class="move-details" hidden>
 <legend>Detaljer om flytten</legend>
 <p class="move-intro">Berätta var vi ska hämta och lämna dina saker. Uppgifterna hjälper oss att ge rätt offert.</p>
@@ -318,8 +335,35 @@
 <label class="move-check"><input type="checkbox" id="move-pack"> Jag vill även ha hjälp med packning</label>
 <label class="move-check"><input type="checkbox" id="move-clean"> Jag vill även ha flyttstädning</label>
 </fieldset>
-<div><div class="lb">Bostadens storlek</div><div class="out"><b id="mv">60</b><span>m²</span></div><input id="m" type="range" min="15" max="250" step="5" value="60" aria-label="Bostadens storlek i kvadratmeter"></div>
-<div><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
+<fieldset id="clean-details" class="adaptive-panel" hidden>
+  <legend>Om flyttstädningen</legend>
+  <div class="r2">
+    <div><label for="clean-empty">Kommer bostaden att vara tömd?</label><select id="clean-empty"><option value="">Välj svar</option><option>Ja</option><option>Nej</option><option>Vet inte ännu</option></select></div>
+    <div><label for="clean-windows">Behöver fönstren också putsas?</label><select id="clean-windows"><option value="">Välj svar</option><option>Ja</option><option>Nej</option><option>Vi vill diskutera det</option></select></div>
+  </div>
+</fieldset>
+<fieldset id="home-details" class="adaptive-panel" hidden>
+  <legend>Om hemstädningen</legend>
+  <div><label for="home-frequency">Hur ofta vill du ha hjälp?</label><select id="home-frequency"><option value="">Välj</option><option>En gång</option><option>Varje vecka</option><option>Varannan vecka</option><option>En gång i månaden</option><option>Inte bestämt än</option></select></div>
+</fieldset>
+<fieldset id="window-details" class="adaptive-panel" hidden>
+  <legend>Om fönsterputsningen</legend>
+  <div class="r2">
+    <div><label for="window-count">Ungefär hur många fönster?</label><input id="window-count" type="number" min="1" max="300" step="1" inputmode="numeric" placeholder="t.ex. 8"></div>
+    <div><label for="window-type">Typ av bostad eller lokal</label><select id="window-type"><option value="">Välj</option><option>Lägenhet</option><option>Villa / radhus</option><option>Kontor / lokal</option><option>Annat</option></select></div>
+  </div>
+  <div><label for="window-sides">Hur vill du putsa fönstren?</label><select id="window-sides"><option value="">Välj</option><option>Invändigt och utvändigt</option><option>Bara invändigt</option><option>Bara utvändigt</option><option>Vet inte ännu</option></select></div>
+</fieldset>
+<fieldset id="carry-details" class="adaptive-panel" hidden>
+  <legend>Om bärhjälp och packning</legend>
+  <div class="r2">
+    <div><label for="carry-type">Vilken hjälp behöver du?</label><select id="carry-type"><option value="">Välj</option><option>Bärhjälp</option><option>Packhjälp</option><option>Både bärhjälp och packhjälp</option></select></div>
+    <div><label for="carry-transport">Behöver du även transport?</label><select id="carry-transport"><option value="">Välj</option><option>Ja</option><option>Nej</option><option>Vet inte ännu</option></select></div>
+  </div>
+  <div><label for="carry-items">Vad behöver du hjälp att bära eller packa? (valfritt)</label><textarea id="carry-items" maxlength="300" placeholder="T.ex. soffa, säng, flyttkartonger..."></textarea></div>
+</fieldset>
+<div id="size-block"><div class="lb">Bostadens storlek</div><div class="out"><b id="mv">60</b><span>m²</span></div><input id="m" type="range" min="15" max="250" step="5" value="60" aria-label="Bostadens storlek i kvadratmeter"></div>
+<div id="rooms-block"><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
 <input type="radio" name="r" id="r1" value="1"><label for="r1">1</label><input type="radio" name="r" id="r2" value="2" checked><label for="r2">2</label><input type="radio" name="r" id="r3" value="3"><label for="r3">3</label><input type="radio" name="r" id="r4" value="4"><label for="r4">4</label><input type="radio" name="r" id="r5" value="5+"><label for="r5">5+</label></div></div>
 <div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div class="date-field"><label for="date-open">Önskat datum</label><input id="d" type="date"><button type="button" id="date-open" class="date-open" aria-haspopup="dialog" aria-controls="date-dialog"><span class="date-open-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2M14 14h2M8 18h2"/></svg></span><span id="date-choice">Välj ett datum</span><span class="date-open-arrow" aria-hidden="true">▾</span></button></div></div>
 <div>
@@ -330,7 +374,7 @@
   </div>
   <p class="hint">Du behöver inte ange någon budget. Vi återkommer med ett personligt prisförslag.</p>
 </div>
-<div><label for="g">Något mer vi bör veta? (t.ex. stora möbler, parkering eller andra önskemål)</label><textarea id="g" maxlength="1800"></textarea></div>
+<div><label for="g">Övriga önskemål eller information (valfritt)</label><textarea id="g" maxlength="1800"></textarea></div>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
 <button class="btn" id="sendBtn" type="submit">Skicka offertförfrågan ✦</button>
