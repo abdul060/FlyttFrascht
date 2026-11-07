@@ -1,3 +1,52 @@
 /* Separat fotogalleri för admin – inga befintliga adminstilar behöver bytas */
 .ff-admin-photos{padding:5px 0 25px}.ff-ap-header{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;padding:18px 0}.ff-ap-header h2{margin:4px 0;font-size:clamp(23px,3vw,31px)}.ff-ap-header p{margin:4px 0;color:var(--muted,#67748c);max-width:650px;font-size:14px}.ff-ap-eyebrow{font-size:11px;font-weight:800;letter-spacing:.1em;color:#c66b24}.ff-ap-refresh{border:0!important;border-radius:12px!important;background:#ff9239!important;color:#14233b!important;font-weight:800!important;min-height:44px!important;padding:11px 18px!important}.ff-ap-refresh:disabled{opacity:.5}.ff-ap-controls{display:flex;align-items:end;justify-content:space-between;gap:14px;flex-wrap:wrap;padding:15px;background:#f6f8fc;border:1px solid #dfe5f0;border-radius:15px}.ff-ap-controls label{font-size:12px;font-weight:750;display:grid;gap:6px;flex:1;min-width:200px}.ff-ap-controls input{min-height:42px;width:100%;max-width:360px;border-radius:10px}.ff-ap-filter{display:flex;gap:6px;flex-wrap:wrap}.ff-ap-filter button{padding:9px 16px;min-height:42px;border:1px solid #ccd5e2;border-radius:11px;background:#fff;color:#273a54;font-weight:750}.ff-ap-filter button.selected{background:#1a304e;color:#fff;border-color:#1a304e}#ffApStatus{color:#5c6b81;min-height:24px;font-size:13px;margin:12px 0}.ff-ap-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:15px}.ff-ap-item{min-width:0;background:white;border:1px solid #e1e6ee;border-radius:15px;overflow:hidden;box-shadow:0 6px 18px rgba(12,28,52,.06)}.ff-ap-item>a{display:block}.ff-ap-item img{width:100%;height:180px;object-fit:cover;display:block;background:#edf2f8}.ff-ap-info{padding:13px;display:grid;gap:5px;color:#23344f}.ff-ap-info strong{font-size:14px;overflow-wrap:anywhere}.ff-ap-info>span:not(.ff-ap-stage){font-size:12px;color:#53647a}.ff-ap-info small{color:#6b7b92;font-size:11px}.ff-ap-stage{font-size:11px;font-weight:850;padding:4px 8px;width:max-content;border-radius:8px;background:#fff0df;color:#8f501e}.ff-ap-stage.after{background:#e1f5e8;color:#216c48}.ff-ap-empty{grid-column:1/-1;display:grid;justify-items:center;gap:8px;padding:50px 15px;border:1px dashed #cad3df;border-radius:15px;text-align:center;font-size:16px;color:#637187}.ff-ap-note{font-size:12px;color:#748095;line-height:1.5;margin-top:20px}
 @media(max-width:600px){.ff-ap-controls{align-items:stretch;flex-direction:column}.ff-ap-controls input{max-width:none}.ff-ap-filter{display:grid;grid-template-columns:repeat(3,1fr)}.ff-ap-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.ff-ap-item img{height:135px}.ff-ap-info{padding:9px}.ff-ap-header{padding:10px 0}.ff-ap-refresh{width:100%}}
+
+
+/* Jobbfoton v2: mobilvänliga fotokort och trygg radering */
+.ff-admin-photos{min-width:0}
+.ff-admin-photos *{box-sizing:border-box}
+.ff-ap-header{min-width:0}
+.ff-ap-controls{min-width:0}
+.ff-ap-controls label{min-width:0}
+.ff-ap-filter{min-width:0}
+.ff-ap-grid{grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:14px}
+.ff-ap-item{display:flex;flex-direction:column;min-width:0}
+.ff-ap-item>a{position:relative;display:block;overflow:hidden;background:#e9eff7}
+.ff-ap-item img{width:100%;aspect-ratio:4/3;height:auto;object-fit:cover;transition:transform .15s}
+.ff-ap-item>a:focus-visible{outline:3px solid #ff8f35;outline-offset:-3px}
+.ff-ap-info{flex:1;min-width:0}
+.ff-ap-info strong,.ff-ap-info small{overflow-wrap:anywhere}
+.ff-ap-delete{width:100%;min-height:43px;border:1px solid #e5b2b3!important;background:#fff4f2!important;color:#992a2a!important;border-radius:11px!important;padding:9px 12px!important;font-size:13px!important;font-weight:800!important;cursor:pointer}
+.ff-ap-delete:hover{background:#ffe7e3!important}.ff-ap-delete:focus-visible{outline:3px solid #ee9e54;outline-offset:2px}
+.ff-ap-delete:disabled{cursor:wait;opacity:.55}
+.ff-ap-delete-dialog[hidden]{display:none!important}
+.ff-ap-delete-dialog{position:fixed;inset:0;z-index:99999;background:rgba(6,17,34,.76);display:grid;place-items:center;padding:16px;overscroll-behavior:contain}
+.ff-ap-delete-card{background:#fff;color:#18283e;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.25);width:min(100%,430px);max-height:calc(100dvh - 32px);overflow:auto;padding:22px}
+.ff-ap-delete-card h3{font-size:20px;margin:0 0 10px}.ff-ap-delete-card p{line-height:1.5;color:#465771;font-size:14px}
+.ff-ap-delete-card .ff-ap-warning{padding:12px;background:#fff4ed;border:1px solid #ffc89d;border-radius:12px;color:#7d391c;font-size:13px}
+.ff-ap-delete-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.ff-ap-delete-actions button{min-height:46px;border-radius:12px!important;padding:9px!important;font-weight:800!important}
+.ff-ap-delete-cancel{border:1px solid #cdd7e6!important;background:#fff!important;color:#243b59!important}
+.ff-ap-delete-confirm{border:1px solid #b12a2a!important;background:#b12a2a!important;color:#fff!important}
+.ff-ap-delete-confirm:disabled{opacity:.55}
+@media(max-width:640px){
+ .ff-admin-photos{padding:4px 0 20px}
+ .ff-ap-header{display:grid;grid-template-columns:1fr!important;gap:13px!important}
+ .ff-ap-header h2{font-size:24px!important}
+ .ff-ap-header p{font-size:13px}
+ .ff-ap-refresh{width:100%!important;min-height:46px!important}
+ .ff-ap-controls{display:grid!important;grid-template-columns:1fr!important;gap:13px!important;padding:13px!important}
+ .ff-ap-controls label,.ff-ap-controls input{width:100%!important;max-width:none!important}
+ .ff-ap-filter{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important;width:100%}
+ .ff-ap-filter button{min-width:0!important;min-height:43px!important;padding:8px 4px!important;font-size:13px!important}
+ .ff-ap-grid{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:9px!important}
+ .ff-ap-item{border-radius:13px!important}
+ .ff-ap-item img{aspect-ratio:1/1;height:auto!important}
+ .ff-ap-info{padding:9px!important;gap:6px!important}
+ .ff-ap-info strong{font-size:12px!important;line-height:1.3}
+ .ff-ap-info small{font-size:10px!important;line-height:1.3}
+ .ff-ap-delete{min-height:42px!important;font-size:12px!important}
+ .ff-ap-delete-card{padding:19px!important}
+}
+@media(max-width:350px){.ff-ap-grid{grid-template-columns:1fr!important}.ff-ap-item img{aspect-ratio:4/3}.ff-ap-filter button{font-size:12px!important}}
