@@ -154,6 +154,7 @@
 <link rel="stylesheet" href="offert-dynamiskt.css">
 <link rel="stylesheet" href="offert-sammanfattning.css">
 <link rel="stylesheet" href="mobilmeny.css">
+<link rel="stylesheet" href="offert-bekraftelse.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -421,6 +422,30 @@
   <a href="tel:0793596556" class="mobile-contact-call">☎ Ring oss</a>
 </div>
 
+<!-- Visas bara efter bekräftat lyckat formulärskick. Befintlig inline-text finns kvar som reserv. -->
+<dialog id="ff-success-dialog" class="ff-success-dialog" aria-labelledby="ff-success-title" aria-describedby="ff-success-desc">
+  <div class="ff-success-inner">
+    <div class="ff-success-top">
+      <div class="ff-success-icon" aria-hidden="true">✓</div>
+      <button type="button" id="ff-success-x" class="ff-success-x" aria-label="Stäng bekräftelsen">×</button>
+    </div>
+    <p class="ff-success-kicker">Flytt &amp; Fräscht · Tack!</p>
+    <h2 id="ff-success-title">Din förfrågan är skickad!</h2>
+    <p id="ff-success-desc" class="ff-success-lead">Tack för att du kontaktar oss! Vi har tagit emot din offertförfrågan och återkommer via dina kontaktuppgifter.</p>
+    <div class="ff-success-steps">
+      <h3>Vad händer nu?</h3>
+      <div class="ff-success-step"><span class="ff-success-n">1</span><span>Vi går igenom uppgifterna du har skickat.</span></div>
+      <div class="ff-success-step"><span class="ff-success-n">2</span><span>Vi kontaktar dig om något behöver förtydligas.</span></div>
+      <div class="ff-success-step"><span class="ff-success-n">3</span><span>Du får ett personligt prisförslag att ta ställning till.</span></div>
+    </div>
+    <p class="ff-success-small">Detta är en offertförfrågan, inte en bindande bokning. Har du bråttom? Du kan ringa oss direkt.</p>
+    <div class="ff-success-actions">
+      <button id="ff-success-done" class="ff-success-done" type="button">Klart, tack!</button>
+      <a class="ff-success-call" href="tel:0793596556">Ring oss ↗</a>
+    </div>
+  </div>
+</dialog>
+
 <!-- Offertgranskning: inget skickas innan kunden bekräftar. -->
 <dialog id="quote-review-dialog" class="quote-review-dialog" aria-labelledby="quote-review-title" aria-describedby="quote-review-description">
   <div class="quote-review-header">
@@ -486,5 +511,6 @@
 })();
 </script>
 <script src="mobilmeny.js" defer></script>
+<script src="offert-bekraftelse.js" defer></script>
 </body>
 </html>

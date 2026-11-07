@@ -1,0 +1,23 @@
+/* Bekräftelse efter att offertförfrågan skickats */
+.ff-success-dialog{box-sizing:border-box;position:fixed;inset:0;margin:auto;width:min(94vw,490px);max-height:min(90dvh,760px);padding:0;border:1px solid #324866;border-radius:24px;background:#172a45;color:#f7f9ff;box-shadow:0 24px 70px rgba(8,17,32,.46);overflow-y:auto;overscroll-behavior:contain}
+.ff-success-dialog::backdrop{background:rgba(6,14,28,.74);backdrop-filter:blur(5px)}
+.ff-success-inner{padding:clamp(20px,5vw,34px)}
+.ff-success-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.ff-success-icon{width:66px;height:66px;flex:0 0 66px;border-radius:22px;background:#2d624b;color:#d6ffe4;display:grid;place-items:center;font-weight:900;font-size:34px;line-height:1;border:1px solid #4d9370}
+.ff-success-x{width:40px;height:40px;border:1px solid #50607c;border-radius:13px;background:#293d59;color:#eaf0f8;font-size:25px;line-height:1;cursor:pointer}
+.ff-success-kicker{margin:20px 0 7px;color:#ffb37b;font-size:12px;letter-spacing:.13em;font-weight:800;text-transform:uppercase}
+.ff-success-dialog h2{margin:0;color:#fff;font-weight:800;line-height:1.15;font-size:clamp(25px,6vw,32px)}
+.ff-success-lead{margin:13px 0 18px;color:#dce7f2;font-size:15px;line-height:1.6}
+.ff-success-steps{background:#233a56;border:1px solid #3e536e;border-radius:16px;padding:17px 18px;margin:0 0 18px}
+.ff-success-steps h3{font-size:15px;color:#fff;margin:0 0 14px}
+.ff-success-step{display:flex;align-items:flex-start;gap:11px;margin:12px 0;color:#dce7f2;font-size:14px;line-height:1.45}
+.ff-success-step:last-child{margin-bottom:0}
+.ff-success-n{flex:0 0 26px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ff9a4b;color:#172a45;font-weight:800;font-size:13px}
+.ff-success-small{font-size:13px;color:#b9cce1;line-height:1.5;margin:0 0 17px}
+.ff-success-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ff-success-actions button,.ff-success-actions a{appearance:none;display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;border-radius:12px;padding:10px 12px;font-weight:800;font-size:14px;text-decoration:none;cursor:pointer}
+.ff-success-done{background:#ff922f;border:1px solid #ff922f;color:#152642}
+.ff-success-call{background:#304764;border:1px solid #5c7392;color:#fff}
+.ff-success-x:focus-visible,.ff-success-actions button:focus-visible,.ff-success-actions a:focus-visible{outline:3px solid #ffbf83;outline-offset:3px}
+@media(max-width:360px){.ff-success-inner{padding:19px}.ff-success-actions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:no-preference){.ff-success-dialog[open]{animation:ff-success-pop .18s ease-out}@keyframes ff-success-pop{from{opacity:.1;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}}
