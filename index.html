@@ -444,5 +444,27 @@
 </dialog>
 <script src="datumkalender.js" defer></script>
 
+
+<!-- Loggan: gå hela vägen upp på ett enda tryck, utan mjuk mellan-scrollning -->
+<script>
+(function () {
+  var brand = document.querySelector('header#top a.brand[href="#top"]');
+  if (!brand) return;
+  brand.addEventListener('click', function (event) {
+    // Behåll länken som reserv om JavaScript är avstängt.
+    event.preventDefault();
+    var root = document.documentElement;
+    var oldInline = root.style.scrollBehavior;
+    root.style.scrollBehavior = 'auto';
+    window.scrollTo(0, 0);
+    // Återställ mjuk scrollning för alla andra offert- och menylänkar.
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        root.style.scrollBehavior = oldInline;
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
