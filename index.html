@@ -153,6 +153,7 @@
 <link rel="stylesheet" href="design-refresh.css">
 <link rel="stylesheet" href="offert-dynamiskt.css">
 <link rel="stylesheet" href="offert-sammanfattning.css">
+<link rel="stylesheet" href="mobilmeny.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -163,7 +164,25 @@
 <header id="top"><div class="wrap bar">
 <a class="brand h" href="#top" aria-label="Flytt &amp; Fräscht – till toppen"><svg aria-hidden="true"><use href="#mark"/></svg><span>Flytt &amp; <span style="color:var(--or2)">Fräscht</span></span></a>
 <nav aria-label="Huvudmeny"><a class="l" href="#tjanster">Tjänster</a><a class="l" href="#om-oss">Om oss</a><a class="l" href="#prisguide">Prisguide</a><a class="l" href="#fragor">Frågor & svar</a><a class="btn sm" href="#offert">Få offert</a></nav>
+<button class="ff-menu-toggle" type="button" aria-label="Öppna menyn" aria-expanded="false" aria-controls="ff-mobile-menu">
+  <span class="ff-menu-lines" aria-hidden="true"><span></span><span></span><span></span></span>
+  <span class="ff-menu-label">Meny</span>
+</button>
 </div></header>
+<div class="ff-menu-backdrop" id="ff-menu-backdrop" hidden></div>
+<nav id="ff-mobile-menu" class="ff-mobile-panel" aria-label="Mobilmeny" aria-hidden="true" inert>
+  <div class="ff-mobile-panel-heading">Utforska Flytt &amp; Fräscht</div>
+  <a href="#tjanster">🚚 <span>Våra tjänster</span></a>
+  <a href="#om-oss">🏠 <span>Om oss</span></a>
+  <a href="#prisguide">📋 <span>Prisguide</span></a>
+  <a href="#sa-funkar-det">✨ <span>Så fungerar det</span></a>
+  <a href="#fragor">❓ <span>Frågor &amp; svar</span></a>
+  <a href="#kontakt">☎ <span>Kontakt</span></a>
+  <div class="ff-mobile-panel-actions">
+    <a class="ff-menu-quote" href="#offert">Få en offert</a>
+    <a class="ff-menu-call" href="tel:0793596556">Ring oss</a>
+  </div>
+</nav>
 
 <main>
 <section class="hero" id="hem" style="padding-top:72px">
@@ -466,5 +485,6 @@
   });
 })();
 </script>
+<script src="mobilmeny.js" defer></script>
 </body>
 </html>
