@@ -1,0 +1,22 @@
+/* Flytt & Fräscht · notisklocka i adminpanelen */
+.ff-admin-top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ff-bell-wrap{position:relative}
+.ff-bell-button{position:relative;display:inline-flex;align-items:center;justify-content:center;min-width:48px;min-height:46px;padding:7px 12px;border-radius:13px;background:#192e4c;color:#fff;border:1px solid #314969;cursor:pointer;line-height:1}
+.ff-bell-button:hover,.ff-bell-button[aria-expanded="true"]{background:#293f60}
+.ff-bell-button:focus-visible,.ff-bell-panel button:focus-visible{outline:3px solid #fb923c;outline-offset:3px}
+.ff-bell-icon{font-size:23px}
+.ff-bell-badge:not([hidden]){position:absolute;top:-7px;right:-7px;display:flex;align-items:center;justify-content:center;min-width:23px;height:23px;padding:0 5px;border-radius:50px;background:#ed6d26;color:#fff;font-size:12px;font-weight:800;border:2px solid white}
+.ff-bell-panel[hidden],.ff-bell-badge[hidden]{display:none!important}
+.ff-bell-panel{position:absolute;z-index:110;right:0;top:calc(100% + 11px);width:min(350px,calc(100vw - 26px));max-height:min(68vh,520px);overflow-y:auto;border-radius:17px;background:#fff;color:#192b43;border:1px solid #d7e2ec;box-shadow:0 20px 48px #15243e40;padding:17px;text-align:left}
+.ff-bell-panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:17px}
+.ff-bell-panel-head button{font-size:25px;line-height:1;background:transparent;border:0;color:#263a54;padding:3px 8px;cursor:pointer}
+.ff-bell-subtitle,.ff-bell-foot{font-size:12px;color:#586b7e;margin:8px 0}
+.ff-bell-items{display:grid;gap:8px;margin:12px 0}
+.ff-bell-item{display:grid;gap:3px;padding:11px 12px;background:#fff5ea;border-left:3px solid #fb923c;border-radius:9px;min-width:0}
+.ff-bell-item strong{font-size:14px;overflow-wrap:anywhere}
+.ff-bell-item span{font-size:13px;overflow-wrap:anywhere}
+.ff-bell-item small{font-size:11px;color:#657184}
+.ff-bell-empty,.ff-bell-more{font-size:13px;margin:9px 0;color:#4e6074}
+.ff-bell-view{width:100%;background:#ef8538;color:#172941;border:0;border-radius:10px;padding:12px;font-weight:800;cursor:pointer}
+.ff-bell-foot{margin:10px 0 0}
+@media(max-width:600px){.ff-admin-top-actions{gap:7px}.ff-bell-panel{position:fixed;top:90px;right:12px;left:12px;width:auto;max-height:70vh}}

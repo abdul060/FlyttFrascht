@@ -93,7 +93,7 @@ async function deleteOffers(rows){
  finally{isDeleting=false;updateDeleteToolbars();}
 }
 
-function showLogin(){token='';refreshToken='';sessionStorage.removeItem('flytt_admin_session');$('loginPanel').hidden=false;$('dashboard').hidden=true;if(poller){clearInterval(poller);poller=null;}if($('quickReplyDialog')?.open)$('quickReplyDialog').close();}
+function showLogin(){closeBell();lastIds=null;records=[];offers=[];bookings=[];token='';refreshToken='';sessionStorage.removeItem('flytt_admin_session');$('loginPanel').hidden=false;$('dashboard').hidden=true;if(poller){clearInterval(poller);poller=null;}if($('quickReplyDialog')?.open)$('quickReplyDialog').close();}
 function showDashboard(){$('loginPanel').hidden=true;$('dashboard').hidden=false;switchTab('requests');reload(true);if(!poller)poller=setInterval(()=>reload(false),30000);}
 function authUrl(type){return url+'/auth/v1/token?grant_type='+type;}
 async function login(username,password){if(username.trim().toLowerCase()!==(cfg.adminUsername||'abdul').toLowerCase())throw Error('Fel användarnamn eller lösenord.');const resp=await fetch(authUrl('password'),{method:'POST',headers:headers(),body:JSON.stringify({email:cfg.adminEmail,password})});if(!resp.ok)throw Error('Fel användarnamn eller lösenord.');const j=await resp.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();}
@@ -111,8 +111,33 @@ function updateInbox(){
  $('inboxShowNew').disabled=count===0;
  $('inboxShowNew').textContent=count===0?'Inget att följa upp':'Visa obehandlade ('+count+')';
 }
+// Klockan läser samma Supabase-data som inkorgen och pollas via befintlig reload(30s).
+function updateBell(){
+ const pending=records.filter(r=>r.status==='ny');
+ const badge=$('ffBellBadge'),items=$('ffBellItems'),button=$('ffBellButton');
+ badge.hidden=pending.length===0;
+ badge.textContent=pending.length>99?'99+':String(pending.length);
+ button.setAttribute('aria-label',pending.length?('Visa '+pending.length+' nya offertförfrågningar'):'Visa nya offertförfrågningar, inga nya');
+ items.replaceChildren();
+ if(!pending.length){items.append(el('p','Inga nya förfrågningar just nu.','ff-bell-empty'));}
+ else{
+  pending.slice(0,6).forEach(r=>{
+   const card=el('div',undefined,'ff-bell-item');
+   card.append(el('strong',r.namn||'Ny kund'),el('span',r.tjanst||'Offertförfrågan'),el('small','Inkommen: '+dateFormat(r.skapad)));
+   items.append(card);
+  });
+  if(pending.length>6)items.append(el('p','+'+(pending.length-6)+' ytterligare obehandlade','ff-bell-more'));
+ }
+ $('ffBellViewAll').textContent=pending.length?'Visa alla obehandlade ('+pending.length+')':'Visa förfrågningar';
+}
+function closeBell(){ $('ffBellPanel').hidden=true;$('ffBellButton').setAttribute('aria-expanded','false'); }
+function openPendingRequests(){
+ closeBell();$('search').value='';$('filter').value='ny';markedRequests.clear();switchTab('requests');
+ $('requestsPanel').scrollIntoView({behavior:'smooth',block:'start'});
+}
 function render(){
  updateInbox();
+ updateBell();
  for(const id of markedRequests)if(!records.some(r=>String(r.id)===id))markedRequests.delete(id);
  for(const id of markedOffers)if(!offers.some(o=>String(o.id)===id))markedOffers.delete(id);
  const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();drawToday();}
@@ -331,6 +356,15 @@ $('inboxShowNew').addEventListener('click',()=>{
  $('search').value='';$('filter').value='ny';markedRequests.clear();switchTab('requests');
  $('requestsPanel').scrollIntoView({behavior:'smooth',block:'start'});
 });
+$('ffBellButton').addEventListener('click',()=>{
+ const opening=$('ffBellPanel').hidden;
+ $('ffBellPanel').hidden=!opening;
+ $('ffBellButton').setAttribute('aria-expanded',String(opening));
+});
+$('ffBellClose').addEventListener('click',closeBell);
+$('ffBellViewAll').addEventListener('click',openPendingRequests);
+document.addEventListener('click',e=>{if(!$('ffBellPanel').hidden&&!e.target.closest('.ff-bell-wrap'))closeBell();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBell();});
 $('logoutBtn').addEventListener('click',showLogin);$('refreshBtn').addEventListener('click',()=>reload(true));$('search').addEventListener('input',()=>{markedRequests.clear();drawRequests();});$('filter').addEventListener('change',()=>{markedRequests.clear();drawRequests();});$('customerSearch').addEventListener('input',()=>drawCustomers(customersData()));document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 $('relatedRequest').addEventListener('change',()=>{const r=records.find(x=>x.id===$('relatedRequest').value);if(r)prefill(r);});$('clearOfferBtn').addEventListener('click',clearOffer);
 $('offerForm').addEventListener('submit',async e=>{e.preventDefault();$('offerError').textContent='';const btn=$('saveOfferBtn');btn.disabled=true;try{const payload={forfragan_id:$('relatedRequest').value||null,kundnamn:$('offerName').value.trim(),epost:$('offerEmail').value.trim().toLowerCase(),tjanst:$('offerService').value.trim(),beskrivning:$('offerDescription').value.trim(),pris_inkl_moms:Number($('offerPrice').value),giltig_till:$('offerValid').value,status:'utkast'};if(!payload.kundnamn||!payload.epost||!payload.beskrivning||!payload.tjanst||payload.pris_inkl_moms<=0||!payload.giltig_till)throw Error('Fyll i alla obligatoriska fält.');await api('offerter','POST',payload);clearOffer();await reload(true);notice('Offerten är sparad. Granska den och välj Skicka till kund.');}catch(err){$('offerError').textContent=err.message;}finally{btn.disabled=false;}});
