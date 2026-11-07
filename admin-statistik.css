@@ -1,0 +1,32 @@
+/* Flytt & Fräscht – separat statistikflik */
+#statisticsPanel[hidden]{display:none!important}
+.ff-statistics{margin-top:22px;color:#152540}
+.ff-stats-header{display:flex;gap:18px;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;margin:14px 0 18px}
+.ff-stats-header h2{font-size:29px;margin:5px 0}
+.ff-stats-eyebrow{color:#ad4b00;font-size:12px;letter-spacing:.11em;font-weight:850}
+.ff-stats-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.ff-stats-controls label{font-size:13px;font-weight:750;margin:0}
+.ff-stats-controls input{width:auto;min-width:165px;margin:0;background:#fff;color:#152540;border:1px solid #d8dfe9;border-radius:10px;padding:10px}
+.ff-stats-controls button{margin:0}
+.ff-stats-status{font-size:13px;color:#52647a;min-height:20px}
+.ff-stats-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:11px;margin:18px 0 22px}
+.ff-stats-kpi{background:#fff;border:1px solid #dfe5ee;border-radius:17px;padding:17px;box-shadow:0 7px 22px #0b1b3f09;display:grid;gap:7px;min-width:0}
+.ff-stats-kpi-label{font-size:12px;font-weight:750;color:#53647a}
+.ff-stats-kpi-value{font-size:clamp(20px,2.2vw,31px);color:#132b49;overflow-wrap:anywhere}
+.ff-stats-kpi-detail{font-size:11px;color:#687b8c;line-height:1.45}
+.ff-stats-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
+.ff-stats-card{background:#fff;border:1px solid #e0e5ee;border-radius:18px;min-width:0;padding:20px;box-shadow:0 6px 24px #0b1b3f07}
+.ff-stats-card h3{font-size:17px;margin:0 0 6px;color:#132b49}
+.ff-stats-sub{font-size:12px;color:#64748b;line-height:1.5;margin:0 0 20px}
+.ff-stats-trend{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;min-height:190px;align-items:end}
+.ff-stats-trend-month{display:flex;flex-direction:column;align-items:center;gap:7px;min-width:0;font-size:11px;color:#66768c;text-align:center}
+.ff-stats-trend-month strong{font-size:14px;color:#172a45}
+.ff-stats-trend-rail{height:125px;width:100%;max-width:55px;display:flex;align-items:end;background:#f1f3f8;border-radius:9px 9px 4px 4px;overflow:hidden}
+.ff-stats-trend-bar{background:linear-gradient(0deg,#e77827,#ffa45a);width:100%;border-radius:9px 9px 0 0;min-height:2px}
+.ff-stats-services,#ffStatsOffers,#ffStatsBookings{display:grid;gap:14px}
+.ff-stats-service-row{display:grid;gap:5px}.ff-stats-service-top{display:flex;justify-content:space-between;gap:10px;font-size:13px;color:#273a54}.ff-stats-service-top span{overflow-wrap:anywhere}.ff-stats-service-top strong{color:#152540}
+.ff-stats-service-rail{height:10px;background:#e9edf4;border-radius:50px;overflow:hidden}.ff-stats-service-fill{height:100%;background:#f38d36;border-radius:50px}
+.ff-stats-empty{font-size:13px;color:#64748b}.ff-stats-footnote{font-size:12px;line-height:1.6;color:#596b80;margin:20px 0}
+@media(max-width:1070px){.ff-stats-kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:720px){.ff-stats-grid{grid-template-columns:1fr}.ff-stats-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-stats-card{padding:16px}.ff-stats-header h2{font-size:24px}.ff-stats-controls{width:100%}.ff-stats-trend{gap:5px}}
+@media(max-width:360px){.ff-stats-kpis{gap:7px}.ff-stats-kpi{padding:12px}}
