@@ -1,0 +1,18 @@
+/* Flytt & Fräscht – tydlig inkorg för obesvarade förfrågningar.
+   Använder befintlig status=ny i Supabase. Ingen extra lagring. */
+.ff-inbox-summary{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:20px 22px;margin:22px 0 4px;background:#172c48;color:#fff;border-radius:18px;border-left:5px solid #ff963a;box-shadow:0 8px 24px #10243b18}
+.ff-inbox-summary-text{display:flex;flex-direction:column;gap:5px;min-width:0}
+.ff-inbox-eyebrow{font-size:11px;letter-spacing:.13em;color:#ffbc85;font-weight:850}
+.ff-inbox-summary strong{font-size:clamp(19px,2.5vw,25px);line-height:1.2}
+.ff-inbox-summary-text>span:last-child{color:#d8e3f0;font-size:13px}
+.ff-inbox-button{background:#ff963a;color:#172c48;white-space:normal;padding:12px 16px}
+.ff-inbox-button:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.ff-inbox-all-done{border-left-color:#65bd8a}
+.ff-inbox-all-done .ff-inbox-eyebrow{color:#aeefcc}
+.ff-inbox-all-done .ff-inbox-button{background:#dbe8e1}
+.quote.ff-inbox-unanswered{border:1px solid #f9b477;border-left:5px solid #ff8a1f;background:linear-gradient(110deg,#fff7ee 0,#fff 35%)}
+.quote.ff-inbox-overdue{border-left-color:#b44729}
+.ff-inbox-card-title{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.ff-inbox-pill{display:inline-flex;align-items:center;border-radius:999px;padding:5px 9px;background:#fff0df;color:#8d3800;font-size:12px;line-height:1.2;font-weight:800}
+.ff-inbox-overdue .ff-inbox-pill{background:#ffebe7;color:#9a301c}
+@media(max-width:560px){.ff-inbox-summary{padding:17px;gap:13px}.ff-inbox-button{width:100%}.ff-inbox-card-title{align-items:flex-start}.ff-inbox-pill{font-size:11px}}
