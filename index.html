@@ -28,6 +28,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="site-extras.css">
+<link rel="stylesheet" href="datumkalender.css">
 
 <style>
 /* Mobilmeny – dold på dator */
@@ -270,7 +271,7 @@
 <div><div class="lb">Bostadens storlek</div><div class="out"><b id="mv">60</b><span>m²</span></div><input id="m" type="range" min="15" max="250" step="5" value="60" aria-label="Bostadens storlek i kvadratmeter"></div>
 <div><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
 <input type="radio" name="r" id="r1" value="1"><label for="r1">1</label><input type="radio" name="r" id="r2" value="2" checked><label for="r2">2</label><input type="radio" name="r" id="r3" value="3"><label for="r3">3</label><input type="radio" name="r" id="r4" value="4"><label for="r4">4</label><input type="radio" name="r" id="r5" value="5+"><label for="r5">5+</label></div></div>
-<div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div><label for="d">Önskat datum</label><input id="d" type="date"></div></div>
+<div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div class="date-field"><label for="date-open">Önskat datum</label><input id="d" type="date"><button type="button" id="date-open" class="date-open" aria-haspopup="dialog" aria-controls="date-dialog"><span class="date-open-icon" aria-hidden="true">▦</span><span id="date-choice">Välj ett datum</span><span class="date-open-arrow" aria-hidden="true">▾</span></button></div></div>
 <div>
   <label for="k">Din ungefärliga budget (valfritt)</label>
   <div class="kr">
@@ -312,6 +313,18 @@
 <!-- Cloudflare Web Analytics -->
 <script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token":"607491e0988b44e18d6959e32c16d67f"}'></script>
 <!-- End Cloudflare Web Analytics -->
+
+
+<!-- Egen datumkalender, men det ursprungliga #d-fältet behålls för offertsystemet. -->
+<dialog id="date-dialog" class="date-dialog" aria-labelledby="date-title">
+  <div class="date-dialog-head"><div><span class="date-eyebrow">FLYTT &amp; FRÄSCHT</span><h2 id="date-title">Välj önskat datum</h2><p>Vilken dag passar dig bäst?</p></div><button type="button" id="date-close" class="date-close" aria-label="Stäng kalendern">×</button></div>
+  <div class="date-calendar-nav"><button type="button" id="date-prev" aria-label="Föregående månad">‹</button><strong id="date-month"></strong><button type="button" id="date-next" aria-label="Nästa månad">›</button></div>
+  <div class="date-weekdays" aria-hidden="true"><span>Mån</span><span>Tis</span><span>Ons</span><span>Tor</span><span>Fre</span><span>Lör</span><span>Sön</span></div>
+  <div id="date-grid" class="date-grid" role="group" aria-label="Välj en dag"></div>
+  <div class="date-picked">Valt datum: <strong id="date-picked-label">Inget datum valt</strong></div>
+  <div class="date-actions"><button type="button" id="date-cancel">Avbryt</button><button type="button" id="date-apply">Välj datum</button></div>
+</dialog>
+<script src="datumkalender.js" defer></script>
 
 </body>
 </html>

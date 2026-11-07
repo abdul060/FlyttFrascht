@@ -1,0 +1,33 @@
+/* Egen datumkalender för offertformuläret. Begränsad till datumkomponenterna. */
+.date-field { min-width: 0; }
+.date-field #d { position: absolute !important; width: 1px !important; height: 1px !important; opacity: 0 !important; pointer-events: none !important; overflow: hidden !important; clip-path: inset(50%) !important; }
+.date-open { display:flex; align-items:center; gap:10px; width:100%; min-height:52px; border:1px solid #c6d1e2; border-radius:13px; background:#fff; padding:12px 15px; text-align:left; font:inherit; color:#14244a; cursor:pointer; box-sizing:border-box; }
+.date-open:hover { border-color:#ff7a00; } .date-open:focus-visible { outline:3px solid rgba(255,122,0,.35); outline-offset:2px; }
+.date-open-icon { display:grid;place-items:center; flex:0 0 29px; width:29px;height:29px;border-radius:8px;background:#fff1e4;color:#ad5100;font-size:21px; }
+.date-open-arrow { margin-left:auto;color:#60738d; }
+.date-dialog { position:fixed; inset:0; margin:auto; width:min(420px,calc(100vw - 24px)); max-height:min(90dvh,700px); padding:0; border:0; border-radius:23px; background:#fff; color:#132345; box-shadow:0 24px 72px rgba(0,0,0,.32); overflow:auto; box-sizing:border-box; }
+.date-dialog::backdrop { background:rgba(8,20,43,.65); backdrop-filter:blur(3px); }
+.date-dialog-head { display:flex; justify-content:space-between;gap:12px;background:#0b1b3f;color:#fff;padding:24px 24px 19px; }
+.date-eyebrow { font-size:11px; font-weight:800; letter-spacing:.16em; color:#ffac60; }
+.date-dialog-head h2 { color:#fff; font-size:24px; margin:5px 0 4px;line-height:1.2; }
+.date-dialog-head p { margin:0;color:#d9e4f6;font-size:14px; }
+.date-close { align-self:flex-start;display:grid;place-items:center;border:1px solid #577099;border-radius:50%;width:34px;height:34px;background:transparent;color:white;font-size:24px;cursor:pointer; }
+.date-calendar-nav { display:flex;align-items:center;justify-content:space-between;margin:20px 22px 12px; }
+.date-calendar-nav strong { font-size:17px;text-transform:capitalize; }
+.date-calendar-nav button { border:1px solid #dce2ee;border-radius:11px;width:40px;height:40px;background:#f5f7fb;color:#0b1b3f;font-size:28px;cursor:pointer; }
+.date-weekdays,.date-grid { display:grid;grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px;margin-inline:20px; }
+.date-weekdays span { font-size:12px;color:#657692;font-weight:700;text-align:center;padding:7px 0; }
+.date-grid button { aspect-ratio:1;min-width:0;border:0;border-radius:11px;background:transparent;color:#14244a;font:inherit;font-weight:600;cursor:pointer; }
+.date-grid button:hover:not(:disabled) { background:#fff0df; }
+.date-grid button.is-selected { background:#ff7a00;color:#0b1b3f;font-weight:800; }
+.date-grid button.is-today:not(.is-selected) { border:2px solid #ff7a00; }
+.date-grid button:disabled { opacity:.28;cursor:not-allowed; }
+.date-grid button:focus-visible { outline:2px solid #0b1b3f;outline-offset:1px; }
+.date-picked { margin:17px 22px 0;padding:13px 15px;background:#f4f7fc;border-radius:12px;color:#54647e;font-size:13px; }
+.date-picked strong { display:block;color:#14244a;font-size:15px;margin-top:3px; }
+.date-actions { display:flex;gap:10px;padding:18px 22px 22px; }
+.date-actions button { min-height:47px;flex:1;border-radius:11px;border:1px solid #dbe2ee;font:inherit;font-weight:800;cursor:pointer; }
+#date-cancel { background:#f1f4f9;color:#1a2b4e; }
+#date-apply { background:#ff7a00;color:#0b1b3f;border-color:#ff7a00; }
+#date-apply:disabled { opacity:.5;cursor:not-allowed; }
+@media(max-width:767px) { .date-dialog { max-height:calc(100dvh - 24px); } .date-dialog-head { padding:20px 20px 16px; } .date-grid button { min-height:39px; } }
