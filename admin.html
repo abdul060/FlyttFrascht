@@ -1,10 +1,10 @@
 <!doctype html>
 <html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin – Flytt &amp; Fräscht</title><meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="admin-ui.css"></head>
 <body><header><a href="index.html" class="brand">Flytt &amp; <span>Fräscht</span></a><span>Administration</span></header>
 <main><section id="loginPanel" class="panel small"><h1>Logga in</h1><p>Endast behörig administratör.</p>
-<form id="loginForm"><label for="username">Användarnamn</label><input id="username" autocomplete="username" required>
+<form id="loginForm"><label for="username">Användarnamn</label><input id="username" autocomplete="username" required placeholder="abdul">
 <label for="password">Lösenord</label><input id="password" type="password" autocomplete="current-password" required>
 <button id="loginBtn" type="submit">Logga in</button><p id="loginError" role="alert"></p></form></section>
 <section id="dashboard" hidden><div class="topline"><div><h1>Adminpanel</h1><p>Hantera kundförfrågningar och skicka offerter.</p></div><button id="logoutBtn" class="outline">Logga ut</button></div>
@@ -32,7 +32,7 @@
   <div class="two"><div><label for="bookingPhone">Telefon</label><input id="bookingPhone" type="tel" maxlength="50"></div><div><label for="bookingEmail">E-post</label><input id="bookingEmail" type="email" maxlength="254"></div></div>
   <label for="bookingService">Tjänst *</label><select id="bookingService"><option>Flyttstädning</option><option>Hemstädning</option><option>Fönsterputs</option><option>Bärhjälp &amp; packning</option><option>Flera tjänster</option><option>Annat</option></select>
   <label for="bookingAddress">Adress/område</label><input id="bookingAddress" maxlength="300">
-  <div class="two"><div><label for="bookingDate">Datum *</label><input id="bookingDate" type="date" required></div><div><label for="bookingStaff">Tilldelad personal</label><input id="bookingStaff" maxlength="150" placeholder="t.ex. Arsi och Omar"></div></div>
+  <div class="two"><div><label for="bookingDate">Önskat datum för uppdraget *</label><input id="bookingDate" type="date" required></div><div><label for="bookingStaff">Tilldelad personal</label><input id="bookingStaff" maxlength="150" placeholder="t.ex. Arsi och Omar"></div></div>
   <section class="availability-panel" aria-labelledby="availability-heading"><div class="availability-title"><h3 id="availability-heading">Personalens tillgänglighet</h3><button type="button" class="outline" id="availabilityRefresh">Kontrollera</button></div><p class="minor">Jämför med ledighet i Timerflytt och med andra bokade uppdrag. Kontrollera alltid med personalen vid tveksamhet.</p><div id="availabilityStatus" role="status" aria-live="polite">Välj datum och arbetstid för att kontrollera.</div><div id="availabilityList" class="availability-list"></div></section>
   <div class="two"><div><label for="bookingStart">Starttid *</label><input id="bookingStart" type="time" required value="09:00"></div><div><label for="bookingEnd">Sluttid *</label><input id="bookingEnd" type="time" required value="12:00"></div></div>
   <label for="bookingStatus">Status</label><select id="bookingStatus"><option value="planerad">Planerad</option><option value="bekraftad">Bekräftad</option><option value="utford">Utförd</option><option value="avbokad">Avbokad</option></select>
@@ -42,4 +42,4 @@
   <p class="minor">När du sparar en bokning som Bekräftad skickas ett mejl automatiskt till kundens e-postadress. Planerade bokningar skickar inga mejl. Kontrollera kundens uppgifter innan du bekräftar. Vid ändring av en redan bekräftad bokning behöver du kontakta kunden separat.</p>
 </section>
 </section></main>
-<script src="config.js"></script><script src="admin.js"></script></body></html>
+<script src="config.js"></script><script src="admin-ui.js"></script><script src="admin.js"></script></body></html>
