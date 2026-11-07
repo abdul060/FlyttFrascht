@@ -1,0 +1,16 @@
+
+/* Flytt & Fräscht – publicering med manuellt samtycke */
+.ff-gallery-publish-btn{width:100%;padding:11px;border:1px solid #4b789b;background:#163e5c;color:#fff;border-radius:10px;font:inherit;font-weight:700;cursor:pointer;margin-top:9px}
+.ff-gallery-publish-btn[data-published="1"]{background:#f7f0e7;color:#713515;border-color:#e3af83}
+.ff-gallery-publish-dialog{border:0;border-radius:18px;padding:0;max-width:min(510px,calc(100% - 24px));width:100%;color:#182b44;box-shadow:0 22px 80px #0007}
+.ff-gallery-publish-dialog::backdrop{background:rgba(5,16,35,.8)}
+.ff-gallery-publish-card{padding:clamp(18px,4vw,30px);display:grid;gap:13px}
+.ff-gallery-publish-card h3{margin:0;color:#172a45}
+.ff-gallery-publish-card p{margin:0;line-height:1.5}
+.ff-gallery-publish-card label{display:grid;gap:6px;font-weight:650}
+.ff-gallery-publish-card input:not([type=checkbox]),.ff-gallery-publish-card textarea{padding:12px;width:100%;box-sizing:border-box;border:1px solid #abc0d1;border-radius:10px;font:inherit;color:#162943;background:#fff}
+.ff-gallery-pub-check{display:flex!important;align-items:start;gap:10px;font-size:.92rem}
+.ff-gallery-pub-check input{width:20px;height:20px;flex-shrink:0}
+.ff-gallery-pub-actions{display:flex;gap:10px;flex-wrap:wrap}
+.ff-gallery-pub-actions button{flex:1;min-height:46px;padding:10px;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+#ffPubConfirm{background:#fa913c;border:0;color:#10223d}#ffPubCancel{background:white;border:1px solid #aab8ca;color:#182b44}

@@ -80,4 +80,76 @@ confirm.addEventListener('click',async()=>{
  finally{deleting=false;confirm.disabled=false;cancel.disabled=false;confirm.textContent='Ja, radera';if(modal.hidden)$('#ffApRefresh').focus();}
 });
 $('#logoutBtn')?.addEventListener('click',()=>{hide();photos=[];$('#ffApGrid').replaceChildren();modal.hidden=true;pendingDelete=null});
+
+// Publicering: separata kopior, ingen offentlig åtkomst till privata original.
+const galleryStyle=document.createElement('link');galleryStyle.rel='stylesheet';galleryStyle.href='admin-publicering.css';document.head.append(galleryStyle);
+const pubEndpoint=String(CFG.supabaseUrl||'').replace(/\/$/,'')+'/functions/v1/publicera-jobbfoton';
+let approved=new Set();
+async function refreshApprovals(){
+ try{const r=await fetch(pubEndpoint,{cache:'no-store'});if(!r.ok)throw Error();const d=await r.json();approved=new Set((d.photos||[]).map(p=>p.id));}catch{approved=new Set();}
+ updatePublishLabels();
+}
+function updatePublishLabels(){
+ document.querySelectorAll('[data-ff-publish]').forEach(b=>{const yes=approved.has(b.dataset.ffPublish);b.textContent=yes?'↩ Avpublicera':'🌐 Publicera på hemsidan';b.dataset.published=yes?'1':'0';});
+}
+const publishDialog=document.createElement('dialog');publishDialog.className='ff-gallery-publish-dialog';
+publishDialog.innerHTML='<form method="dialog" class="ff-gallery-publish-card"><h3 id="ffPubTitle">Publicera jobbfoto?</h3><p>Det här gör en separat bildkopia synlig för alla besökare på hemsidan. Kontrollera bilden noggrant: inga personer, namnskyltar, dokument, adressuppgifter eller andra känsliga detaljer.</p><label>Bildtext (utan kunduppgifter)<input id="ffPubCaption" maxlength="150" required placeholder="Exempel: Flyttstädning – före arbetet"></label><label>Hur och när godkände kunden publicering?<textarea id="ffPubConsent" rows="3" minlength="10" maxlength="300" required placeholder="Exempel: Skriftligt godkännande via e-post 2026-11-08"></textarea></label><label class="ff-gallery-pub-check"><input id="ffPubAgree" type="checkbox" required> Jag har kundens uttryckliga tillstånd för offentlig publicering av just denna bild och har kontrollerat innehållet.</label><p id="ffPubStatus" role="status"></p><div class="ff-gallery-pub-actions"><button value="cancel" type="button" id="ffPubCancel">Avbryt</button><button value="ok" type="button" id="ffPubConfirm">Godkänn och publicera</button></div></form>';
+document.body.append(publishDialog);
+let selectedPublish=null, publishing=false;
+publishDialog.querySelector('#ffPubCancel').addEventListener('click',()=>{if(!publishing)publishDialog.close()});
+function imgWebp(url){return new Promise(async(resolve,reject)=>{try{
+ const response=await fetch(url,{mode:'cors',cache:'no-store'});if(!response.ok)throw Error('Kunde inte läsa originalbilden.');
+ const blob=await response.blob();const bitmap=await createImageBitmap(blob);
+ const scale=Math.min(1,1400/Math.max(bitmap.width,bitmap.height));
+ const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(bitmap.width*scale));canvas.height=Math.max(1,Math.round(bitmap.height*scale));
+ const ctx=canvas.getContext('2d');if(!ctx)throw Error('Bildkonvertering stöds inte.');ctx.drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close?.();
+ canvas.toBlob(async b=>{if(!b)return reject(Error('Bilden kunde inte konverteras.'));
+ if(b.size>1500000)return reject(Error('Webbbilden blev för stor.'));
+ const bytes=new Uint8Array(await b.arrayBuffer());let binary='';for(let i=0;i<bytes.length;i+=8192)binary+=String.fromCharCode(...bytes.subarray(i,i+8192));resolve(btoa(binary));},'image/webp',0.77);
+ }catch(e){reject(e)}})}
+function addPublishButtons(){
+ document.querySelectorAll('#ffApGrid .ff-ap-item').forEach(card=>{
+  const del=card.querySelector('[data-photo-delete]');if(!del||card.querySelector('[data-ff-publish]'))return;
+  const btn=document.createElement('button');btn.type='button';btn.className='ff-gallery-publish-btn';btn.dataset.ffPublish=del.dataset.photoDelete;
+  del.before(btn);
+ });updatePublishLabels();
+}
+const observer=new MutationObserver(()=>{observer.disconnect();addPublishButtons();observer.observe($('#ffApGrid'),{childList:true});});
+observer.observe($('#ffApGrid'),{childList:true});
+const originalLoad=load;
+// Fliken laddar privata bilder först; sedan hämtas bara redan publicerade ID:n.
+$('#ffApRefresh').addEventListener('click',()=>setTimeout(refreshApprovals,500));
+tab.addEventListener('click',()=>setTimeout(refreshApprovals,500));
+$('#ffApGrid').addEventListener('click',async(e)=>{
+ const b=e.target.closest('[data-ff-publish]');if(!b||publishing)return;
+ const photo=photos.find(p=>p.id===b.dataset.ffPublish);if(!photo)return;
+ const token=session()?.token;if(!token)return alert('Logga in igen.');
+ if(approved.has(photo.id)){
+  if(!window.confirm('Avpublicera bilden från hemsidan? Den privata originalbilden behålls.'))return;
+  b.disabled=true;
+  try{const r=await fetch(pubEndpoint,{method:'POST',headers:{Authorization:'Bearer '+token,apikey:CFG.supabaseAnonKey||'','Content-Type':'application/json'},body:JSON.stringify({action:'unpublish',id:photo.id})});const d=await r.json();if(!r.ok)throw Error(d.error||'Avpublicering misslyckades.');approved.delete(photo.id);updatePublishLabels();$('#ffApStatus').textContent='✅ Bilden har avpublicerats.';}
+  catch(err){$('#ffApStatus').textContent='⚠️ '+err.message;}finally{b.disabled=false;}
+  return;
+ }
+ selectedPublish=photo;
+ publishDialog.querySelector('#ffPubTitle').textContent='Publicera '+(photo.stage==='fore'?'förebilden':'efterbilden')+' på hemsidan?';
+ publishDialog.querySelector('#ffPubCaption').value=(photo.service||'Utfört arbete')+' – '+(photo.stage==='fore'?'före':'efter');
+ publishDialog.querySelector('#ffPubConsent').value='';publishDialog.querySelector('#ffPubAgree').checked=false;
+ publishDialog.querySelector('#ffPubStatus').textContent='';publishDialog.showModal();
+});
+publishDialog.querySelector('#ffPubConfirm').addEventListener('click',async()=>{
+ if(publishing||!selectedPublish)return;
+ const consent=publishDialog.querySelector('#ffPubConsent');const agree=publishDialog.querySelector('#ffPubAgree');const caption=publishDialog.querySelector('#ffPubCaption');
+ if(!caption.reportValidity()||!consent.reportValidity()||!agree.reportValidity())return;
+ publishing=true;const btn=publishDialog.querySelector('#ffPubConfirm');btn.disabled=true;
+ const status=publishDialog.querySelector('#ffPubStatus');status.textContent='Förbereder webbbilden och publicerar…';
+ try{
+  const base64=await imgWebp(selectedPublish.url);
+  const r=await fetch(pubEndpoint,{method:'POST',headers:{Authorization:'Bearer '+session().token,apikey:CFG.supabaseAnonKey||'','Content-Type':'application/json'},body:JSON.stringify({action:'publish',id:selectedPublish.id,image_base64:base64,caption:caption.value.trim(),consent_reference:consent.value.trim(),consent_confirmed:true})});
+  const d=await r.json();if(!r.ok)throw Error(d.error||'Publiceringen misslyckades.');
+  approved.add(selectedPublish.id);updatePublishLabels();publishDialog.close();$('#ffApStatus').textContent='✅ Bilden är nu publicerad på hemsidan.';
+ }catch(err){status.textContent='⚠️ '+(err.message||'Publiceringen misslyckades.');}
+ finally{publishing=false;btn.disabled=false;}
+});
+
 })();
