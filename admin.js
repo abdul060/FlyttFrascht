@@ -251,6 +251,7 @@ function fillQuickReply(){
  $('quickReplySubject').value=t.subject;
  $('quickReplyBody').value=t.body.replaceAll('{namn}',name).replaceAll('{tjanst}',service);
  $('quickReplyStatus').textContent='';
+ updateQuickReplySendMode();
 }
 function openQuickReply(data,template='received'){
  currentReply=data;
@@ -259,6 +260,12 @@ function openQuickReply(data,template='received'){
  $('quickReplyTemplate').value=replyTemplates[template]?template:'received';
  fillQuickReply();$('quickReplyDialog').showModal();
 }
+// Endast uppföljning av skickad offert skickas direkt. Andra svar behåller mejlutkast.
+function updateQuickReplySendMode(){
+ const isFollowUp=$('quickReplyTemplate').value==='followup' && currentReply && currentReply.status==='skickad' && currentReply.id;
+ const b=$('quickReplyEmail');b.textContent=isFollowUp?'Skicka uppföljningsmejl':'Öppna mejl';
+ b.title=isFollowUp?'Skickar direkt via Resend efter bekräftelse':'Öppnar ett utkast i e-postprogrammet';
+}
 $('quickReplyTemplate').addEventListener('change',fillQuickReply);
 $('quickReplyClose').addEventListener('click',()=>$('quickReplyDialog').close());
 $('quickReplyCopy').addEventListener('click',async()=>{
@@ -266,12 +273,32 @@ $('quickReplyCopy').addEventListener('click',async()=>{
  try{await navigator.clipboard.writeText(copy);$('quickReplyStatus').textContent='Texten kopierad.';}
  catch(e){$('quickReplyStatus').textContent='Kunde inte kopiera automatiskt. Markera texten och kopiera manuellt.';}
 });
-$('quickReplyEmail').addEventListener('click',()=>{
+$('quickReplyEmail').addEventListener('click',async()=>{
+ const btn=$('quickReplyEmail');
  const email=String(currentReply?.epost||'').trim();
  if(!/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(email)){$('quickReplyStatus').textContent='Kunden saknar en giltig e-postadress.';return;}
- const mail='mailto:'+email+'?subject='+encodeURIComponent($('quickReplySubject').value)+'&body='+encodeURIComponent($('quickReplyBody').value);
- window.location.href=mail;
- $('quickReplyStatus').textContent='Ett mejlutkast öppnas i ditt e-postprogram. Kontrollera och skicka själv.';
+ const subject=$('quickReplySubject').value.trim();
+ const body=$('quickReplyBody').value.trim();
+ const direct=$('quickReplyTemplate').value==='followup' && currentReply?.status==='skickad' && currentReply?.id;
+ if(!direct){
+  const mail='mailto:'+email+'?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body);
+  window.location.href=mail;
+  $('quickReplyStatus').textContent='Ett mejlutkast öppnas i ditt e-postprogram. Kontrollera och skicka själv.';
+  return;
+ }
+ if(!subject||!body){$('quickReplyStatus').textContent='Skriv en ämnesrad och ett meddelande först.';return;}
+ if(!await window.adminConfirm({title:'Skicka uppföljning direkt?',message:'Uppföljningen skickas via Flytt & Fräscht och Resend. Kontrollera mottagare och text innan du bekräftar.',details:[['Mottagare',email],['Ämne',subject]],confirmLabel:'Ja, skicka mejlet',kind:'send'}))return;
+ const old=btn.textContent;btn.disabled=true;btn.textContent='Skickar…';
+ $('quickReplyStatus').textContent='Skickar uppföljningen via Resend…';
+ try{
+  let response=await fetch(url+'/functions/v1/skicka-uppfoljning',{method:'POST',headers:headers(token),body:JSON.stringify({offer_id:String(currentReply.id),subject,message:body})});
+  if(response.status===401&&await refresh())response=await fetch(url+'/functions/v1/skicka-uppfoljning',{method:'POST',headers:headers(token),body:JSON.stringify({offer_id:String(currentReply.id),subject,message:body})});
+  const result=await response.json().catch(()=>({}));
+  if(!response.ok)throw Error(result.error||'Mejlet kunde inte skickas (HTTP '+response.status+').');
+  $('quickReplyStatus').textContent='✅ Uppföljningsmejlet är skickat till '+email+'.';
+  notice('Uppföljningsmejl skickat till '+email+'.');
+ }catch(e){$('quickReplyStatus').textContent='Mejlet skickades inte: '+e.message;}
+ finally{btn.disabled=false;btn.textContent=old;updateQuickReplySendMode();}
 });
 // Dagens och morgondagens bokningar från samma skyddade datakälla som kalendern.
 function drawToday(){
