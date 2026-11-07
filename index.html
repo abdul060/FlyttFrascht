@@ -28,6 +28,64 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&family=Barlow:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="site-extras.css">
+
+  
+<style>
+/* Mobilmeny – dold på dator */
+.mobile-contact-bar {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-contact-bar {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+    gap: 10px;
+    padding: 12px 14px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #0B1B3F;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .mobile-contact-bar a {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    min-height: 48px;
+    border-radius: 10px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .mobile-contact-quote {
+    background: #FF7A00;
+    color: #0B1B3F;
+  }
+
+  .mobile-contact-call {
+    background: #FFFFFF;
+    color: #0B1B3F;
+  }
+
+  /* Förhindrar att menyn täcker sidans nederdel */
+  body {
+    padding-bottom: calc(82px + env(safe-area-inset-bottom));
+  }
+
+  /* När man klickar på Få offert ska rubriken synas */
+  #offert {
+    scroll-margin-top: 90px;
+  }
+}
+</style>
+
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -38,7 +96,9 @@
 <header id="top"><div class="wrap bar">
 <a class="brand h" href="#top" aria-label="Flytt &amp; Fräscht – till toppen"><svg aria-hidden="true"><use href="#mark"/></svg><span>Flytt &amp; <span style="color:var(--or2)">Fräscht</span></span></a>
 <nav aria-label="Huvudmeny"><a class="l" href="#tjanster">Tjänster</a><a class="l" href="#om-oss">Om oss</a><a class="l" href="#prisguide">Prisguide</a><a class="l" href="#fragor">Frågor & svar</a><a class="btn sm" href="#offert">Få offert</a></nav>
-</div></header>
+</div>
+
+</header>
 
 <main>
 <section class="hero" id="hem" style="padding-top:72px">
