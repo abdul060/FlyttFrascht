@@ -81,7 +81,83 @@ function serviceDetails(){
 }
 var form=$('f');
 var sendBtn=$('sendBtn');
+var reviewDialog=$('quote-review-dialog');
+var reviewRows=$('quote-review-rows');
+var reviewConfirm=$('quote-review-confirm');
+var reviewEdit=$('quote-review-edit');
+var reviewClose=$('quote-review-close');
+var canReview=!!(reviewDialog && reviewRows && typeof reviewDialog.showModal==='function');
+var reviewApproved=false;
+if(!canReview)sendBtn.textContent='Skicka offertförfrågan ✦';
 var originalButton=sendBtn.textContent;
+// Förhandsvisning använder textContent (aldrig HTML från kundens svar).
+function addReviewRow(label,value){
+ var row=document.createElement('div');row.className='quote-review-row';
+ var term=document.createElement('dt');term.textContent=label;
+ var desc=document.createElement('dd');desc.textContent=value || 'Ej angivet';
+ row.appendChild(term);row.appendChild(desc);reviewRows.appendChild(row);
+}
+function reviewValue(id){return $(id).value.trim() || 'Ej angivet';}
+function fillReview(){
+ reviewRows.replaceChildren();
+ addReviewRow('Namn',reviewValue('n'));
+ addReviewRow('Telefon',reviewValue('p'));
+ addReviewRow('E-post',$('e').value.trim() || 'Ej angiven');
+ addReviewRow('Tjänst',isMulti() ? chosenServices().join(', ') : $('s').value);
+ if(isMovingService()){
+  addReviewRow('Flyttar från',reviewValue('move-from'));
+  addReviewRow('Våning från',reviewValue('move-floor-from'));
+  addReviewRow('Hiss från',reviewValue('move-lift-from'));
+  addReviewRow('Flyttar till',reviewValue('move-to'));
+  addReviewRow('Våning till',reviewValue('move-floor-to'));
+  addReviewRow('Hiss till',reviewValue('move-lift-to'));
+  addReviewRow('Hjälp med packning',$('move-pack').checked?'Ja':'Nej');
+  addReviewRow('Flyttstädning vid flytt',$('move-clean').checked?'Ja':'Nej');
+ }
+ if(!$('clean-details').hidden){
+  addReviewRow('Bostaden tömd',reviewValue('clean-empty'));
+  addReviewRow('Fönsterputs vid flyttstädning',reviewValue('clean-windows'));
+ }
+ if(wants('hemstad'))addReviewRow('Hemstädning – hur ofta',reviewValue('home-frequency'));
+ if(wants('fonster')){
+  addReviewRow('Antal fönster',reviewValue('window-count'));
+  addReviewRow('Bostad/lokal',reviewValue('window-type'));
+  addReviewRow('Fönsterputsning',reviewValue('window-sides'));
+ }
+ if(wants('bar')){
+  addReviewRow('Hjälp med',reviewValue('carry-type'));
+  addReviewRow('Transport',reviewValue('carry-transport'));
+  addReviewRow('Att bära/packa',reviewValue('carry-items'));
+ }
+ if(housingRelevant()){
+  addReviewRow('Bostadens storlek',m.value+' m²');
+  var room=document.querySelector('input[name=r]:checked');
+  addReviewRow('Antal rum',room?room.value:'Ej angivet');
+ }
+ if(!isMovingService())addReviewRow('Adress/område',reviewValue('a'));
+ var date=$('d').value;
+ if(date){
+  var match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(date);
+  if(match){var dateObj=new Date(Number(match[1]),Number(match[2])-1,Number(match[3]));
+   if(!isNaN(dateObj.getTime()))date=new Intl.DateTimeFormat('sv-SE',{day:'numeric',month:'long',year:'numeric'}).format(dateObj);}
+ }
+ addReviewRow('Önskat datum',date || 'Ej angivet');
+ addReviewRow('Ungefärlig budget',$('k').value.trim()?$('k').value.trim()+' kr':'Ingen budget angiven');
+ if($('g').value.trim())addReviewRow('Övrig information',$('g').value.trim());
+}
+if(canReview){
+ function closeReview(){reviewDialog.close();sendBtn.focus({preventScroll:true});}
+ reviewEdit.addEventListener('click',closeReview);
+ reviewClose.addEventListener('click',closeReview);
+ reviewDialog.addEventListener('click',function(e){if(e.target===reviewDialog)closeReview();});
+ reviewConfirm.addEventListener('click',function(){
+  if(sendBtn.disabled)return;
+  reviewDialog.close();reviewApproved=true;
+  // Samma befintliga submit-kod som tidigare, med ny validering.
+  if(form.requestSubmit)form.requestSubmit(sendBtn);
+  else sendBtn.click();
+ });
+}
 form.addEventListener('submit',async function(ev){
  ev.preventDefault();
  var n=$('n').value.trim(),p=$('p').value.trim(),e=$('e').value.trim();
@@ -102,6 +178,11 @@ form.addEventListener('submit',async function(ev){
   return;
  }
  if($('website').value){return;}
+ // Första trycket visar granskning. Endast bekräftelse kan skicka formuläret.
+ if(canReview && !reviewApproved){
+  fillReview();reviewDialog.showModal();reviewDialog.scrollTop=0;$('quote-review-title').focus({preventScroll:true});return;
+ }
+ reviewApproved=false;
  var rm=document.querySelector('input[name=r]:checked');
  var extraInfo=serviceDetails();
  var housing=housingRelevant();

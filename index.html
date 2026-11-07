@@ -152,6 +152,7 @@
 </style>
 <link rel="stylesheet" href="design-refresh.css">
 <link rel="stylesheet" href="offert-dynamiskt.css">
+<link rel="stylesheet" href="offert-sammanfattning.css">
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
@@ -378,7 +379,7 @@
 <div><label for="g">Övriga önskemål eller information (valfritt)</label><textarea id="g" maxlength="1800"></textarea></div>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
-<button class="btn" id="sendBtn" type="submit">Skicka offertförfrågan ✦</button>
+<button class="btn" id="sendBtn" type="submit">Granska och skicka ✦</button>
 <p class="hint" id="err" role="alert" style="color:var(--ortext);margin:0"></p>
 <div id="res" role="status" aria-live="polite"><b>✓ Tack för din offertförfrågan!</b><p class="hint" style="margin:8px 0 0">Vi har tagit emot din förfrågan och kommer att behandla den så snart som möjligt. Vi återkommer till dig via dina kontaktuppgifter.</p><p id="saveNote" class="hint" style="margin-top:8px" role="status"></p></div>
 </form></div>
@@ -400,6 +401,27 @@
   <a href="#offert" class="mobile-contact-quote">✦ Få offert</a>
   <a href="tel:0793596556" class="mobile-contact-call">☎ Ring oss</a>
 </div>
+
+<!-- Offertgranskning: inget skickas innan kunden bekräftar. -->
+<dialog id="quote-review-dialog" class="quote-review-dialog" aria-labelledby="quote-review-title" aria-describedby="quote-review-description">
+  <div class="quote-review-header">
+    <div class="quote-review-heading">
+      <span class="quote-review-eyebrow">FLYTT &amp; FRÄSCHT · STEG 2 AV 2</span>
+      <h2 id="quote-review-title" tabindex="-1">Kontrollera din förfrågan</h2>
+      <p id="quote-review-description">Ser allt rätt ut? Du kan ändra uppgifterna innan du skickar.</p>
+    </div>
+    <button type="button" id="quote-review-close" class="quote-review-close" aria-label="Stäng sammanfattningen">×</button>
+  </div>
+  <div class="quote-review-content">
+    <p class="quote-review-section-label">Dina uppgifter</p>
+    <dl id="quote-review-rows" class="quote-review-rows"></dl>
+    <p class="quote-review-privacy">Förfrågan är inte bindande. Vi använder uppgifterna för att kontakta dig med ett personligt offertförslag.</p>
+  </div>
+  <div class="quote-review-actions">
+    <button type="button" id="quote-review-edit" class="quote-review-edit">← Ändra uppgifter</button>
+    <button type="button" id="quote-review-confirm" class="quote-review-confirm">Bekräfta och skicka →</button>
+  </div>
+</dialog>
 
 <script src="config.js"></script>
 <script src="script.js"></script>
