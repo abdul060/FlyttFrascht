@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
+<title>Svara på offert | Flytt & Fräscht</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#162a43;background:#f0f4f9;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:26px 16px;min-height:100svh;display:grid;place-items:center}.wrap{max-width:570px;width:100%}.brand{display:inline-flex;align-items:center;gap:12px;color:#172b45;text-decoration:none;font-weight:800;font-size:1.17rem;margin-bottom:18px}.brand img{width:34px;height:34px}.brand em{font-style:normal;color:#df751e}.panel{background:white;border:1px solid #dde5f0;border-radius:20px;box-shadow:0 15px 42px #13294013;padding:clamp(22px,5vw,38px)}.eyebrow{font-size:.76rem;letter-spacing:.1em;font-weight:800;color:#b9651c}h1{font-size:clamp(1.55rem,5vw,2.1rem);margin:10px 0 14px;line-height:1.15}p{line-height:1.55;color:#4b5e72}.detail{border-radius:13px;background:#f3f6fa;padding:18px;margin:19px 0}.detail dl{margin:0;display:grid;gap:11px}.detail div{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.detail dt{color:#56687a}.detail dd{margin:0;font-weight:750;overflow-wrap:anywhere}.legal{padding:12px 14px;background:#fff4e7;border-radius:10px;font-size:.88rem;color:#63452c}.agree{display:flex;gap:11px;align-items:start;margin:20px 0;font-size:.92rem;line-height:1.5}.agree input{margin-top:4px;width:18px;height:18px;accent-color:#24764e}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{border-radius:11px;padding:13px 12px;font:inherit;font-weight:750;cursor:pointer;border:1px solid #ccd7e3;background:white;color:#182e48}button.accept{background:#207851;color:white;border-color:#207851}button:disabled{opacity:.45;cursor:not-allowed}a{color:#275d92}.feedback{margin-top:15px;font-weight:650;min-height:1.3em}.sub{font-size:.83rem}.hidden{display:none!important}:focus-visible{outline:3px solid #f09137;outline-offset:3px}@media(max-width:380px){.actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body><main class="wrap"><a class="brand" href="/" aria-label="Till Flytt & Fräscht"><img src="/favicon.svg" alt=""> Flytt & <em>Fräscht</em></a><section class="panel"><span class="eyebrow">FLYTT & FRÄSCHT · OFFERTSVAR</span><h1 id="heading">Kontrollerar din svarslänk…</h1><p id="intro">Vi hämtar uppgifterna om din offert.</p>
+<div id="details" class="detail hidden"><dl><div><dt>Tjänst</dt><dd id="service"></dd></div><div><dt>Pris inklusive moms</dt><dd id="price"></dd></div><div><dt>Giltig till</dt><dd id="valid"></dd></div></dl></div>
+<div id="decision" class="hidden"><p class="legal">Ett ja kan innebära att ett bindande avtal ingås. Kontrollera offerten och dess villkor i mejlet innan du accepterar. Om du är osäker, kontakta oss först.</p><label class="agree"><input id="confirm" type="checkbox"> <span>Jag har läst offerten och vill registrera mitt svar.</span></label><div class="actions"><button class="accept" id="accept" disabled>Acceptera offert</button><button id="decline" disabled>Tacka nej</button></div></div>
+<p class="feedback" id="feedback" role="status" aria-live="polite"></p><p class="sub">Behöver du hjälp? Skriv till <a href="mailto:flyttfrascht@gmail.com">flyttfrascht@gmail.com</a>.</p></section></main>
+<script>
+(()=>{'use strict';
+// Publik anon-nyckel används endast för CORS; token i URL-fragment skickas inte med sidans HTTP-anrop.
+const base='https://kikwvqaayclblbnvhtay.supabase.co/functions/v1/offert-svar';
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.hash.slice(1));const token=params.get('token')||'';
+if(location.hash)history.replaceState(null,'',location.pathname); // rensa engångstoken från adressfältet
+function status(h,t){$('heading').textContent=h;$('intro').textContent=t;}
+async function request(action,extra={}){
+ const r=await fetch(base,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action,token,...extra})});
+ const data=await r.json().catch(()=>({}));if(!r.ok)throw Error(data.error||'Det gick inte att behandla svaret.');return data;
+}
+async function init(){
+ if(!/^[a-f0-9]{64}$/.test(token)){status('Länken är ogiltig','Öppna den personliga svarslänken från offertmejlet.');return;}
+ try{const d=await request('inspect');$('service').textContent=d.tjanst||'–';$('price').textContent=Number(d.pris_inkl_moms).toLocaleString('sv-SE',{style:'currency',currency:'SEK'});$('valid').textContent=d.giltig_till||'–';$('details').classList.remove('hidden');$('decision').classList.remove('hidden');status('Svara på din offert','Välj om du vill acceptera eller tacka nej. Du behöver bekräfta ditt val en gång till.');}
+ catch(e){status('Länken kan inte användas',e.message);}
+}
+$('confirm').addEventListener('change',()=>{const yes=$('confirm').checked;$('accept').disabled=!yes;$('decline').disabled=!yes;});
+async function submit(decision){if(!$('confirm').checked)return;const label=decision==='accepterad'?'acceptera':'tacka nej till';if(!window.confirm('Vill du '+label+' offerten? Detta registreras hos Flytt & Fräscht.'))return;
+ $('accept').disabled=true;$('decline').disabled=true;$('feedback').textContent='Registrerar ditt svar…';
+ try{await request('respond',{decision});$('decision').classList.add('hidden');$('feedback').textContent='Ditt svar är registrerat.';status(decision==='accepterad'?'Tack! Du har accepterat offerten.':'Tack! Du har tackat nej.','Flytt & Fräscht har fått ditt svar i adminpanelen. Vi återkommer vid behov.');}
+ catch(e){$('feedback').textContent=e.message;$('accept').disabled=false;$('decline').disabled=false;}
+}
+$('accept').addEventListener('click',()=>submit('accepterad'));
+$('decline').addEventListener('click',()=>submit('avbojd'));
+init();})();
+</script>
+</body></html>
