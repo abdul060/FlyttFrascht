@@ -94,13 +94,13 @@ async function deleteOffers(rows){
 }
 
 function showLogin(){closeBell();lastIds=null;records=[];offers=[];bookings=[];token='';refreshToken='';sessionStorage.removeItem('flytt_admin_session');$('loginPanel').hidden=false;$('dashboard').hidden=true;if(poller){clearInterval(poller);poller=null;}if($('quickReplyDialog')?.open)$('quickReplyDialog').close();}
-function showDashboard(){$('loginPanel').hidden=true;$('dashboard').hidden=false;switchTab('requests');reload(true);if(!poller)poller=setInterval(()=>reload(false),30000);}
+function showDashboard(){$('loginPanel').hidden=true;$('dashboard').hidden=false;switchTab('overview');reload(true);if(!poller)poller=setInterval(()=>reload(false),30000);}
 function authUrl(type){return url+'/auth/v1/token?grant_type='+type;}
 async function login(username,password){if(username.trim().toLowerCase()!==(cfg.adminUsername||'abdul').toLowerCase())throw Error('Fel användarnamn eller lösenord.');const resp=await fetch(authUrl('password'),{method:'POST',headers:headers(),body:JSON.stringify({email:cfg.adminEmail,password})});if(!resp.ok)throw Error('Fel användarnamn eller lösenord.');const j=await resp.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();}
 function saveSession(){sessionStorage.setItem('flytt_admin_session',JSON.stringify({token,refreshToken}));}
 async function refresh(){if(!refreshToken)return false;try{const r=await fetch(authUrl('refresh_token'),{method:'POST',headers:headers(),body:JSON.stringify({refresh_token:refreshToken})});if(!r.ok)return false;const j=await r.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();return true;}catch{return false;}}
 async function api(path,method='GET',body,retry=true){const r=await fetch(url+'/rest/v1/'+path,{method,headers:{...headers(token),...(method==='POST'?{'Prefer':'return=representation'}:{}),...(method==='PATCH'?{'Prefer':'return=minimal'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});if(r.status===401&&retry&&await refresh())return api(path,method,body,false);if(!r.ok){if(r.status===401)showLogin();const info=await r.json().catch(()=>({}));throw Error(info.message||'Databasen svarade med HTTP '+r.status+'. Kontrollera SQL-reglerna.');}return method==='GET'||method==='POST'?r.json():null;}
-function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['requests','customers','offers','bookings','today'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
+function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['overview','requests','customers','offers','bookings','today'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
 function updateInbox(){
  const pending=records.filter(r=>r.status==='ny');
  const count=pending.length;
@@ -135,12 +135,50 @@ function openPendingRequests(){
  closeBell();$('search').value='';$('filter').value='ny';markedRequests.clear();switchTab('requests');
  $('requestsPanel').scrollIntoView({behavior:'smooth',block:'start'});
 }
+// Etapp 2: Skrivskyddad startsida som återanvänder redan inlästa uppgifter.
+function renderOverview(){
+ const today=ymd(new Date()),weekEnd=ymd(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+7));
+ const openRequests=records.filter(r=>r.status==='ny');
+ const aged=openRequests.filter(r=>{const d=Date.parse(r.skapad);return Number.isFinite(d)&&Date.now()-d>=86400000;});
+ const waiting=offers.filter(o=>o.status==='skickad'&&(!o.kundbeslut||o.kundbeslut==='ej_svar'));
+ const todayJobs=bookings.filter(b=>b.datum===today&&b.status!=='avbokad');
+ const upcoming=bookings.filter(b=>b.datum>today&&b.datum<=weekEnd&&b.status!=='avbokad').sort((a,b)=>String(a.datum+' '+a.starttid).localeCompare(String(b.datum+' '+b.starttid)));
+ $('ffOverviewDate').textContent=new Date().toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+ const kpis=$('ffOverviewKpis');kpis.replaceChildren();
+ const definitions=[
+  ['Nya förfrågningar',openRequests.length,'requests',aged.length?aged.length+' har väntat minst 24 timmar':'Att följa upp'],
+  ['Väntar på kundsvar',waiting.length,'offers','Skickade offerter'],
+  ['Dagens jobb',todayJobs.length,'today','Ej avbokade uppdrag'],
+  ['Nästa 7 dagar',upcoming.length,'bookings','Kommande bokningar']
+ ];
+ for(const [label,num,tab,sub] of definitions){
+  const b=el('button',undefined,'ff-overview-kpi');b.type='button';
+  b.append(el('span',label,'ff-overview-kpi-label'),el('strong',num,'ff-overview-kpi-number'),el('small',sub,'ff-overview-kpi-hint'));
+  b.addEventListener('click',()=>{if(tab==='requests')openPendingRequests();else switchTab(tab);});kpis.append(b);
+ }
+ function drawEntries(id,items,format,empty){
+  const target=$(id);target.replaceChildren();
+  if(!items.length){target.append(el('p',empty,'ff-overview-empty'));return;}
+  for(const it of items.slice(0,4)){
+   const item=el('div',undefined,'ff-overview-entry');
+   const [name,desc,tag]=format(it);
+   item.append(el('strong',name||'–'),el('span',desc||'–','ff-overview-desc'));
+   if(tag)item.append(el('small',tag,'ff-overview-tag'));
+   target.append(item);
+  }
+  if(items.length>4)target.append(el('p','+'+(items.length-4)+' till – öppna fliken för att se alla.','ff-overview-more'));
+ }
+ drawEntries('ffOverviewPending',openRequests,(r)=>[r.namn||'Ny kund',r.tjanst||'Offertförfrågan',aged.includes(r)?'Väntat minst 24 timmar':'Inkommen: '+dateFormat(r.skapad)],'Inga obehandlade förfrågningar. Bra jobbat!');
+ drawEntries('ffOverviewOffersList',waiting,(o)=>[o.kundnamn||'Kund',o.tjanst||'Offert',o.skickad?'Skickad: '+dateFormat(o.skickad):'Väntar på svar'],'Inga skickade offerter väntar på kundsvar.');
+ drawEntries('ffOverviewTodayList',todayJobs.sort((a,b)=>String(a.starttid).localeCompare(String(b.starttid))),(b)=>[b.kundnamn||'Kund',(b.starttid||'').slice(0,5)+'–'+(b.sluttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.personal?'Personal: '+b.personal:'Personal ej tilldelad'],'Inga aktiva bokningar idag.');
+ drawEntries('ffOverviewUpcoming',upcoming,(b)=>[b.kundnamn||'Kund',b.datum+' kl. '+(b.starttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.status==='bekraftad'?'Bekräftad':'Status: '+(b.status||'planerad')],'Inga kommande bokningar de närmaste sju dagarna.');
+}
 function render(){
  updateInbox();
  updateBell();
  for(const id of markedRequests)if(!records.some(r=>String(r.id)===id))markedRequests.delete(id);
  for(const id of markedOffers)if(!offers.some(o=>String(o.id)===id))markedOffers.delete(id);
- const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();drawToday();}
+ const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();drawToday();renderOverview();}
 function drawRequests(){const root=$('quotes');root.replaceChildren();const list=records.filter(requestMatches);if(!list.length){root.append(el('p','Inga förfrågningar matchar sökningen.','empty'));updateDeleteToolbars();return;}
 for(const r of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');
 const isPending=r.status==='ny';
@@ -365,6 +403,11 @@ $('ffBellClose').addEventListener('click',closeBell);
 $('ffBellViewAll').addEventListener('click',openPendingRequests);
 document.addEventListener('click',e=>{if(!$('ffBellPanel').hidden&&!e.target.closest('.ff-bell-wrap'))closeBell();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeBell();});
+$('ffOverviewRefresh').addEventListener('click',()=>reload(true));
+$('ffOverviewRequests').addEventListener('click',openPendingRequests);
+$('ffOverviewOffers').addEventListener('click',()=>switchTab('offers'));
+$('ffOverviewToday').addEventListener('click',()=>switchTab('today'));
+$('ffOverviewBookings').addEventListener('click',()=>switchTab('bookings'));
 $('logoutBtn').addEventListener('click',showLogin);$('refreshBtn').addEventListener('click',()=>reload(true));$('search').addEventListener('input',()=>{markedRequests.clear();drawRequests();});$('filter').addEventListener('change',()=>{markedRequests.clear();drawRequests();});$('customerSearch').addEventListener('input',()=>drawCustomers(customersData()));document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 $('relatedRequest').addEventListener('change',()=>{const r=records.find(x=>x.id===$('relatedRequest').value);if(r)prefill(r);});$('clearOfferBtn').addEventListener('click',clearOffer);
 $('offerForm').addEventListener('submit',async e=>{e.preventDefault();$('offerError').textContent='';const btn=$('saveOfferBtn');btn.disabled=true;try{const payload={forfragan_id:$('relatedRequest').value||null,kundnamn:$('offerName').value.trim(),epost:$('offerEmail').value.trim().toLowerCase(),tjanst:$('offerService').value.trim(),beskrivning:$('offerDescription').value.trim(),pris_inkl_moms:Number($('offerPrice').value),giltig_till:$('offerValid').value,status:'utkast'};if(!payload.kundnamn||!payload.epost||!payload.beskrivning||!payload.tjanst||payload.pris_inkl_moms<=0||!payload.giltig_till)throw Error('Fyll i alla obligatoriska fält.');await api('offerter','POST',payload);clearOffer();await reload(true);notice('Offerten är sparad. Granska den och välj Skicka till kund.');}catch(err){$('offerError').textContent=err.message;}finally{btn.disabled=false;}});
