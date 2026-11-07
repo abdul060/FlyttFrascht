@@ -1,0 +1,20 @@
+/* Flytt & Fräscht: dagöversikt, offertstatus och snabba svar. */
+.ff-today-heading{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:24px}
+.ff-today-heading h2{margin:0 0 6px}.ff-today-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:18px 0}
+.ff-today-count{border-radius:16px;background:#fff;border:1px solid #dce5f1;padding:18px;display:flex;align-items:baseline;gap:12px}
+.ff-today-count strong{font-size:30px;color:#173659}.ff-today-count span{color:#536781;font-weight:700}
+.ff-today-list{display:grid;gap:22px}.ff-today-group{display:grid;gap:12px}.ff-today-group h3{color:#18375b;margin:10px 0 0}
+.ff-today-card{background:#fff;border:1px solid #d9e3f0;border-left:4px solid #ed8a39;border-radius:16px;padding:18px;box-shadow:0 6px 22px #0b1b3f0b}
+.ff-today-card-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.ff-today-card-head strong{font-size:22px;color:#15345a}
+.ff-today-pill{background:#eaf1fb;color:#233f66;border-radius:999px;padding:5px 10px;font-size:12px;font-weight:750}
+.ff-today-card h4{font-size:19px;margin:14px 0 8px;color:#172b4d}.ff-today-card dl{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:0}
+.ff-today-card dt{font-size:12px;color:#536781}.ff-today-card dd{margin:3px 0 0;font-weight:650;overflow-wrap:anywhere}
+.ff-today-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:16px}.ff-today-actions button{padding:10px 14px}.ff-today-actions a{color:#18375b;font-weight:750}
+.ff-today-empty{background:#fff;border-radius:12px;border:1px solid #dce5f1;padding:18px;color:#536781}
+.ff-offer-status-label{font-size:13px;margin:3px 0 0;font-weight:650;color:#355477}.ff-offer-status{min-width:150px;min-height:42px;background:#fff}
+.ff-reply-dialog{position:fixed;inset:0;margin:auto;width:min(94vw,560px);max-height:min(92dvh,760px);overflow:auto;padding:24px;background:#fff;color:#132e51;border-radius:22px;border:1px solid #dce5f1;box-shadow:0 24px 90px #061a3f55}
+.ff-reply-dialog::backdrop{background:#07152cc4;backdrop-filter:blur(3px)}
+.ff-reply-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.ff-reply-top h2{margin:0}.ff-reply-top button{min-width:44px}
+.ff-reply-dialog label{margin-top:14px}.ff-reply-dialog select,.ff-reply-dialog input,.ff-reply-dialog textarea{width:100%;max-width:none}
+.ff-reply-recipient{overflow-wrap:anywhere;font-weight:650;margin:10px 0 18px;color:#466080}.ff-reply-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:15px}
+@media(max-width:560px){.ff-today-card{padding:15px}.ff-reply-dialog{padding:16px}.ff-reply-actions{grid-template-columns:1fr}.ff-today-card dl{grid-template-columns:1fr 1fr}}
