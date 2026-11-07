@@ -18,33 +18,65 @@ c.addEventListener('pointerleave',function(){c.style.transform=''});});}}
 var m=$('m');
 function sl(){$('mv').textContent=m.value;m.style.setProperty('--p',((m.value-m.min)/(m.max-m.min)*100)+'%')}
 m.addEventListener('input',sl);sl();
-// Visa flyttuppgifter enbart för tjänster som innefattar flytt/bärhjälp.
-function isMovingService(){
- var service=$('s').value;
- return service==='Komplett flytt & transport'||service==='Bärhjälp & packning'||service==='Flera tjänster';
-}
+// Dynamiska frågor. Inga extra databasfält krävs – svaren följer med i meddelandet.
+var serviceNames={flytt:'Komplett flytt & transport',flyttstad:'Flyttstädning',hemstad:'Hemstädning',fonster:'Fönsterputs',bar:'Bärhjälp & packning'};
+function isMulti(){return $('s').value==='Flera tjänster';}
+function wants(type){return isMulti()? $('multi-'+type).checked : $('s').value===serviceNames[type];}
+function isMovingService(){return wants('flytt');}
+function housingRelevant(){return wants('flytt')||wants('flyttstad')||wants('hemstad');}
+function chosenServices(){return Object.keys(serviceNames).filter(function(key){return $('multi-'+key).checked;}).map(function(key){return serviceNames[key];});}
 function updateMoveFields(){
- var moving=isMovingService();
+ var moving=isMovingService(), housing=housingRelevant(), multi=isMulti();
+ $('multi-details').hidden=!multi;
  $('move-details').hidden=!moving;
+ $('clean-details').hidden=!wants('flyttstad') && !(moving && $('move-clean').checked);
+ $('home-details').hidden=!wants('hemstad');
+ $('window-details').hidden=!wants('fonster');
+ $('carry-details').hidden=!wants('bar');
+ $('size-block').hidden=!housing;
+ $('rooms-block').hidden=!housing;
  $('single-address').hidden=moving;
  $('move-from').required=moving;
  $('move-to').required=moving;
  $('a').disabled=moving;
+ var help='Fyll i de uppgifter du känner till. Vi återkommer med ett personligt prisförslag.';
+ if(multi)help='Välj minst två tjänster nedan. Frågorna anpassas efter dina val.';
+ else if(wants('fonster'))help='Berätta hur många fönster du vill putsa. Du behöver inte ange bostadens storlek.';
+ else if(wants('bar'))help='Beskriv vad du vill bära eller packa. Du behöver inte ange flyttadresser.';
+ $('service-help').textContent=help;
 }
-$('s').addEventListener('change', updateMoveFields);
+$('s').addEventListener('change',updateMoveFields);
+['flytt','flyttstad','hemstad','fonster','bar'].forEach(function(key){$('multi-'+key).addEventListener('change',updateMoveFields);});
+$('move-clean').addEventListener('change',updateMoveFields);
 updateMoveFields();
-function movementInfo(){
- if(!isMovingService())return '';
- var parts=[
- 'Flyttar från: '+$('move-from').value.trim(),
- 'Våning från: '+($('move-floor-from').value||'Ej angiven'),
- 'Hiss från: '+($('move-lift-from').value||'Ej angivet'),
- 'Flyttar till: '+$('move-to').value.trim(),
- 'Våning till: '+($('move-floor-to').value||'Ej angiven'),
- 'Hiss till: '+($('move-lift-to').value||'Ej angivet'),
- 'Packhjälp: '+($('move-pack').checked?'Ja':'Nej'),
- 'Flyttstädning: '+($('move-clean').checked?'Ja':'Nej')
- ];
+function serviceDetails(){
+ var parts=[];
+ if(isMulti())parts.push('Valda tjänster: '+chosenServices().join(', '));
+ if(isMovingService())parts.push(
+  'Flyttar från: '+$('move-from').value.trim(),
+  'Våning från: '+($('move-floor-from').value||'Ej angiven'),
+  'Hiss från: '+($('move-lift-from').value||'Ej angivet'),
+  'Flyttar till: '+$('move-to').value.trim(),
+  'Våning till: '+($('move-floor-to').value||'Ej angiven'),
+  'Hiss till: '+($('move-lift-to').value||'Ej angivet'),
+  'Packhjälp i samband med flytt: '+($('move-pack').checked?'Ja':'Nej'),
+  'Flyttstädning i samband med flytt: '+($('move-clean').checked?'Ja':'Nej')
+ );
+ if(!$('clean-details').hidden)parts.push(
+  'Flyttstädning – bostaden tömd: '+($('clean-empty').value||'Ej angivet'),
+  'Flyttstädning – fönsterputs önskas: '+($('clean-windows').value||'Ej angivet')
+ );
+ if(wants('hemstad'))parts.push('Hemstädning – hur ofta: '+($('home-frequency').value||'Ej angivet'));
+ if(wants('fonster'))parts.push(
+  'Antal fönster: '+($('window-count').value||'Ej angivet'),
+  'Typ av bostad/lokal: '+($('window-type').value||'Ej angivet'),
+  'Fönsterputs: '+($('window-sides').value||'Ej angivet')
+ );
+ if(wants('bar'))parts.push(
+  'Bärhjälp/packning – typ: '+($('carry-type').value||'Ej angivet'),
+  'Transport behövs: '+($('carry-transport').value||'Ej angivet'),
+  'Saker att bära/packa: '+($('carry-items').value.trim()||'Ej angivet')
+ );
  return parts.join('\n');
 }
 var form=$('f');
@@ -56,6 +88,14 @@ form.addEventListener('submit',async function(ev){
  var er=$('err');er.textContent='';$('res').classList.remove('on');
  if(!n||!p){er.textContent='Fyll i namn och telefonnummer så att vi kan nå dig.';(!n?$('n'):$('p')).focus();return;}
  if(e&&!$('e').checkValidity()){er.textContent='Skriv en giltig e-postadress eller lämna fältet tomt.';$('e').focus();return;}
+ if(isMulti() && chosenServices().length<2){
+  er.textContent='Välj minst två tjänster som du vill kombinera.';
+  $('multi-flytt').focus();return;
+ }
+ if(wants('fonster') && $('window-count').value && !$('window-count').checkValidity()){
+  er.textContent='Ange ett rimligt antal fönster eller lämna fältet tomt.';
+  $('window-count').focus();return;
+ }
  if(isMovingService() && (!$('move-from').value.trim() || !$('move-to').value.trim())){
   er.textContent='Fyll i var du flyttar från och vart du flyttar till.';
   (!$('move-from').value.trim() ? $('move-from') : $('move-to')).focus();
@@ -63,19 +103,20 @@ form.addEventListener('submit',async function(ev){
  }
  if($('website').value){return;}
  var rm=document.querySelector('input[name=r]:checked');
- var movingInfo=movementInfo();
+ var extraInfo=serviceDetails();
+ var housing=housingRelevant();
  var address=isMovingService() ?
   ('Från: '+$('move-from').value.trim()+' | Till: '+$('move-to').value.trim()) : $('a').value.trim();
- var msg=($('g').value.trim()+(movingInfo?'\n\n'+movingInfo:'')).trim().slice(0,3000);
+ var msg=($('g').value.trim()+(extraInfo?'\n\n'+extraInfo:'')).trim().slice(0,3000);
  var fields=new FormData();
  fields.append('Namn',n);
  fields.append('Telefon',p);
  fields.append('E-post',e||'Ej angiven');
  fields.append('Tjänst',$('s').value);
- fields.append('Bostadens storlek',m.value+' m²');
- fields.append('Antal rum',rm?rm.value:'Ej angivet');
+ fields.append('Bostadens storlek',housing?m.value+' m²':'Ej relevant för denna tjänst');
+ fields.append('Antal rum',housing?(rm?rm.value:'Ej angivet'):'Ej relevant');
  fields.append('Adress eller område',address||'Ej angivet');
- if(movingInfo)fields.append('Flyttdetaljer',movingInfo);
+ if(extraInfo)fields.append('Uppdragsdetaljer',extraInfo);
  fields.append('Önskat datum',$('d').value||'Ej angivet');
  fields.append('Rimligt pris',$('k').value.trim()?$('k').value.trim()+' kr':'Ej angivet');
  fields.append('Meddelande',msg||'Inget meddelande');
@@ -93,7 +134,7 @@ form.addEventListener('submit',async function(ev){
   if(cfg.supabaseUrl && cfg.supabaseAnonKey && !cfg.supabaseUrl.includes('DITT-PROJEKT')){
    try {
     var record={namn:n,telefon:p,epost:e||null,tjanst:$('s').value,
-     storlek_kvm:Number(m.value),rum:rm?rm.value:'',adress:address,
+     storlek_kvm:housing?Number(m.value):0,rum:housing?(rm?rm.value:''):'Ej relevant',adress:address,
      onskat_datum:$('d').value||null,rimligt_pris:$('k').value?Number($('k').value):null,
      meddelande:msg,status:'ny'};
     var saved=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/rest/v1/offertforfragningar',{
@@ -102,6 +143,7 @@ form.addEventListener('submit',async function(ev){
    }catch(ignore){}
   }
   form.reset();sl();updateMoveFields();
+  $('d').dispatchEvent(new Event('change',{bubbles:true}));
   var note=$('saveNote');
   if(note) note.textContent=stored?'':'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.';
   $('res').classList.add('on');

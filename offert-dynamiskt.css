@@ -1,0 +1,27 @@
+/* Dynamiskt offertformulär – mjuka färger från webbplatsens tema */
+#offert .service-help { margin: -4px 0 0; padding: 11px 14px; border-left: 3px solid #e88b35; background: var(--bg2); border-radius: 0 10px 10px 0; color: var(--muted); font-size: 14px; }
+#offert .adaptive-panel { min-width: 0; margin: 0; border: 1px solid var(--line); border-radius: 18px; padding: 17px; display: grid; gap: 14px; background: var(--bg2); }
+#offert .adaptive-panel legend { padding: 0 9px; font-weight: 800; color: var(--text); }
+#offert .adaptive-panel .panel-intro { margin: 0; color: var(--muted); font-size: 14px; }
+#offert .adaptive-panel .r2, #offert .adaptive-panel .r2 > div { min-width: 0; }
+#offert .adaptive-panel :is(input,select,textarea) { max-width: 100%; min-width: 0; }
+#offert .service-choice-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+#offert .service-choice-list label { display: flex; align-items: center; gap: 10px; margin: 0; padding: 12px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--text); font-size: 14px; line-height: 1.35; cursor: pointer; }
+#offert .service-choice-list input { flex: 0 0 19px; width: 19px; height: 19px; min-height: 19px; padding: 0; margin: 0; accent-color: #ff7a00; }
+#offert .service-choice-list label:has(input:checked) { border-color: #e88b35; box-shadow: inset 0 0 0 1px #e88b35; }
+#offert #multi-details[hidden],
+#offert #clean-details[hidden],
+#offert #home-details[hidden],
+#offert #window-details[hidden],
+#offert #carry-details[hidden],
+#offert #move-details[hidden],
+#offert #size-block[hidden],
+#offert #rooms-block[hidden],
+#offert #single-address[hidden] { display: none !important; }
+@media (max-width: 860px) {
+  #offert .adaptive-panel .r2 { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 500px) {
+  #offert .service-choice-list { grid-template-columns: minmax(0,1fr); }
+  #offert .adaptive-panel { padding: 15px; }
+}

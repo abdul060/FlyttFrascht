@@ -10,5 +10,5 @@ function updateGuideSize(){
 size.addEventListener('input',updateGuideSize);
 size.addEventListener('change',updateGuideSize);
 updateGuideSize();
-next.addEventListener('click',()=>{const target=document.getElementById('offert');const s=document.getElementById('s'),m=document.getElementById('m'),mv=document.getElementById('mv');if(s)s.value=service.value;if(m){m.value=size.value;m.dispatchEvent(new Event('input',{bubbles:true}));}if(mv)mv.textContent=size.value;const radio=document.querySelector('input[name="r"][value="'+rooms.value+'"]');if(radio)radio.checked=true;target?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
+next.addEventListener('click',()=>{const target=document.getElementById('offert');const s=document.getElementById('s'),m=document.getElementById('m'),mv=document.getElementById('mv');if(s){s.value=service.value;s.dispatchEvent(new Event('change',{bubbles:true}));}if(m){m.value=size.value;m.dispatchEvent(new Event('input',{bubbles:true}));}if(mv)mv.textContent=size.value;const radio=document.querySelector('input[name="r"][value="'+rooms.value+'"]');if(radio)radio.checked=true;target?.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});});
 })();
