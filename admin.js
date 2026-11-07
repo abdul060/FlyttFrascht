@@ -2,6 +2,8 @@
 'use strict';
 const cfg=window.FLYTT_CONFIG||{},$=id=>document.getElementById(id),url=(cfg.supabaseUrl||'').replace(/\/$/,''),key=cfg.supabaseAnonKey||'';
 let token='',refreshToken='',records=[],offers=[],bookings=[],editingBookingId=null,calendarDate=new Date(),selectedBookingDate='',currentTab='requests',poller=null,lastIds=null;
+const markedRequests=new Set(),markedOffers=new Set();
+let isDeleting=false;
 const validConfig=url.startsWith('https://')&&!!key;
 function headers(auth){return {'apikey':key,...(auth?{'Authorization':'Bearer '+auth}:{}),'Content-Type':'application/json'};}
 function notice(s){$('notice').textContent=s||'';}
@@ -12,6 +14,85 @@ function dateFormat(s){return s?new Date(s).toLocaleString('sv-SE',{dateStyle:'m
 function money(n){return Number(n).toLocaleString('sv-SE',{maximumFractionDigits:2})+' kr';}
 function identity(x){return x.epost&&x.epost.includes('@')?'e:'+x.epost.trim().toLocaleLowerCase('sv'):'t:'+String(x.telefon||'').replace(/[^0-9]/g,'');}
 function customersData(){const m=new Map();for(const r of records){const id=identity(r);if(id==='t:')continue;if(!m.has(id))m.set(id,{name:r.namn,phone:r.telefon,email:r.epost,items:[]});m.get(id).items.push(r);}return [...m.values()].sort((a,b)=>new Date(b.items[0].skapad)-new Date(a.items[0].skapad));}
+// Permanent radering: bara adminrollen kan få DELETE via Supabase/RLS.
+// Kundregistret är INTE en egen tabell; det är grupperade förfrågningar.
+function requestMatches(r){
+ const search=$('search').value.toLocaleLowerCase('sv').trim(),f=$('filter').value;
+ return (f==='alla'||r.status===f)&&[r.namn,r.telefon,r.epost,r.tjanst,r.adress].some(v=>String(v||'').toLocaleLowerCase('sv').includes(search));
+}
+function updateDeleteToolbars(){
+ const requestCount=[...markedRequests].filter(id=>records.some(r=>String(r.id)===id&&requestMatches(r))).length;
+ const offersCount=[...markedOffers].filter(id=>offers.some(o=>String(o.id)===id)).length;
+ for(const [id,count,base] of [['requestsDeleteSelected',requestCount,'Ta bort markerade förfrågningar'],['offersDeleteSelected',offersCount,'Ta bort markerade offerter']]){
+  const b=$(id);if(b){b.disabled=!count||isDeleting;b.textContent=base+(count?' ('+count+')':'');}
+ }
+}
+function choiceCheckbox(entity,group){
+ const holder=el('label',undefined,'ff-delete-choice'),check=el('input');
+ check.type='checkbox';check.checked=group.has(String(entity.id));check.setAttribute('aria-label','Markera '+String(entity.namn||entity.kundnamn||'post')+' för radering');
+ check.addEventListener('change',()=>{if(check.checked)group.add(String(entity.id));else group.delete(String(entity.id));updateDeleteToolbars();});
+ holder.append(check,el('span','Markera'));return holder;
+}
+function linkedEntries(rows){
+ const ids=new Set(rows.map(r=>String(r.id)));
+ const usedOffers=offers.filter(o=>o.forfragan_id!=null&&ids.has(String(o.forfragan_id)));
+ const usedBookings=bookings.filter(b=>b.forfragan_id!=null&&ids.has(String(b.forfragan_id)));
+ return {usedOffers,usedBookings};
+}
+function safeIds(rows){
+ return rows.map(row=>{
+  const id=String(row.id??'');
+  if(!/^[A-Za-z0-9_-]{1,80}$/.test(id))throw Error('Ogiltigt post-ID. Ingen radering genomfördes.');
+  return id;
+ });
+}
+async function apiDeleteRows(table,rows){
+ const ids=safeIds(rows),deleted=[];
+ // Små grupper undviker alltför långa webbadresser vid många testposter.
+ for(let i=0;i<ids.length;i+=40){
+  const batch=ids.slice(i,i+40),path=table+'?id=in.('+batch.map(encodeURIComponent).join(',')+')';
+  // DELETE med return=representation ger möjlighet att kontrollera att RLS verkligen tillät raderingen.
+  const opts=()=>({method:'DELETE',headers:{...headers(token),'Prefer':'return=representation'}});
+  let r=await fetch(url+'/rest/v1/'+path,opts());
+  if(r.status===401&&await refresh())r=await fetch(url+'/rest/v1/'+path,opts());
+  if(r.status===401){showLogin();throw Error('Din inloggning har gått ut. Logga in igen och kontrollera posterna.');}
+  if(!r.ok){const info=await r.json().catch(()=>({}));throw Error(info.message||'Radering nekades av databasen (HTTP '+r.status+').');}
+  const removed=await r.json().catch(()=>[]);
+  if(!Array.isArray(removed)||removed.length!==batch.length)throw Error('Databasen bekräftade bara '+(Array.isArray(removed)?removed.length:0)+' av '+batch.length+' raderingar. Ladda om och kontrollera posterna.');
+  deleted.push(...removed);
+ }
+ return deleted.length;
+}
+async function deleteRequests(rows,customerName=''){
+ if(isDeleting||!rows.length)return;
+ const {usedOffers,usedBookings}=linkedEntries(rows);
+ if(usedOffers.length||usedBookings.length){
+  notice('Kan inte radera: '+usedOffers.length+' kopplade offerter och '+usedBookings.length+' kopplade bokningar finns. Ta först bort testofferterna och kopplade testbokningar (eller koppla loss dem). Inget har raderats.');
+  return;
+ }
+ const many=rows.length>1;
+ const title=customerName?'Ta bort kund från registret?':many?'Ta bort '+rows.length+' förfrågningar?':'Ta bort förfrågan?';
+ const message=customerName?'Kundregistret bygger på förfrågningar. Alla '+rows.length+' inlästa förfrågningar för kunden raderas permanent. Sparade offerter och bokningar raderas inte.':many?'Du kommer att radera '+rows.length+' markerade förfrågningar permanent. Detta går inte att ångra.':'Förfrågan raderas permanent. Detta går inte att ångra.';
+ const details=customerName?[['Kund',customerName],['Förfrågningar',rows.length]]:many?[['Antal förfrågningar',rows.length]]:[['Kund',rows[0].namn||'–'],['Tjänst',rows[0].tjanst||'–']];
+ if(!await window.adminConfirm({title,message,details,confirmLabel:customerName?'Ja, ta bort kundposten':('Ja, ta bort '+(many?rows.length+' förfrågningar':'förfrågan')),kind:'danger'}))return;
+ isDeleting=true;updateDeleteToolbars();
+ try{const count=await apiDeleteRows('offertforfragningar',rows);rows.forEach(r=>markedRequests.delete(String(r.id)));await reload(false);notice(count+' förfrågan/förfrågningar borttagna permanent.');}
+ catch(e){await reload(false);notice('Raderingen kunde inte slutföras: '+e.message);}
+ finally{isDeleting=false;updateDeleteToolbars();}
+}
+async function deleteOffers(rows){
+ if(isDeleting||!rows.length)return;
+ const sent=rows.filter(o=>o.status==='skickad').length,many=rows.length>1;
+ const title=many?'Ta bort '+rows.length+' sparade offerter?':'Ta bort sparad offert?';
+ const message=(sent?sent+' av de valda offerterna har skickats. Redan skickade mejl kan inte återkallas. ':'')+'Offerterna raderas permanent från adminpanelen, men befintliga bokningar och förfrågningar behålls. Detta går inte att ångra.';
+ const details=many?[['Antal offerter',rows.length],['Redan skickade',sent]]:[['Kund',rows[0].kundnamn||'–'],['Tjänst',rows[0].tjanst||'–'],['Status',rows[0].status||'–']];
+ if(!await window.adminConfirm({title,message,details,confirmLabel:'Ja, ta bort '+(many?rows.length+' offerter':'offerten'),kind:'danger'}))return;
+ isDeleting=true;updateDeleteToolbars();
+ try{const count=await apiDeleteRows('offerter',rows);rows.forEach(o=>markedOffers.delete(String(o.id)));await reload(false);notice(count+' offert/offert(er) borttagna permanent.');}
+ catch(e){await reload(false);notice('Raderingen kunde inte slutföras: '+e.message);}
+ finally{isDeleting=false;updateDeleteToolbars();}
+}
+
 function showLogin(){token='';refreshToken='';sessionStorage.removeItem('flytt_admin_session');$('loginPanel').hidden=false;$('dashboard').hidden=true;if(poller){clearInterval(poller);poller=null;}if($('quickReplyDialog')?.open)$('quickReplyDialog').close();}
 function showDashboard(){$('loginPanel').hidden=true;$('dashboard').hidden=false;switchTab('requests');reload(true);if(!poller)poller=setInterval(()=>reload(false),30000);}
 function authUrl(type){return url+'/auth/v1/token?grant_type='+type;}
@@ -20,16 +101,35 @@ function saveSession(){sessionStorage.setItem('flytt_admin_session',JSON.stringi
 async function refresh(){if(!refreshToken)return false;try{const r=await fetch(authUrl('refresh_token'),{method:'POST',headers:headers(),body:JSON.stringify({refresh_token:refreshToken})});if(!r.ok)return false;const j=await r.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();return true;}catch{return false;}}
 async function api(path,method='GET',body,retry=true){const r=await fetch(url+'/rest/v1/'+path,{method,headers:{...headers(token),...(method==='POST'?{'Prefer':'return=representation'}:{}),...(method==='PATCH'?{'Prefer':'return=minimal'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});if(r.status===401&&retry&&await refresh())return api(path,method,body,false);if(!r.ok){if(r.status===401)showLogin();const info=await r.json().catch(()=>({}));throw Error(info.message||'Databasen svarade med HTTP '+r.status+'. Kontrollera SQL-reglerna.');}return method==='GET'||method==='POST'?r.json():null;}
 function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['requests','customers','offers','bookings','today'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
-function render(){const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();drawToday();}
-function drawRequests(){const search=$('search').value.toLocaleLowerCase('sv').trim(),f=$('filter').value,root=$('quotes');root.replaceChildren();const list=records.filter(r=>(f==='alla'||r.status===f)&&[r.namn,r.telefon,r.epost,r.tjanst,r.adress].some(v=>String(v||'').toLocaleLowerCase('sv').includes(search)));if(!list.length){root.append(el('p','Inga förfrågningar matchar sökningen.','empty'));return;}
-for(const r of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',r.namn),el('strong',r.tjanst));card.append(h,el('p','Inkommen: '+dateFormat(r.skapad),'meta'));const dl=el('dl');[['Telefon',r.telefon],['E-post',r.epost],['Adress',r.adress],['Önskat datum',r.onskat_datum],['Storlek',r.storlek_kvm+' m²'],['Rum',r.rum],['Prisförslag',r.rimligt_pris===null?'–':money(r.rimligt_pris)],['Meddelande',r.meddelande]].forEach(([l,v])=>field(dl,l,v));card.append(dl);const ft=el('div',undefined,'footer'),status=el('select');[['ny','Ny'],['kontaktad','Kontaktad'],['klar','Avslutad']].forEach(([v,t])=>{const o=el('option',t);o.value=v;status.append(o);});status.value=r.status;status.addEventListener('change',async()=>{status.disabled=true;const next=status.value;try{await api('offertforfragningar?id=eq.'+encodeURIComponent(r.id),'PATCH',{status:next});r.status=next;render();notice('Status uppdaterad.');}catch(e){status.value=r.status;notice(e.message);}finally{status.disabled=false;}});ft.append(el('span','Status:'),status);if(r.telefon)addLink(ft,'Ring','tel:'+r.telefon.replace(/[^+\d]/g,''));if(r.epost)addLink(ft,'Mejla','mailto:'+encodeURIComponent(r.epost));const make=el('button','Skapa offert','outline');make.addEventListener('click',()=>{switchTab('offers');$('relatedRequest').value=r.id;prefill(r);$('offerName').focus();});ft.append(make);const reply=el('button','Snabbt svar','outline');reply.type='button';reply.addEventListener('click',()=>openQuickReply(r));ft.append(reply);card.append(ft);root.append(card);}}
-function drawCustomers(cs){const root=$('customers');root.replaceChildren();const q=$('customerSearch').value.trim().toLocaleLowerCase('sv');const list=cs.filter(c=>[c.name,c.phone,c.email].some(v=>String(v||'').toLocaleLowerCase('sv').includes(q)));if(!list.length){root.append(el('p','Inga kunder att visa.','empty'));return;}for(const c of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',c.name),el('span',c.items.length+' förfrågan/förfrågningar','status-pill'));card.append(h);const dl=el('dl');field(dl,'Telefon',c.phone);field(dl,'E-post',c.email);field(dl,'Senaste kontakt',dateFormat(c.items[0].skapad));card.append(dl);const history=el('details',undefined,'customerhistory'),summary=el('summary','Visa förfrågningshistorik'),ul=el('ul');for(const r of c.items){ul.append(el('li',dateFormat(r.skapad)+' – '+r.tjanst+' ('+r.status+')'));}history.append(summary,ul);card.append(history);const ft=el('div',undefined,'footer');if(c.phone)addLink(ft,'Ring kund','tel:'+c.phone.replace(/[^+\d]/g,''));if(c.email)addLink(ft,'Mejla kund','mailto:'+encodeURIComponent(c.email));card.append(ft);root.append(card);}}
+function render(){
+ for(const id of markedRequests)if(!records.some(r=>String(r.id)===id))markedRequests.delete(id);
+ for(const id of markedOffers)if(!offers.some(o=>String(o.id)===id))markedOffers.delete(id);
+ const cs=customersData();$('total').textContent=records.length;$('newCount').textContent=records.filter(r=>r.status==='ny').length;$('customerCount').textContent=cs.length;$('sentCount').textContent=offers.filter(x=>x.status==='skickad').length;$('tabNew').textContent=records.filter(r=>r.status==='ny').length?'('+records.filter(r=>r.status==='ny').length+')':'';drawRequests();drawCustomers(cs);drawOffers();fillRequestOptions();fillBookingOptions();drawCalendar();drawToday();}
+function drawRequests(){const root=$('quotes');root.replaceChildren();const list=records.filter(requestMatches);if(!list.length){root.append(el('p','Inga förfrågningar matchar sökningen.','empty'));updateDeleteToolbars();return;}
+for(const r of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',r.namn),el('strong',r.tjanst));card.append(h,el('p','Inkommen: '+dateFormat(r.skapad),'meta'));const dl=el('dl');[['Telefon',r.telefon],['E-post',r.epost],['Adress',r.adress],['Önskat datum',r.onskat_datum],['Storlek',r.storlek_kvm+' m²'],['Rum',r.rum],['Prisförslag',r.rimligt_pris===null?'–':money(r.rimligt_pris)],['Meddelande',r.meddelande]].forEach(([l,v])=>field(dl,l,v));card.append(dl);const ft=el('div',undefined,'footer'),status=el('select');[['ny','Ny'],['kontaktad','Kontaktad'],['klar','Avslutad']].forEach(([v,t])=>{const o=el('option',t);o.value=v;status.append(o);});status.value=r.status;status.addEventListener('change',async()=>{status.disabled=true;const next=status.value;try{await api('offertforfragningar?id=eq.'+encodeURIComponent(r.id),'PATCH',{status:next});r.status=next;render();notice('Status uppdaterad.');}catch(e){status.value=r.status;notice(e.message);}finally{status.disabled=false;}});ft.append(el('span','Status:'),status);if(r.telefon)addLink(ft,'Ring','tel:'+r.telefon.replace(/[^+\d]/g,''));if(r.epost)addLink(ft,'Mejla','mailto:'+encodeURIComponent(r.epost));const make=el('button','Skapa offert','outline');make.addEventListener('click',()=>{switchTab('offers');$('relatedRequest').value=r.id;prefill(r);$('offerName').focus();});ft.append(make);const reply=el('button','Snabbt svar','outline');reply.type='button';reply.addEventListener('click',()=>openQuickReply(r));ft.append(reply);
+ft.append(choiceCheckbox(r,markedRequests));
+const del=el('button','Ta bort','ff-delete-action');del.type='button';del.disabled=isDeleting;
+del.setAttribute('aria-label','Ta bort förfrågan från '+String(r.namn||'kunden'));
+del.addEventListener('click',()=>deleteRequests([r]));ft.append(del);
+card.append(ft);root.append(card);}
+updateDeleteToolbars();}
+function drawCustomers(cs){const root=$('customers');root.replaceChildren();const q=$('customerSearch').value.trim().toLocaleLowerCase('sv');const list=cs.filter(c=>[c.name,c.phone,c.email].some(v=>String(v||'').toLocaleLowerCase('sv').includes(q)));if(!list.length){root.append(el('p','Inga kunder att visa.','empty'));return;}for(const c of list){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',c.name),el('span',c.items.length+' förfrågan/förfrågningar','status-pill'));card.append(h);const dl=el('dl');field(dl,'Telefon',c.phone);field(dl,'E-post',c.email);field(dl,'Senaste kontakt',dateFormat(c.items[0].skapad));card.append(dl);const history=el('details',undefined,'customerhistory'),summary=el('summary','Visa förfrågningshistorik'),ul=el('ul');for(const r of c.items){ul.append(el('li',dateFormat(r.skapad)+' – '+r.tjanst+' ('+r.status+')'));}history.append(summary,ul);card.append(history);const ft=el('div',undefined,'footer');if(c.phone)addLink(ft,'Ring kund','tel:'+c.phone.replace(/[^+\d]/g,''));if(c.email)addLink(ft,'Mejla kund','mailto:'+encodeURIComponent(c.email));
+const del=el('button','Ta bort kund','ff-delete-action');del.type='button';del.disabled=isDeleting;
+del.setAttribute('aria-label','Ta bort kundpost och dess förfrågningar för '+String(c.name||'kunden'));
+del.addEventListener('click',()=>deleteRequests(c.items,c.name||'Kund'));ft.append(del);
+card.append(ft);root.append(card);}}
 function fillRequestOptions(){const s=$('relatedRequest'),old=s.value;s.replaceChildren();const d=el('option','Ingen – skapa manuellt');d.value='';s.append(d);for(const r of records){const o=el('option',r.namn+' – '+r.tjanst+' ('+(r.onskat_datum||'utan datum')+')');o.value=r.id;s.append(o);}if([...s.options].some(o=>o.value===old))s.value=old;}
 function prefill(r){$('offerName').value=r.namn||'';$('offerEmail').value=r.epost||'';$('offerService').value=r.tjanst||'';$('offerDescription').value='Tjänst: '+(r.tjanst||'')+'\nStorlek: '+(r.storlek_kvm||'')+' m²\nAdress: '+(r.adress||'')+'\nÖnskat datum: '+(r.onskat_datum||'')+'\n\nDetta ingår:\n';$('offerPrice').value=r.rimligt_pris||'';}
 function clearOffer(){$('offerForm').reset();$('offerError').textContent='';defaultValidDate();}
 function defaultValidDate(){const d=new Date();d.setDate(d.getDate()+14);$('offerValid').value=d.toISOString().slice(0,10);window.adminRefreshDates?.();}
-function drawOffers(){const root=$('offers');root.replaceChildren();if(!offers.length){root.append(el('p','Inga offerter skapade ännu.','empty'));return;}for(const o of offers){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',o.kundnamn),el('strong',o.status!=='skickad'?'Utkast':o.kundbeslut==='accepterad'?'Accepterad (manuellt)':o.kundbeslut==='avbojd'?'Avböjd (manuellt)':'Skickad – inväntar svar'));card.append(h,el('p',o.tjanst+' · '+money(o.pris_inkl_moms)+' · giltig t.o.m. '+o.giltig_till,'meta'));const details=el('details',undefined,'customerhistory');details.append(el('summary','Visa offerttext'),el('p',o.beskrivning));card.append(details);const foot=el('div',undefined,'footer');const print=el('button','Skriv ut / PDF','outline');print.addEventListener('click',()=>printOffer(o));foot.append(print);
-const send=el('button',o.status==='skickad'?'Skicka igen':'Skicka till kund');send.disabled=!o.epost;send.addEventListener('click',()=>sendOffer(o,send));foot.append(send);if(o.status==='skickad')foot.append(el('span','Skickad: '+dateFormat(o.skickad)));const copy=el('button','Kopiera offert','outline');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(offerText(o));notice('Offerttext kopierad.');}catch{notice('Kunde inte kopiera texten.');}});foot.append(copy);if(o.status==='skickad'){const reply=el('button','Följ upp kunden','outline');reply.type='button';reply.addEventListener('click',()=>openQuickReply(o,'followup'));foot.append(reply);const statusLabel=el('label','Kundens svar (registreras manuellt):','ff-offer-status-label');const select=el('select',undefined,'ff-offer-status');for(const [v,t] of [['ej_svar','Väntar på svar'],['accepterad','Accepterad'],['avbojd','Avböjd']]){const opt=el('option',t);opt.value=v;select.append(opt)}select.value=['ej_svar','accepterad','avbojd'].includes(o.kundbeslut)?o.kundbeslut:'ej_svar';select.addEventListener('change',async()=>{const old=o.kundbeslut||'ej_svar',next=select.value;select.disabled=true;try{await api('offerter?id=eq.'+encodeURIComponent(o.id),'PATCH',{kundbeslut:next});o.kundbeslut=next;render();notice('Kundens svar sparat.');}catch(e){select.value=old;notice('Kunde inte spara svaret: '+e.message+' Kontrollera att SQL-steget har körts.');}finally{select.disabled=false;}});foot.append(statusLabel,select);}card.append(foot);root.append(card);}}
+function drawOffers(){const root=$('offers');root.replaceChildren();if(!offers.length){root.append(el('p','Inga offerter skapade ännu.','empty'));updateDeleteToolbars();return;}for(const o of offers){const card=el('article',undefined,'quote'),h=el('div',undefined,'head');h.append(el('h2',o.kundnamn),el('strong',o.status!=='skickad'?'Utkast':o.kundbeslut==='accepterad'?'Accepterad (manuellt)':o.kundbeslut==='avbojd'?'Avböjd (manuellt)':'Skickad – inväntar svar'));card.append(h,el('p',o.tjanst+' · '+money(o.pris_inkl_moms)+' · giltig t.o.m. '+o.giltig_till,'meta'));const details=el('details',undefined,'customerhistory');details.append(el('summary','Visa offerttext'),el('p',o.beskrivning));card.append(details);const foot=el('div',undefined,'footer');const print=el('button','Skriv ut / PDF','outline');print.addEventListener('click',()=>printOffer(o));foot.append(print);
+const send=el('button',o.status==='skickad'?'Skicka igen':'Skicka till kund');send.disabled=!o.epost;send.addEventListener('click',()=>sendOffer(o,send));foot.append(send);if(o.status==='skickad')foot.append(el('span','Skickad: '+dateFormat(o.skickad)));const copy=el('button','Kopiera offert','outline');copy.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(offerText(o));notice('Offerttext kopierad.');}catch{notice('Kunde inte kopiera texten.');}});foot.append(copy);if(o.status==='skickad'){const reply=el('button','Följ upp kunden','outline');reply.type='button';reply.addEventListener('click',()=>openQuickReply(o,'followup'));foot.append(reply);const statusLabel=el('label','Kundens svar (registreras manuellt):','ff-offer-status-label');const select=el('select',undefined,'ff-offer-status');for(const [v,t] of [['ej_svar','Väntar på svar'],['accepterad','Accepterad'],['avbojd','Avböjd']]){const opt=el('option',t);opt.value=v;select.append(opt)}select.value=['ej_svar','accepterad','avbojd'].includes(o.kundbeslut)?o.kundbeslut:'ej_svar';select.addEventListener('change',async()=>{const old=o.kundbeslut||'ej_svar',next=select.value;select.disabled=true;try{await api('offerter?id=eq.'+encodeURIComponent(o.id),'PATCH',{kundbeslut:next});o.kundbeslut=next;render();notice('Kundens svar sparat.');}catch(e){select.value=old;notice('Kunde inte spara svaret: '+e.message+' Kontrollera att SQL-steget har körts.');}finally{select.disabled=false;}});foot.append(statusLabel,select);}
+foot.append(choiceCheckbox(o,markedOffers));
+const del=el('button','Ta bort','ff-delete-action');del.type='button';del.disabled=isDeleting;
+del.setAttribute('aria-label','Ta bort sparad offert för '+String(o.kundnamn||'kunden'));
+del.addEventListener('click',()=>deleteOffers([o]));foot.append(del);
+card.append(foot);root.append(card);}
+updateDeleteToolbars();}
 function offerText(o){return 'OFFERT – FLYTT & FRÄSCHT\n\nTill: '+o.kundnamn+' ('+o.epost+')\nTjänst: '+o.tjanst+'\n\n'+o.beskrivning+'\n\nPris inklusive moms: '+money(o.pris_inkl_moms)+'\nGiltig till: '+o.giltig_till+'\n\nKontakt: flyttfrascht@gmail.com | 079-359 65 56';}
 function printOffer(o){const w=window.open('','_blank','width=820,height=900');if(!w){notice('Tillåt popupfönster för att skriva ut offerten.');return;}w.opener=null;const esc=s=>String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));w.document.write('<!doctype html><html lang="sv"><head><meta charset="utf-8"><title>Offert – Flytt & Fräscht</title><style>body{font:17px system-ui;max-width:750px;margin:55px auto;color:#0b1b3f;padding:20px}h1{font-size:38px}h2{margin-top:40px}pre{font:inherit;white-space:pre-wrap}.price{font-size:26px;font-weight:800}footer{border-top:1px solid #aaa;margin-top:50px;padding-top:18px}</style></head><body><h1>Flytt & Fräscht</h1><p>OFFERT</p><h2>'+esc(o.kundnamn)+'</h2><p>'+esc(o.epost)+'</p><h3>'+esc(o.tjanst)+'</h3><pre>'+esc(o.beskrivning)+'</pre><p class="price">'+esc(money(o.pris_inkl_moms))+' inkl. moms</p><p>Giltig till: '+esc(o.giltig_till)+'</p><footer>flyttfrascht@gmail.com · 079-359 65 56</footer></body></html>');w.document.close();w.focus();w.print();}
 async function sendOffer(o,btn){if(!await window.adminConfirm({title:'Skicka offert till kunden?',message:'Kontrollera mottagare och offert innan du skickar. Mejlet skickas först när du bekräftar.',details:[['Kund',o.kundnamn],['Mottagare',o.epost],['Tjänst',o.tjanst],['Pris inkl. moms',money(o.pris_inkl_moms)]],confirmLabel:'Ja, skicka offert',kind:'send'}))return;btn.disabled=true;btn.textContent='Skickar…';try{let r=await fetch(url+'/functions/v1/skicka-offert',{method:'POST',headers:headers(token),body:JSON.stringify({offer_id:o.id})});if(r.status===401&&await refresh())r=await fetch(url+'/functions/v1/skicka-offert',{method:'POST',headers:headers(token),body:JSON.stringify({offer_id:o.id})});const result=await r.json().catch(()=>({}));if(!r.ok)throw Error(result.error||'Mejlet kunde inte skickas. Kontrollera att Edge Function och Resend är aktiverade.');notice('Offerten skickades till '+o.epost+'.');await reload(true);}catch(e){notice('Offerten skickades inte: '+e.message);}finally{btn.disabled=false;btn.textContent='Skicka till kund';}}
@@ -204,8 +304,14 @@ if(data.status==='bekraftad'&&!(original?.bekraftelse_skickad)){
 notice(message);}catch(e){$('bookingError').textContent=e.message;}finally{btn.disabled=false;}});
 $('bookingDelete').addEventListener('click',async()=>{if(!editingBookingId||!await window.adminConfirm({title:'Ta bort bokning?',message:'Bokningen tas bort permanent. Detta går inte att ångra.',confirmLabel:'Ja, ta bort bokningen',kind:'danger'}))return;const id=editingBookingId;try{await api('bokningar?id=eq.'+encodeURIComponent(id),'DELETE');resetBooking();await reload(false);notice('Bokningen har tagits bort.');}catch(e){$('bookingError').textContent=e.message;}});
 resetBooking();
+$('requestsSelectShown').addEventListener('click',()=>{for(const r of records.filter(requestMatches))markedRequests.add(String(r.id));drawRequests();});
+$('requestsUnselect').addEventListener('click',()=>{markedRequests.clear();drawRequests();});
+$('requestsDeleteSelected').addEventListener('click',()=>deleteRequests(records.filter(r=>markedRequests.has(String(r.id))&&requestMatches(r))));
+$('offersSelectShown').addEventListener('click',()=>{for(const o of offers)markedOffers.add(String(o.id));drawOffers();});
+$('offersUnselect').addEventListener('click',()=>{markedOffers.clear();drawOffers();});
+$('offersDeleteSelected').addEventListener('click',()=>deleteOffers(offers.filter(o=>markedOffers.has(String(o.id)))));
 $('loginForm').addEventListener('submit',async e=>{e.preventDefault();$('loginError').textContent='';$('loginBtn').disabled=true;try{if(!validConfig)throw Error('Supabase är inte konfigurerat.');await login($('username').value,$('password').value);$('password').value='';showDashboard();}catch(err){$('loginError').textContent=err.message;}finally{$('loginBtn').disabled=false;}});
-$('logoutBtn').addEventListener('click',showLogin);$('refreshBtn').addEventListener('click',()=>reload(true));$('search').addEventListener('input',drawRequests);$('filter').addEventListener('change',drawRequests);$('customerSearch').addEventListener('input',()=>drawCustomers(customersData()));document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
+$('logoutBtn').addEventListener('click',showLogin);$('refreshBtn').addEventListener('click',()=>reload(true));$('search').addEventListener('input',()=>{markedRequests.clear();drawRequests();});$('filter').addEventListener('change',()=>{markedRequests.clear();drawRequests();});$('customerSearch').addEventListener('input',()=>drawCustomers(customersData()));document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>switchTab(b.dataset.tab)));
 $('relatedRequest').addEventListener('change',()=>{const r=records.find(x=>x.id===$('relatedRequest').value);if(r)prefill(r);});$('clearOfferBtn').addEventListener('click',clearOffer);
 $('offerForm').addEventListener('submit',async e=>{e.preventDefault();$('offerError').textContent='';const btn=$('saveOfferBtn');btn.disabled=true;try{const payload={forfragan_id:$('relatedRequest').value||null,kundnamn:$('offerName').value.trim(),epost:$('offerEmail').value.trim().toLowerCase(),tjanst:$('offerService').value.trim(),beskrivning:$('offerDescription').value.trim(),pris_inkl_moms:Number($('offerPrice').value),giltig_till:$('offerValid').value,status:'utkast'};if(!payload.kundnamn||!payload.epost||!payload.beskrivning||!payload.tjanst||payload.pris_inkl_moms<=0||!payload.giltig_till)throw Error('Fyll i alla obligatoriska fält.');await api('offerter','POST',payload);clearOffer();await reload(true);notice('Offerten är sparad. Granska den och välj Skicka till kund.');}catch(err){$('offerError').textContent=err.message;}finally{btn.disabled=false;}});
 $('enableAlerts').addEventListener('change',async e=>{if(e.target.checked&&'Notification' in window){const p=await Notification.requestPermission();if(p!=='granted'){e.target.checked=false;notice('Webbläsarnotiser nekades. Nya förfrågningar visas ändå i adminpanelen.');}}});defaultValidDate();

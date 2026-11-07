@@ -1,0 +1,11 @@
+/* Flytt & Fräscht: säker radering av testposter i adminpanelen. */
+.ff-cleanup-bar { display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin:12px 0 18px; padding:12px 14px; background:#eef3f9; border:1px solid #d5e0ed; border-radius:14px; }
+.ff-cleanup-bar>span {font-weight:700;color:#324962;font-size:14px;margin-right:auto}
+.ff-cleanup-bar button {font-size:13px;padding:10px 12px;min-height:42px}
+button.ff-delete-action {background:#fff3f1;color:#a62922;border:1px solid #e4ada9;box-shadow:none;font-weight:750;white-space:normal}
+button.ff-delete-action:not(:disabled):hover {background:#ffe6e2}
+button.ff-delete-action:disabled {opacity:.48;cursor:not-allowed}
+.ff-delete-choice {display:inline-flex;align-items:center;gap:6px;font-size:13px;color:#3c5472;margin:0 4px 0 0;padding:7px 8px;border-radius:9px;background:#f0f4f9;border:1px solid #d7e1ed;cursor:pointer;white-space:nowrap}
+.ff-delete-choice input {width:17px;height:17px;accent-color:#233e68;margin:0;padding:0}
+.ff-delete-choice span {font-weight:650}
+@media(max-width:650px){.ff-cleanup-bar{gap:8px}.ff-cleanup-bar>span{width:100%}.ff-cleanup-bar button{flex:1 1 130px}.quote .footer .ff-delete-action{flex:1 1 100%}}
