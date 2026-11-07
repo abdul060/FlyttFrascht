@@ -7,12 +7,40 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <style>
 :root{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;color:#162a43;background:#f0f4f9;color-scheme:light}*{box-sizing:border-box}body{margin:0;padding:26px 16px;min-height:100svh;display:grid;place-items:center}.wrap{max-width:570px;width:100%}.brand{display:inline-flex;align-items:center;gap:12px;color:#172b45;text-decoration:none;font-weight:800;font-size:1.17rem;margin-bottom:18px}.brand img{width:34px;height:34px}.brand em{font-style:normal;color:#df751e}.panel{background:white;border:1px solid #dde5f0;border-radius:20px;box-shadow:0 15px 42px #13294013;padding:clamp(22px,5vw,38px)}.eyebrow{font-size:.76rem;letter-spacing:.1em;font-weight:800;color:#b9651c}h1{font-size:clamp(1.55rem,5vw,2.1rem);margin:10px 0 14px;line-height:1.15}p{line-height:1.55;color:#4b5e72}.detail{border-radius:13px;background:#f3f6fa;padding:18px;margin:19px 0}.detail dl{margin:0;display:grid;gap:11px}.detail div{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}.detail dt{color:#56687a}.detail dd{margin:0;font-weight:750;overflow-wrap:anywhere}.legal{padding:12px 14px;background:#fff4e7;border-radius:10px;font-size:.88rem;color:#63452c}.agree{display:flex;gap:11px;align-items:start;margin:20px 0;font-size:.92rem;line-height:1.5}.agree input{margin-top:4px;width:18px;height:18px;accent-color:#24764e}.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}button{border-radius:11px;padding:13px 12px;font:inherit;font-weight:750;cursor:pointer;border:1px solid #ccd7e3;background:white;color:#182e48}button.accept{background:#207851;color:white;border-color:#207851}button:disabled{opacity:.45;cursor:not-allowed}a{color:#275d92}.feedback{margin-top:15px;font-weight:650;min-height:1.3em}.sub{font-size:.83rem}.hidden{display:none!important}:focus-visible{outline:3px solid #f09137;outline-offset:3px}@media(max-width:380px){.actions{grid-template-columns:1fr}}
+
+/* Flytt & Fräscht – egen bekräftelseruta för offertval */
+.review-backdrop{position:fixed;inset:0;z-index:9999;background:rgba(12,26,44,.72);display:flex;align-items:center;justify-content:center;padding:18px;overflow-y:auto}
+.review-backdrop[hidden]{display:none!important}
+.review-modal{background:#fff;width:min(100%,450px);border-radius:20px;border:1px solid #e5eaf0;box-shadow:0 26px 80px #08182a55;max-height:calc(100svh - 36px);overflow-y:auto;padding:clamp(22px,5vw,32px)}
+.review-icon{width:49px;height:49px;border-radius:15px;background:#fff0e2;color:#a94e08;display:grid;place-items:center;font-size:1.5rem;font-weight:900;margin-bottom:14px}
+.review-modal h2{font-size:1.5rem;line-height:1.25;margin:0 0 10px;color:#172b45}
+.review-modal p{margin:0 0 12px}
+.review-choice{border-radius:12px;background:#f3f6fa;padding:14px 16px;color:#1d3653;font-weight:750;margin:14px 0}
+.review-warning{font-size:.86rem;color:#694526;background:#fff4e7;border-radius:10px;padding:11px 13px;margin:12px 0 18px}
+.review-actions{display:flex;gap:10px;flex-wrap:wrap}.review-actions button{flex:1 1 150px;min-height:46px}
+.review-submit{background:#f28a32;border-color:#f28a32;color:#142942}.review-submit:hover:not(:disabled){background:#de7522}
+.review-cancel:hover:not(:disabled){background:#f1f5f9}
+body.review-open{overflow:hidden}
+@media(prefers-reduced-motion:no-preference){.review-modal{animation:reviewEnter .16s ease-out}@keyframes reviewEnter{from{opacity:.75;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}}
 </style>
 </head>
-<body><main class="wrap"><a class="brand" href="/" aria-label="Till Flytt & Fräscht"><img src="/favicon.svg" alt=""> Flytt & <em>Fräscht</em></a><section class="panel"><span class="eyebrow">FLYTT & FRÄSCHT · OFFERTSVAR</span><h1 id="heading">Kontrollerar din svarslänk…</h1><p id="intro">Vi hämtar uppgifterna om din offert.</p>
+<body><main class="wrap"><a class="brand" href="/" aria-label="Till Flytt & Fräscht"><img src="/favicon.svg" alt=""> Flytt & <em>Fräscht</em></a><section class="panel"><span class="eyebrow">FLYTT & FRÄSCHT · OFFERTSVAR</span><h1 id="heading" tabindex="-1">Kontrollerar din svarslänk…</h1><p id="intro">Vi hämtar uppgifterna om din offert.</p>
 <div id="details" class="detail hidden"><dl><div><dt>Tjänst</dt><dd id="service"></dd></div><div><dt>Pris inklusive moms</dt><dd id="price"></dd></div><div><dt>Giltig till</dt><dd id="valid"></dd></div></dl></div>
 <div id="decision" class="hidden"><p class="legal">Ett ja kan innebära att ett bindande avtal ingås. Kontrollera offerten och dess villkor i mejlet innan du accepterar. Om du är osäker, kontakta oss först.</p><label class="agree"><input id="confirm" type="checkbox"> <span>Jag har läst offerten och vill registrera mitt svar.</span></label><div class="actions"><button class="accept" id="accept" disabled>Acceptera offert</button><button id="decline" disabled>Tacka nej</button></div></div>
-<p class="feedback" id="feedback" role="status" aria-live="polite"></p><p class="sub">Behöver du hjälp? Skriv till <a href="mailto:flyttfrascht@gmail.com">flyttfrascht@gmail.com</a>.</p></section></main>
+<p class="feedback" id="feedback" tabindex="-1" role="status" aria-live="polite"></p><p class="sub">Behöver du hjälp? Skriv till <a href="mailto:flyttfrascht@gmail.com">flyttfrascht@gmail.com</a>.</p></section></main>
+<div id="reviewBackdrop" class="review-backdrop" hidden>
+  <section class="review-modal" role="dialog" aria-modal="true" aria-labelledby="reviewTitle" aria-describedby="reviewDesc" tabindex="-1">
+    <div class="review-icon" aria-hidden="true">✓</div>
+    <h2 id="reviewTitle">Bekräfta ditt val</h2>
+    <p id="reviewDesc">Kontrollera att du vill registrera ditt svar på offerten.</p>
+    <div class="review-choice" id="reviewChoice"></div>
+    <p class="review-warning" id="reviewWarning">En accepterad offert kan innebära ett bindande avtal. Läs offertvillkoren innan du bekräftar.</p>
+    <div class="review-actions">
+      <button type="button" class="review-cancel" id="reviewCancel">Avbryt</button>
+      <button type="button" class="review-submit" id="reviewSubmit">Bekräfta mitt svar</button>
+    </div>
+  </section>
+</div>
 <script>
 (()=>{'use strict';
 // Publik anon-nyckel används endast för CORS; token i URL-fragment skickas inte med sidans HTTP-anrop.
@@ -31,13 +59,79 @@ async function init(){
  catch(e){status('Länken kan inte användas',e.message);}
 }
 $('confirm').addEventListener('change',()=>{const yes=$('confirm').checked;$('accept').disabled=!yes;$('decline').disabled=!yes;});
-async function submit(decision){if(!$('confirm').checked)return;const label=decision==='accepterad'?'acceptera':'tacka nej till';if(!window.confirm('Vill du '+label+' offerten? Detta registreras hos Flytt & Fräscht.'))return;
- $('accept').disabled=true;$('decline').disabled=true;$('feedback').textContent='Registrerar ditt svar…';
- try{await request('respond',{decision});$('decision').classList.add('hidden');$('feedback').textContent='Ditt svar är registrerat.';status(decision==='accepterad'?'Tack! Du har accepterat offerten.':'Tack! Du har tackat nej.','Flytt & Fräscht har fått ditt svar i adminpanelen. Vi återkommer vid behov.');}
- catch(e){$('feedback').textContent=e.message;$('accept').disabled=false;$('decline').disabled=false;}
+// Egen tillgänglig bekräftelseruta. Inget skickas förrän besökaren bekräftar.
+let pendingDecision=null;
+let lastFocused=null;
+let sending=false;
+const backdrop=$('reviewBackdrop');
+const reviewSubmit=$('reviewSubmit');
+const reviewCancel=$('reviewCancel');
+function closeReview(){
+ if(sending)return;
+ pendingDecision=null;
+ backdrop.hidden=true;
+ document.body.classList.remove('review-open');
+ if(lastFocused&&lastFocused.isConnected)lastFocused.focus();
 }
-$('accept').addEventListener('click',()=>submit('accepterad'));
-$('decline').addEventListener('click',()=>submit('avbojd'));
+function openReview(decision){
+ if(!$('confirm').checked||sending)return;
+ pendingDecision=decision;
+ lastFocused=document.activeElement;
+ const accepting=decision==='accepterad';
+ $('reviewTitle').textContent=accepting?'Acceptera offerten?':'Tacka nej till offerten?';
+ $('reviewDesc').textContent=accepting?'Du är på väg att acceptera offertens villkor.':'Du är på väg att tacka nej till offerten.';
+ $('reviewChoice').textContent=accepting?'Mitt svar: Ja, jag accepterar offerten':'Mitt svar: Nej, jag tackar nej';
+ $('reviewWarning').hidden=!accepting;
+ reviewSubmit.textContent=accepting?'Ja, acceptera offerten':'Ja, tacka nej';
+ backdrop.hidden=false;
+ document.body.classList.add('review-open');
+ reviewCancel.focus();
+}
+backdrop.addEventListener('click',event=>{if(event.target===backdrop)closeReview();});
+reviewCancel.addEventListener('click',closeReview);
+document.addEventListener('keydown',event=>{
+ if(backdrop.hidden)return;
+ if(event.key==='Escape'){event.preventDefault();closeReview();return;}
+ if(event.key==='Tab'){
+  const focusables=[reviewCancel,reviewSubmit];
+  const i=focusables.indexOf(document.activeElement);
+  if(event.shiftKey&&i<=0){event.preventDefault();reviewSubmit.focus();}
+  else if(!event.shiftKey&&i===focusables.length-1){event.preventDefault();reviewCancel.focus();}
+ }
+});
+reviewSubmit.addEventListener('click',async()=>{
+ if(sending||!pendingDecision||!$('confirm').checked)return;
+ const decision=pendingDecision;
+ sending=true;
+ reviewSubmit.disabled=true;
+ reviewCancel.disabled=true;
+ reviewSubmit.textContent='Sparar ditt svar…';
+ $('feedback').textContent='Registrerar ditt svar…';
+ try{
+  await request('respond',{decision});
+  backdrop.hidden=true;
+  document.body.classList.remove('review-open');
+  pendingDecision=null;
+  $('decision').classList.add('hidden');
+  $('feedback').textContent='Ditt svar är registrerat.';
+  status(decision==='accepterad'?'Tack! Du har accepterat offerten.':'Tack! Du har tackat nej.','Flytt & Fräscht har fått ditt svar i adminpanelen. Vi återkommer vid behov.');
+  $('heading').focus();
+ }catch(e){
+  backdrop.hidden=true;
+  document.body.classList.remove('review-open');
+  pendingDecision=null;
+  $('feedback').textContent=e.message;
+  $('accept').disabled=false;
+  $('decline').disabled=false;
+  $('feedback').focus();
+ }finally{
+  sending=false;
+  reviewSubmit.disabled=false;
+  reviewCancel.disabled=false;
+ }
+});
+$('accept').addEventListener('click',()=>openReview('accepterad'));
+$('decline').addEventListener('click',()=>openReview('avbojd'));
 init();})();
 </script>
 </body></html>
