@@ -6,6 +6,20 @@
 <title>Flyttfirma Stockholm – Flyttbil, Transport & Städ | Flytt &amp; Fräscht</title>
 <link rel="canonical" href="https://flyttfrascht.se/">
 <meta name="theme-color" content="#0B1B3F">
+<script>
+// Vid omladdning startar sidan överst; vanliga offertlänkar fortsätter fungera.
+(function () {
+  var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+  if (nav && nav.type === 'reload') {
+    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+    if (location.hash) history.replaceState(history.state, '', location.pathname + location.search);
+    window.addEventListener('pageshow', function () {
+      window.scrollTo(0, 0);
+      requestAnimationFrame(function () { window.scrollTo(0, 0); });
+    });
+  }
+})();
+</script>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <meta property="og:title" content="Flyttfirma Stockholm | Flytt &amp; Fräscht">
 <meta property="og:description" content="Kompletta flyttar med flyttbil, transport och bärhjälp i Stockholm. Även flyttstädning och hemstädning. Begär offert hos Flytt &amp; Fräscht.">
@@ -70,7 +84,7 @@
 <div class="eyebrow rv">Så funkar det</div>
 <h2 class="h rv">Tre enkla steg</h2>
 <div class="steps">
-<div class="step rv"><b>Berätta vad du behöver</b><span>Fyll i formuläret med tjänst, bostadens storlek och vad du tycker är ett rimligt pris.</span></div>
+<div class="step rv"><b>Berätta vad du behöver</b><span>Välj tjänst och fyll i uppgifterna om ditt uppdrag. Vid flytt anger du även från- och tilladress.</span></div>
 <div class="step rv" style="--dl:.1s"><b>Vi hör av oss</b><span>Vi går igenom din förfrågan och återkommer med ett förslag på offert.</span></div>
 <div class="step rv" style="--dl:.2s"><b>Vi gör jobbet</b><span>Vi kommer på överenskommen tid och ser till att resultatet blir som du vill.</span></div>
 </div>
@@ -106,12 +120,21 @@
 <div class="r2"><div><label for="n">Namn *</label><input id="n" autocomplete="name" required></div><div><label for="p">Telefon *</label><input id="p" type="tel" autocomplete="tel" inputmode="tel" required></div></div>
 <div><label for="e">E-post (valfritt)</label><input id="e" type="email" autocomplete="email"></div>
 <div><label for="s">Vad behöver du hjälp med?</label><select id="s"><option>Komplett flytt &amp; transport</option><option>Flyttstädning</option><option>Hemstädning</option><option>Fönsterputs</option><option>Bärhjälp &amp; packning</option><option>Flera tjänster</option></select></div>
+<fieldset id="move-details" class="move-details" hidden>
+<legend>Detaljer om flytten</legend>
+<p class="move-intro">Berätta var vi ska hämta och lämna dina saker. Uppgifterna hjälper oss att ge rätt offert.</p>
+<div class="r2"><div><label for="move-from">Flyttar från – adress eller område *</label><input id="move-from" maxlength="150" autocomplete="off" placeholder="Gatuadress eller område"></div><div><label for="move-to">Flyttar till – adress eller område *</label><input id="move-to" maxlength="150" autocomplete="off" placeholder="Gatuadress eller område"></div></div>
+<div class="r2"><div><label for="move-floor-from">Våning – från</label><select id="move-floor-from"><option value="">Välj våning</option><option>Bottenvåning</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option><option>Vet inte</option></select></div><div><label for="move-lift-from">Hiss – från</label><select id="move-lift-from"><option value="">Välj</option><option>Ja</option><option>Nej</option><option>Vet inte</option></select></div></div>
+<div class="r2"><div><label for="move-floor-to">Våning – till</label><select id="move-floor-to"><option value="">Välj våning</option><option>Bottenvåning</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10+</option><option>Vet inte</option></select></div><div><label for="move-lift-to">Hiss – till</label><select id="move-lift-to"><option value="">Välj</option><option>Ja</option><option>Nej</option><option>Vet inte</option></select></div></div>
+<label class="move-check"><input type="checkbox" id="move-pack"> Jag vill även ha hjälp med packning</label>
+<label class="move-check"><input type="checkbox" id="move-clean"> Jag vill även ha flyttstädning</label>
+</fieldset>
 <div><div class="lb">Bostadens storlek</div><div class="out"><b id="mv">60</b><span>m²</span></div><input id="m" type="range" min="15" max="250" step="5" value="60" aria-label="Bostadens storlek i kvadratmeter"></div>
 <div><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
 <input type="radio" name="r" id="r1" value="1"><label for="r1">1</label><input type="radio" name="r" id="r2" value="2" checked><label for="r2">2</label><input type="radio" name="r" id="r3" value="3"><label for="r3">3</label><input type="radio" name="r" id="r4" value="4"><label for="r4">4</label><input type="radio" name="r" id="r5" value="5+"><label for="r5">5+</label></div></div>
-<div class="r2"><div><label for="a">Adress eller område</label><input id="a" autocomplete="address-level2"></div><div><label for="d">Önskat datum</label><input id="d" type="date"></div></div>
+<div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div><label for="d">Önskat datum</label><input id="d" type="date"></div></div>
 <div><label for="k">Vad ser du som ett rimligt pris?</label><div class="kr"><input id="k" type="number" min="0" step="100" inputmode="numeric" placeholder="t.ex. 2500"><span>kr</span></div><p class="hint">Det hjälper oss att ge en offert som passar dig.</p></div>
-<div><label for="g">Något mer vi bör veta? (t.ex. från-/tilladress, våning, hiss eller flyttbilens last)</label><textarea id="g"></textarea></div>
+<div><label for="g">Något mer vi bör veta? (t.ex. stora möbler, parkering eller andra önskemål)</label><textarea id="g" maxlength="1800"></textarea></div>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
 <button class="btn" id="sendBtn" type="submit">Skicka offertförfrågan ✦</button>
