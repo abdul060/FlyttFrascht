@@ -161,7 +161,26 @@
 <div><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
 <input type="radio" name="r" id="r1" value="1"><label for="r1">1</label><input type="radio" name="r" id="r2" value="2" checked><label for="r2">2</label><input type="radio" name="r" id="r3" value="3"><label for="r3">3</label><input type="radio" name="r" id="r4" value="4"><label for="r4">4</label><input type="radio" name="r" id="r5" value="5+"><label for="r5">5+</label></div></div>
 <div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div><label for="d">Önskat datum</label><input id="d" type="date"></div></div>
-<div><label for="k">Vad ser du som ett rimligt pris?</label><div class="kr"><input id="k" type="number" min="0" step="100" inputmode="numeric" placeholder="t.ex. 2500"><span>kr</span></div><p class="hint">Det hjälper oss att ge en offert som passar dig.</p></div>
+
+<div>
+  <label for="k">Din ungefärliga budget (valfritt)</label>
+  <div class="kr">
+    <input
+      id="k"
+      type="number"
+      min="0"
+      step="100"
+      inputmode="numeric"
+      placeholder="t.ex. 2500"
+    >
+    <span>kr</span>
+  </div>
+  <p class="hint">
+    Du behöver inte ange någon budget.
+    Vi återkommer med ett personligt prisförslag.
+  </p>
+</div>
+
 <div><label for="g">Något mer vi bör veta? (t.ex. stora möbler, parkering eller andra önskemål)</label><textarea id="g" maxlength="1800"></textarea></div>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
