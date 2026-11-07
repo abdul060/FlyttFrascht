@@ -1,0 +1,40 @@
+/* Flytt & Fräscht — designförfining 2026-11-07.
+   Endast presentation; ändrar inte offertlogik, datalagring eller beteende. */
+:root{--ff-soft-shadow:0 10px 36px rgba(5,17,42,.09)}
+/* Mjukare övergångar mellan de mörka partierna */
+.why-section{background:linear-gradient(145deg,#132640 0%,#172f4c 100%);padding-block:clamp(54px,7vw,86px)}
+.why-section .eyebrow{color:#f2b47d}
+.why-section h2{color:#f1f5fb}
+.why-section .lead{color:#c9d5e4}
+.why-grid{gap:16px}
+.why-card{background:#213a56;border:1px solid #39516c;border-radius:20px;box-shadow:0 8px 24px rgba(4,14,32,.12);transition:transform .18s ease,border-color .18s ease}
+.why-card p{color:#d0dbea;line-height:1.65}
+.why-card h3{color:#f5f7fd}
+.why-card:hover{transform:translateY(-2px);border-color:#6b809b}
+/* Tjänstekorten har dämpat ljus och mjukare skillnad mellan ytorna */
+.service-overview{background:linear-gradient(160deg,#182b42,#1b3048);padding-block:clamp(58px,7vw,80px)}
+.service-overview-card{background:#283f58;border-color:#415975;border-radius:22px;box-shadow:0 8px 26px rgba(4,15,29,.09);transition:transform .18s ease,border-color .18s ease}
+.service-overview-card:hover{transform:translateY(-2px);border-color:#7990a7}
+.service-overview-icon{background:#344b62;border:1px solid #4e6580}
+.service-overview-bottom{background:#263d55;border-color:#415975}
+.service-overview-card p,.service-overview .lead{color:#d0dae7}
+/* Lättlästa formulär på små skärmar */
+#offert form{min-width:0}
+#offert input,#offert select,#offert textarea{max-width:100%}
+#offert input:focus-visible,#offert textarea:focus-visible,#offert select:focus-visible{outline:3px solid #ff9a43;outline-offset:2px}
+#offert .privacy-note{line-height:1.65}
+#offert .btn[type="submit"]{min-height:52px}
+/* Övriga informationskort */
+.price-panel,.price-message,.service-cta{box-shadow:var(--ff-soft-shadow)}
+.faq-list details{transition:border-color .18s ease,box-shadow .18s ease}
+.faq-list details[open]{border-color:#8192ab;box-shadow:var(--ff-soft-shadow)}
+.faq-list summary{line-height:1.45}
+/* Ge mobilens fasta kontaktmeny mjukare hörn och tydliga fokusmarkeringar */
+@media(max-width:767px){
+ .mobile-contact-bar{gap:10px;border-top:1px solid rgba(255,255,255,.14)}
+ .mobile-contact-bar a{font-size:15px;min-height:50px}
+ .mobile-contact-bar a:focus-visible{outline:3px solid #ffb574;outline-offset:-3px}
+ .service-overview-grid{gap:14px}
+ .why-card,.service-overview-card{padding:21px}
+}
+@media(prefers-reduced-motion:reduce){.why-card,.service-overview-card,.faq-list details{transition:none}.why-card:hover,.service-overview-card:hover{transform:none}}

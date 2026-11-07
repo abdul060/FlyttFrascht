@@ -1,0 +1,72 @@
+/* Flytt & Fräscht — adminpanel, förbättrad visuell översikt.
+   CSS-only: inga ändringar av Supabase, utskick eller bokningar. */
+:root{--ad-ink:#142746;--ad-muted:#536781;--ad-line:#dce5f1;--ad-soft:#f4f7fb;--ad-accent:#f28b33;--ad-shadow:0 10px 30px rgba(19,38,65,.07)}
+body{background:linear-gradient(180deg,#f3f6fb 0%,#eaf0f7 100%);min-height:100dvh;color:var(--ad-ink)}
+body>header{box-shadow:0 5px 22px rgba(7,20,42,.14)}
+main{margin-top:30px;margin-bottom:70px}
+.topline{padding:4px 0 8px}
+.topline h1{letter-spacing:-.7px;font-size:clamp(28px,3.6vw,38px)}
+.topline p{margin:8px 0 0;line-height:1.5}
+.topline #logoutBtn{flex-shrink:0}
+.tabs{gap:8px;padding:9px;margin-top:23px;border:1px solid var(--ad-line);background:#fff;border-radius:17px;box-shadow:var(--ad-shadow)}
+.tabs button{border:0;border-radius:11px;background:transparent;color:#314768;padding:12px 16px;line-height:1.25;min-height:46px}
+.tabs button:hover{background:#eef3fa}
+.tabs button.active{background:#183459;color:#fff;box-shadow:0 5px 13px rgba(18,39,72,.18)}
+.tabs button.active:hover{background:#183459}
+.stats{gap:13px;margin-top:18px}
+.stats>div{position:relative;overflow:hidden;min-width:0;border:1px solid var(--ad-line);border-radius:17px;padding:20px;box-shadow:var(--ad-shadow)}
+.stats>div::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:#748ba9}
+.stats>div:nth-child(2)::before{background:#f28b33}
+.stats>div:nth-child(3)::before{background:#5291a9}
+.stats>div:nth-child(4)::before{background:#5c9b79}
+.stats strong{font-size:clamp(24px,3vw,34px);line-height:1.18;font-variant-numeric:tabular-nums}
+.stats small{display:block;margin-top:6px;line-height:1.35}
+.panel,.quote{border:1px solid var(--ad-line);border-radius:19px;box-shadow:var(--ad-shadow)}
+.quote{padding:23px}
+.quote .head{gap:12px;align-items:flex-start}
+.quote .meta{line-height:1.55}
+.quote dl{gap:14px;margin:16px 0}
+.quote dd{line-height:1.45}
+.quote .footer{padding-top:16px;gap:9px}
+.quote .footer button,.quote .footer select{min-height:42px}
+.notificationbar{border:1px solid var(--ad-line);box-shadow:var(--ad-shadow);background:#fff}
+.notificationbar small{margin-top:6px;line-height:1.4}
+.toolbar{gap:10px}
+.toolbar input,.toolbar select{background:#fff}
+input,select,textarea{border-color:#bfcde0;background:#fff;color:var(--ad-ink)}
+input:focus-visible,select:focus-visible,textarea:focus-visible,button:focus-visible,.linkbutton:focus-visible{outline:3px solid #f4a254;outline-offset:2px}
+button{transition:filter .16s ease,background .16s ease}
+button:not(:disabled):hover{filter:brightness(.97)}
+.status-pill{border:1px solid #d3dfeb}
+/* Bokningar: tydligare dagsmarkering och mer lättanvänd månadsvy */
+.calendar-header{gap:15px}
+.calendar-controls{gap:6px}
+.calendar-controls button{min-width:42px;min-height:42px}
+.calendar-grid{border-radius:16px;border-color:var(--ad-line);box-shadow:var(--ad-shadow)}
+.calendar-weekday{background:#eaf0f8;color:#425b7b}
+.calendar-day.selected{background:#fff0df;box-shadow:inset 0 0 0 2px #f2ad63}
+.calendar-day.today{box-shadow:inset 0 0 0 2px #f18727}
+.calendar-day:hover{background:#ecf4fc}
+.booking-card{border-left-color:#ec8635}
+.availability-panel{background:#f1f6fc;border-color:#ccd9e9}
+/* Behåll knappar och modaler åtkomliga på telefon */
+@media(max-width:760px){
+ main{padding:0 14px;margin-top:22px}
+ .tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .tabs button{padding:11px 7px;font-size:13px;white-space:normal}
+ .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .stats>div{padding:15px}
+ .quote,.panel{padding:17px}
+ .toolbar input{width:100%}
+ .toolbar select{flex:1 1 160px}
+ .calendar-controls{width:100%;justify-content:space-between}
+ .calendar-controls strong{min-width:0;flex:1;font-size:14px}
+ .calendar-day{min-height:58px;padding:5px 3px;overflow:hidden}
+ .day-event{font-size:9px}
+ .calendar-weekday{padding:10px 1px;font-size:10px}
+ .quote .footer{align-items:stretch}
+ .quote .footer button{flex:1 1 auto}
+ .ff-dialog{width:min(95vw,490px)}
+}
+@media(max-width:380px){.tabs button{font-size:12px}.calendar-day{min-height:51px}.day-event{display:none}}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
