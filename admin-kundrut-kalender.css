@@ -1,0 +1,52 @@
+/* Flytt & Fräscht · tillägg för kundhistorik, RUT och dubbelbokningar */
+.ff-next-panel{color:#182c47;display:grid;gap:16px;margin-top:25px}
+.ff-next-header{display:flex;justify-content:space-between;align-items:end;gap:12px;flex-wrap:wrap}
+.ff-next-eyebrow{font-size:11px;color:#b85f16;letter-spacing:.14em;font-weight:850;text-transform:uppercase}
+.ff-next-header h2{font-size:clamp(23px,3vw,30px);margin:5px 0}
+.ff-next-header p{margin:0;color:#64758b;font-size:14px;line-height:1.5}
+.ff-next-card{background:#fff;border:1px solid #dbe4ef;border-radius:18px;padding:20px;min-width:0;box-shadow:0 9px 22px #162e4810}
+.ff-next-controls{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:end}
+.ff-next-controls input{width:100%;min-height:44px;background:#fff}
+.ff-next-controls button{min-height:44px}
+.ff-next-card h3{font-size:18px;margin:0 0 12px}
+.ff-next-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}
+.ff-next-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ff-next-field{display:grid;gap:5px;min-width:0;margin:0;font-size:13px;font-weight:700;color:#344d6a}
+.ff-next-field input,.ff-next-field select,.ff-next-field textarea{width:100%;max-width:100%;padding:11px 12px;background:#fff;border:1px solid #bfccdc;color:#182c47;border-radius:10px;min-width:0;font:inherit;font-weight:500}
+.ff-next-field textarea{min-height:75px}
+.ff-next-full{grid-column:1/-1}
+.ff-next-actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+.ff-next-actions button{min-height:42px}
+.ff-next-note{font-size:12px;color:#5a7189;line-height:1.6}
+.ff-next-status{font-size:13px;color:#38556e;min-height:1.3em}
+.ff-next-list{display:grid;gap:12px}
+.ff-next-item{padding:15px;border:1px solid #dae4ef;border-radius:14px;background:#fcfdff;display:grid;gap:10px}
+.ff-next-itemhead{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px}
+.ff-next-itemhead strong{font-size:16px;overflow-wrap:anywhere}
+.ff-next-pill{display:inline-block;border-radius:40px;padding:5px 10px;font-size:12px;font-weight:800;background:#eaf1fb;color:#29517e}
+.ff-next-pill[data-kind=done]{background:#e5f5ec;color:#206744}
+.ff-next-pill[data-kind=warning]{background:#fff0dd;color:#90510a}
+.ff-next-meta{font-size:12px;color:#60768c;overflow-wrap:anywhere}
+.ff-next-numbers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ff-next-number{background:#f0f5fa;border:1px solid #e3ebf5;border-radius:10px;padding:10px;display:grid;gap:4px}
+.ff-next-number small{font-size:11px;color:#607790}
+.ff-next-number strong{font-size:15px}
+.ff-next-timeline{display:grid;gap:9px;margin-top:10px;padding-left:13px;border-left:2px solid #e0eaf4}
+.ff-next-event{position:relative;padding:10px 12px;background:#f4f7fb;border-radius:0 12px 12px 0;display:grid;gap:3px}
+.ff-next-event::before{content:"";position:absolute;left:-18px;top:15px;width:8px;height:8px;background:#ff912e;border:2px solid white;border-radius:50%}
+.ff-next-event b{font-size:13px}.ff-next-event span{color:#667b91;font-size:12px;overflow-wrap:anywhere}
+.ff-next-empty{border-radius:12px;padding:25px;text-align:center;background:#f6f9fc;color:#5e748b}
+.ff-next-hint{border-radius:12px;padding:13px 15px;background:#f1f6fb;border:1px solid #d6e3ee;color:#314b68;font-size:13px;line-height:1.5}
+.ff-next-hint[data-warning=true]{background:#fff3e8;border-color:#efbf93;color:#833b0a}
+.ff-next-conflicts{display:grid;gap:7px;margin-top:10px}
+.ff-next-conflict{padding:9px 11px;background:#fff8f0;border:1px solid #f1d1ad;border-radius:9px;font-size:12px;line-height:1.5;color:#7b4210}
+.ff-next-conflict strong{display:block;color:#6c2f0d}
+.ff-next-rut-result{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ff-next-rut-result div{padding:14px;background:#f5f8fc;border-radius:12px;display:grid;gap:5px}
+.ff-next-rut-result span{font-size:12px;color:#60758c}.ff-next-rut-result strong{font-size:20px}
+.ff-next-rut-result div:last-child{background:#fff0e1}
+.ff-next-btn-secondary{border:1px solid #b7c6d8;background:#fff;color:#173450}
+.ff-next-btn-small{font-size:12px;padding:8px 12px;min-height:37px}
+.ff-next-booking-focus{outline:3px solid #ef923f;outline-offset:5px}
+@media(max-width:850px){.ff-next-grid{grid-template-columns:1fr}.ff-next-numbers{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.ff-next-panel{gap:12px}.ff-next-card{padding:14px}.ff-next-controls,.ff-next-form{grid-template-columns:1fr}.ff-next-numbers{grid-template-columns:1fr 1fr}.ff-next-rut-result{grid-template-columns:1fr}.ff-next-actions button{flex:1 1 100%}}
