@@ -34,3 +34,26 @@
 .ff-hours-footnote{margin-top:14px;color:#60728b;font-size:12px;line-height:1.6}
 @media(max-width:950px){.ff-hours-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-hours-layout{grid-template-columns:1fr}}
 @media(max-width:520px){.ff-hours-top{gap:14px}.ff-hours-controls{display:grid;grid-template-columns:1fr 1fr;width:100%}.ff-hours-controls label{min-width:0}.ff-hours-controls label:nth-child(2){grid-column:1/-1}.ff-hours-controls input,.ff-hours-controls select{width:100%;min-width:0}.ff-hours-controls button{grid-column:span 1;width:100%}.ff-hours-kpis{gap:8px}.ff-hours-kpi{padding:12px}.ff-hours-card{padding:12px}.ff-hours-table{font-size:12px}}
+
+/* Tidskorrigering – fristående, mobilanpassad, inga ändringar i andra flikar */
+.ff-hours-table{min-width:830px}
+.ff-hours-table td:last-child{white-space:normal;min-width:170px}
+.ff-hours-voided{opacity:.7;background:#fff6f5}
+.ff-hours-statuspill[data-status=voided]{background:#fbe2e1;color:#9b3535}
+.ff-hours-btn{appearance:none;border:1px solid #bccde0;background:#f4f7fc;color:#1e3857;font:inherit;font-size:12px;border-radius:9px;padding:7px 9px;margin:2px;cursor:pointer;font-weight:700}
+.ff-hours-danger{color:#a82727;background:#fff0ee;border-color:#edc0bb}
+.ff-hours-dialog{width:min(94vw,540px);max-height:min(84dvh,720px);overflow:auto;border:0;border-radius:20px;box-shadow:0 20px 70px #0006;padding:22px;color:#172b45;background:#fff}
+.ff-hours-dialog::backdrop{background:rgba(10,24,43,.70)}
+.ff-hours-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ff-hours-dialog h3{margin:0;font-size:23px}.ff-hours-close{border:1px solid #d5deea;border-radius:50%;background:#f3f6fa;font-size:17px;min-width:38px;height:38px;cursor:pointer}
+.ff-hours-dialog-info{font-size:13px;line-height:1.6;color:#53677e;margin:12px 0 18px}
+.ff-hours-form{display:grid;gap:13px}.ff-hours-field{display:grid;gap:6px;font-size:13px;font-weight:750}
+.ff-hours-field input{box-sizing:border-box;width:100%;min-width:0;padding:12px;border:1px solid #bac9da;background:#fff;color:#172b45;border-radius:10px;font-size:16px}
+.ff-hours-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:6px}
+.ff-hours-dialog-actions button{min-height:42px;border-radius:10px;padding:9px 14px;cursor:pointer;font:inherit;font-weight:750}
+.ff-hours-primary{background:#ed8b35;color:#182b47;border:0}.ff-hours-danger-fill{background:#b53838;color:#fff;border:0}
+.ff-hours-check{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}.ff-hours-check input{margin-top:3px}
+.ff-hours-action-status{color:#a13232;font-size:13px;margin:3px 0}
+.ff-hours-audit{padding:12px;border:1px solid #dce5ef;border-radius:12px;margin:9px 0;overflow-wrap:anywhere;background:#f8fafc}
+.ff-hours-audit p{font-size:13px;color:#465d76;margin:7px 0}.ff-hours-audit small{color:#65788d}
+@media(max-width:540px){.ff-hours-dialog{padding:16px;max-height:88dvh}.ff-hours-dialog h3{font-size:19px}.ff-hours-dialog-actions{display:grid;grid-template-columns:1fr 1fr}.ff-hours-dialog-actions button{min-width:0}}
