@@ -1,0 +1,24 @@
+/* Flytt & Fräscht · Betalda fakturor (endast denna flik) */
+.ff-inv-panel{color:#172b45;--fi-orange:#f18a38;--fi-navy:#172b45}
+.ff-inv-heading{margin:26px 0 18px}.ff-inv-eyebrow{font-size:12px;letter-spacing:.12em;font-weight:850;color:#b55919}.ff-inv-heading h2{font-size:clamp(24px,3vw,32px);margin:6px 0}.ff-inv-heading p{color:#566d88;margin:0}
+.ff-inv-alert{border:1px solid #ead5b9;background:#fff9ee;color:#815219;border-radius:14px;padding:13px 16px;margin-bottom:16px;font-size:13px;line-height:1.65}
+.ff-inv-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(290px,.75fr);gap:16px;align-items:start}
+.ff-inv-card{background:#fff;border:1px solid #dbe4ef;border-radius:20px;padding:22px;box-shadow:0 8px 28px rgba(23,43,69,.05);min-width:0}
+.ff-inv-card h3{margin:0 0 5px;font-size:20px}.ff-inv-card>p{margin:0 0 20px;color:#61748c;font-size:13px}
+.ff-inv-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.ff-inv-section{grid-column:1/-1;font-size:14px;font-weight:850;letter-spacing:.02em;border-bottom:1px solid #e5ebf3;margin:15px 0 0;padding-bottom:9px;color:#223d60}
+.ff-inv-field{display:grid;gap:5px;min-width:0}.ff-inv-field>span{font-size:12px;color:#405777;font-weight:750}
+.ff-inv-field input,.ff-inv-field select,.ff-inv-field textarea{font:inherit;font-size:14px;color:#182b45;background:#fbfcfe;min-width:0;box-sizing:border-box;width:100%;border:1px solid #bbcbdc;border-radius:11px;padding:11px;min-height:44px}
+.ff-inv-field textarea{resize:vertical;min-height:92px}.ff-inv-field input:focus,.ff-inv-field select:focus,.ff-inv-field textarea:focus{outline:2px solid #ffd2a7;outline-offset:0;border-color:var(--fi-orange)}
+.ff-inv-full{grid-column:1/-1}.ff-inv-checkbox{display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.55;color:#354a65}.ff-inv-checkbox input{margin-top:3px;min-width:17px;min-height:17px}
+.ff-inv-items{display:grid;gap:12px}.ff-inv-item{border:1px solid #e0e8f1;border-radius:14px;padding:12px;display:grid;grid-template-columns:2fr 1fr .7fr 1.1fr .8fr auto;align-items:end;gap:8px;background:#f9fbfd}
+.ff-inv-item label{display:grid;gap:5px;font-size:11px;font-weight:750;color:#536986;min-width:0}.ff-inv-item input,.ff-inv-item select{font-size:13px;padding:9px;border-radius:9px;min-height:40px;width:100%;min-width:0;border:1px solid #cad7e5;box-sizing:border-box;background:#fff;color:#172b45}
+.ff-inv-item button{border:1px solid #e6b6b5;background:#fff0ef;color:#a33936;border-radius:10px;padding:9px 10px;min-height:40px;cursor:pointer}
+.ff-inv-primary,.ff-inv-secondary{font:inherit;font-size:13px;font-weight:800;padding:11px 15px;border-radius:11px;cursor:pointer;min-height:42px}
+.ff-inv-primary{background:var(--fi-orange);border:1px solid #e57d2b;color:#172b45}.ff-inv-secondary{background:#eff4fa;border:1px solid #bfcede;color:#203d61}
+.ff-inv-actions{display:flex;flex-wrap:wrap;gap:10px}.ff-inv-actions button{flex:1 1 150px}
+.ff-inv-totals{background:#edf3f9;border:1px solid #d7e1ee;border-radius:13px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:14px;font-size:13px}.ff-inv-totals strong{font-size:16px}
+.ff-inv-notice{font-size:13px;color:#415d80;line-height:1.6;overflow-wrap:anywhere}.ff-inv-list{display:grid;gap:11px;margin-top:12px}.ff-inv-invoice{padding:14px;border-radius:14px;background:#f9fbfe;border:1px solid #e1e9f3;display:grid;gap:8px}.ff-inv-invoice-head{display:flex;justify-content:space-between;align-items:center;gap:10px}.ff-inv-invoice-head strong{font-size:16px}.ff-inv-badge{border-radius:99px;background:#eaf7ed;color:#286741;font-size:11px;padding:5px 9px;font-weight:800}.ff-inv-meta{color:#60738d;font-size:12px;overflow-wrap:anywhere}.ff-inv-invoice-actions{display:flex;flex-wrap:wrap;gap:8px}.ff-inv-invoice-actions button{flex:1 1 125px}.ff-inv-empty{font-size:13px;color:#637993;padding:15px 5px}
+@media(max-width:1100px){.ff-inv-grid{grid-template-columns:1fr}}
+@media(max-width:760px){.ff-inv-card{padding:15px}.ff-inv-item{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-inv-item label:first-child{grid-column:1/-1}.ff-inv-item button{grid-column:1/-1}.ff-inv-heading{margin-top:16px}}
+@media(max-width:520px){.ff-inv-form{grid-template-columns:1fr}.ff-inv-form>*{grid-column:1/-1}.ff-inv-card{padding:13px}.ff-inv-item{grid-template-columns:1fr 1fr}.ff-inv-invoice-head{align-items:flex-start;flex-direction:column}.ff-inv-invoice-actions{flex-direction:column}}
