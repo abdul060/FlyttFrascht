@@ -1,59 +1,121 @@
-/* Flytt & Fräscht · arbetstidsstatistik, fristående från övrig admin-CSS */
-.ff-hours-panel{--ffh-blue:#182b47;--ffh-orange:#f69540;color:#172b45}
-.ff-hours-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+/* Flytt & Fräscht · arbetstider · förbättrad design för dator och mobil */
+.ff-hours-panel{--ffh-blue:#182b47;--ffh-blue-2:#23446d;--ffh-orange:#f69540;--ffh-border:#dbe4ed;--ffh-soft:#f6f8fb;--ffh-text:#172b45;--ffh-muted:#60728b;color:var(--ffh-text)}
+.ff-hours-top{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;flex-wrap:wrap;margin-bottom:18px}
 .ff-hours-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#ad5819}
-.ff-hours-top h2{margin:6px 0 4px;font-size:clamp(23px,3vw,30px)}
-.ff-hours-top p{color:#61718a;margin:0}
-.ff-hours-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
-.ff-hours-controls label{display:grid;gap:5px;font-size:12px;font-weight:700}
-.ff-hours-controls select,.ff-hours-controls input{min-width:140px;max-width:100%;height:42px;border:1px solid #bdc9d7;border-radius:10px;padding:7px 10px;background:white;color:#172b45;font:inherit}
-.ff-hours-controls button{min-height:42px}
+.ff-hours-top h2{margin:6px 0 4px;font-size:clamp(23px,3vw,30px);line-height:1.15}
+.ff-hours-top p{color:#61718a;margin:0;max-width:60ch}
+.ff-hours-controls{display:flex;gap:10px;flex-wrap:wrap;align-items:end}
+.ff-hours-controls label{display:grid;gap:5px;font-size:12px;font-weight:700;color:#334a67}
+.ff-hours-controls select,.ff-hours-controls input{min-width:150px;max-width:100%;height:44px;border:1px solid #bdc9d7;border-radius:12px;padding:7px 11px;background:#fff;color:#172b45;font:inherit;box-sizing:border-box}
+.ff-hours-controls button{min-height:44px;border-radius:12px}
 .ff-hours-status{min-height:1.6em;color:#4d6078;font-size:14px}
 .ff-hours-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
-.ff-hours-kpi{border:1px solid #dbe4ed;background:#fff;border-radius:16px;padding:16px;display:grid;gap:5px;min-width:0}
+.ff-hours-kpi{border:1px solid var(--ffh-border);background:#fff;border-radius:16px;padding:16px;display:grid;gap:5px;min-width:0;box-shadow:0 1px 0 rgba(24,43,71,.02)}
 .ff-hours-kpi span{font-size:13px;font-weight:650;color:#536781}
 .ff-hours-kpi strong{font-size:clamp(20px,2.5vw,29px);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .ff-hours-kpi small{font-size:12px;color:#6c7a8c}
-.ff-hours-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:start}
-.ff-hours-card{padding:17px;background:#fff;border:1px solid #dbe4ed;border-radius:17px;min-width:0}
+.ff-hours-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:14px;align-items:start}
+.ff-hours-card{padding:18px;background:#fff;border:1px solid var(--ffh-border);border-radius:18px;min-width:0;box-shadow:0 8px 20px rgba(24,43,71,.04)}
 .ff-hours-card h3{margin:0 0 5px;font-size:18px}.ff-hours-card p{margin:0 0 16px;color:#63748a;font-size:13px}
 .ff-hours-person{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid #e8edf3}
-.ff-hours-person:last-child{border-bottom:0}.ff-hours-person-top{display:flex;justify-content:space-between;gap:12px;font-size:14px}
-.ff-hours-person-top strong{overflow-wrap:anywhere}.ff-hours-person-track{height:9px;border-radius:30px;background:#ecf0f5;overflow:hidden}
+.ff-hours-person:last-child{border-bottom:0}
+.ff-hours-person-top{display:flex;justify-content:space-between;gap:12px;font-size:14px;align-items:center}
+.ff-hours-person-top strong{overflow-wrap:anywhere}
+.ff-hours-person-track{height:10px;border-radius:30px;background:#ecf0f5;overflow:hidden}
 .ff-hours-person-fill{height:100%;background:linear-gradient(90deg,#f59a43,#e87a20);border-radius:30px}
-.ff-hours-tablewrap{overflow-x:auto;max-width:100%;border:1px solid #e3e9ef;border-radius:12px}
-.ff-hours-table{width:100%;border-collapse:collapse;font-size:13px;min-width:660px}
-.ff-hours-table th,.ff-hours-table td{text-align:left;padding:11px;border-bottom:1px solid #e7edf3;white-space:nowrap}
-.ff-hours-table th{background:#eef2f7;color:#293d55;font-weight:750}
+
+/* Detaljlista - desktop */
+.ff-hours-tablewrap{overflow:auto;max-width:100%;border:1px solid #e3e9ef;border-radius:14px;background:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}
+.ff-hours-table{width:100%;border-collapse:separate;border-spacing:0;font-size:13px;min-width:1040px}
+.ff-hours-table th,.ff-hours-table td{text-align:left;padding:12px 11px;border-bottom:1px solid #e7edf3;vertical-align:top;white-space:nowrap}
+.ff-hours-table th{background:#eef2f7;color:#293d55;font-weight:750;position:sticky;top:0;z-index:1}
 .ff-hours-table tr:last-child td{border-bottom:0}
+.ff-hours-table td:nth-child(2),.ff-hours-table td:nth-child(3){white-space:normal}
+.ff-hours-actions-cell{white-space:normal;min-width:220px}
+.ff-hours-actions{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .ff-hours-statuspill{display:inline-block;padding:4px 8px;border-radius:30px;background:#eaf2ff;font-size:12px;font-weight:700}
 .ff-hours-statuspill[data-status=finished]{background:#e4f7ec;color:#23633e}
 .ff-hours-statuspill[data-status=running]{background:#fff1da;color:#895000}
 .ff-hours-statuspill[data-status=paused]{background:#eaf1fb;color:#305c8b}
+.ff-hours-statuspill[data-status=voided]{background:#fbe2e1;color:#9b3535}
 .ff-hours-empty{padding:22px;color:#64768c;text-align:center}
 .ff-hours-footnote{margin-top:14px;color:#60728b;font-size:12px;line-height:1.6}
-@media(max-width:950px){.ff-hours-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-hours-layout{grid-template-columns:1fr}}
-@media(max-width:520px){.ff-hours-top{gap:14px}.ff-hours-controls{display:grid;grid-template-columns:1fr 1fr;width:100%}.ff-hours-controls label{min-width:0}.ff-hours-controls label:nth-child(2){grid-column:1/-1}.ff-hours-controls input,.ff-hours-controls select{width:100%;min-width:0}.ff-hours-controls button{grid-column:span 1;width:100%}.ff-hours-kpis{gap:8px}.ff-hours-kpi{padding:12px}.ff-hours-card{padding:12px}.ff-hours-table{font-size:12px}}
-
-/* Tidskorrigering – fristående, mobilanpassad, inga ändringar i andra flikar */
-.ff-hours-table{min-width:830px}
-.ff-hours-table td:last-child{white-space:normal;min-width:170px}
-.ff-hours-voided{opacity:.7;background:#fff6f5}
-.ff-hours-statuspill[data-status=voided]{background:#fbe2e1;color:#9b3535}
-.ff-hours-btn{appearance:none;border:1px solid #bccde0;background:#f4f7fc;color:#1e3857;font:inherit;font-size:12px;border-radius:9px;padding:7px 9px;margin:2px;cursor:pointer;font-weight:700}
+.ff-hours-voided{opacity:.78;background:#fff6f5}
+.ff-hours-btn{appearance:none;border:1px solid #bccde0;background:#f4f7fc;color:#1e3857;font:inherit;font-size:12px;line-height:1.2;border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:700;transition:background-color .15s ease,border-color .15s ease,transform .15s ease}
+.ff-hours-btn:hover{background:#ebf1f8;border-color:#9fb5cd}
+.ff-hours-btn:active{transform:translateY(1px)}
 .ff-hours-danger{color:#a82727;background:#fff0ee;border-color:#edc0bb}
+.ff-hours-danger:hover{background:#ffe5e1;border-color:#e3aca5}
+
+/* Mobilkort för detaljlista */
+.ff-hours-mobilelist{display:none;gap:12px;margin-top:12px}
+.ff-hours-entry{border:1px solid var(--ffh-border);background:linear-gradient(180deg,#ffffff,#fbfcfe);border-radius:16px;padding:14px;display:grid;gap:12px;box-shadow:0 6px 18px rgba(24,43,71,.04)}
+.ff-hours-entry.ff-hours-voided{background:linear-gradient(180deg,#fff9f8,#fff4f2);opacity:1}
+.ff-hours-entry-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.ff-hours-entry-date{display:grid;gap:4px}
+.ff-hours-entry-date strong{font-size:15px;line-height:1.2}
+.ff-hours-entry-date span{font-size:12px;color:var(--ffh-muted)}
+.ff-hours-entry-service{display:inline-flex;align-items:center;gap:6px;align-self:flex-start;background:#eef4fb;color:#29486e;border:1px solid #d9e4f0;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;max-width:100%;overflow-wrap:anywhere}
+.ff-hours-entry-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ff-hours-entry-meta{padding:10px 11px;border:1px solid #e8edf3;border-radius:12px;background:#f8fafc;display:grid;gap:4px;min-width:0}
+.ff-hours-entry-meta span{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#68809b}
+.ff-hours-entry-meta strong{font-size:14px;font-weight:700;color:#1f3553;overflow-wrap:anywhere}
+.ff-hours-entry-actions{display:flex;flex-wrap:wrap;gap:8px}
+.ff-hours-entry-actions .ff-hours-btn{flex:1 1 120px;min-height:40px}
+
+/* Dialog */
 .ff-hours-dialog{width:min(94vw,540px);max-height:min(84dvh,720px);overflow:auto;border:0;border-radius:20px;box-shadow:0 20px 70px #0006;padding:22px;color:#172b45;background:#fff}
 .ff-hours-dialog::backdrop{background:rgba(10,24,43,.70)}
 .ff-hours-dialog-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
-.ff-hours-dialog h3{margin:0;font-size:23px}.ff-hours-close{border:1px solid #d5deea;border-radius:50%;background:#f3f6fa;font-size:17px;min-width:38px;height:38px;cursor:pointer}
+.ff-hours-dialog h3{margin:0;font-size:23px}
+.ff-hours-close{border:1px solid #d5deea;border-radius:50%;background:#f3f6fa;font-size:17px;min-width:38px;height:38px;cursor:pointer}
 .ff-hours-dialog-info{font-size:13px;line-height:1.6;color:#53677e;margin:12px 0 18px}
-.ff-hours-form{display:grid;gap:13px}.ff-hours-field{display:grid;gap:6px;font-size:13px;font-weight:750}
+.ff-hours-form{display:grid;gap:13px}
+.ff-hours-field{display:grid;gap:6px;font-size:13px;font-weight:750}
 .ff-hours-field input{box-sizing:border-box;width:100%;min-width:0;padding:12px;border:1px solid #bac9da;background:#fff;color:#172b45;border-radius:10px;font-size:16px}
 .ff-hours-dialog-actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:8px;margin-top:6px}
 .ff-hours-dialog-actions button{min-height:42px;border-radius:10px;padding:9px 14px;cursor:pointer;font:inherit;font-weight:750}
-.ff-hours-primary{background:#ed8b35;color:#182b47;border:0}.ff-hours-danger-fill{background:#b53838;color:#fff;border:0}
-.ff-hours-check{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}.ff-hours-check input{margin-top:3px}
+.ff-hours-primary{background:#ed8b35;color:#182b47;border:0}
+.ff-hours-danger-fill{background:#b53838;color:#fff;border:0}
+.ff-hours-check{display:flex;align-items:flex-start;gap:10px;font-size:13px;line-height:1.5}
+.ff-hours-check input{margin-top:3px}
 .ff-hours-action-status{color:#a13232;font-size:13px;margin:3px 0}
 .ff-hours-audit{padding:12px;border:1px solid #dce5ef;border-radius:12px;margin:9px 0;overflow-wrap:anywhere;background:#f8fafc}
-.ff-hours-audit p{font-size:13px;color:#465d76;margin:7px 0}.ff-hours-audit small{color:#65788d}
-@media(max-width:540px){.ff-hours-dialog{padding:16px;max-height:88dvh}.ff-hours-dialog h3{font-size:19px}.ff-hours-dialog-actions{display:grid;grid-template-columns:1fr 1fr}.ff-hours-dialog-actions button{min-width:0}}
+.ff-hours-audit p{font-size:13px;color:#465d76;margin:7px 0}
+.ff-hours-audit small{color:#65788d}
+
+@media(max-width:1100px){
+  .ff-hours-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .ff-hours-layout{grid-template-columns:1fr}
+}
+@media(max-width:900px){
+  .ff-hours-top{gap:14px}
+  .ff-hours-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%}
+  .ff-hours-controls label{min-width:0}
+  .ff-hours-controls button{width:100%}
+}
+@media(max-width:760px){
+  .ff-hours-card{padding:14px}
+  .ff-hours-tablewrap{display:none}
+  .ff-hours-mobilelist{display:grid}
+}
+@media(max-width:540px){
+  .ff-hours-controls{grid-template-columns:1fr}
+  .ff-hours-controls input,.ff-hours-controls select{width:100%;min-width:0}
+  .ff-hours-kpis{grid-template-columns:1fr 1fr;gap:8px}
+  .ff-hours-kpi{padding:12px}
+  .ff-hours-person-top{align-items:flex-start;flex-direction:column}
+  .ff-hours-entry{padding:12px}
+  .ff-hours-entry-head{flex-direction:column;align-items:flex-start}
+  .ff-hours-entry-grid{grid-template-columns:1fr}
+  .ff-hours-entry-actions{display:grid;grid-template-columns:1fr 1fr}
+  .ff-hours-entry-actions .ff-hours-btn{width:100%}
+  .ff-hours-dialog{padding:16px;max-height:88dvh}
+  .ff-hours-dialog h3{font-size:19px}
+  .ff-hours-dialog-actions{display:grid;grid-template-columns:1fr 1fr}
+  .ff-hours-dialog-actions button{min-width:0}
+}
+@media(max-width:380px){
+  .ff-hours-kpis{grid-template-columns:1fr}
+  .ff-hours-entry-actions{grid-template-columns:1fr}
+}
