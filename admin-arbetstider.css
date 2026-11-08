@@ -1,0 +1,36 @@
+/* Flytt & Fräscht · arbetstidsstatistik, fristående från övrig admin-CSS */
+.ff-hours-panel{--ffh-blue:#182b47;--ffh-orange:#f69540;color:#172b45}
+.ff-hours-top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:18px}
+.ff-hours-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:800;color:#ad5819}
+.ff-hours-top h2{margin:6px 0 4px;font-size:clamp(23px,3vw,30px)}
+.ff-hours-top p{color:#61718a;margin:0}
+.ff-hours-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:end}
+.ff-hours-controls label{display:grid;gap:5px;font-size:12px;font-weight:700}
+.ff-hours-controls select,.ff-hours-controls input{min-width:140px;max-width:100%;height:42px;border:1px solid #bdc9d7;border-radius:10px;padding:7px 10px;background:white;color:#172b45;font:inherit}
+.ff-hours-controls button{min-height:42px}
+.ff-hours-status{min-height:1.6em;color:#4d6078;font-size:14px}
+.ff-hours-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:16px 0}
+.ff-hours-kpi{border:1px solid #dbe4ed;background:#fff;border-radius:16px;padding:16px;display:grid;gap:5px;min-width:0}
+.ff-hours-kpi span{font-size:13px;font-weight:650;color:#536781}
+.ff-hours-kpi strong{font-size:clamp(20px,2.5vw,29px);font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
+.ff-hours-kpi small{font-size:12px;color:#6c7a8c}
+.ff-hours-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:14px;align-items:start}
+.ff-hours-card{padding:17px;background:#fff;border:1px solid #dbe4ed;border-radius:17px;min-width:0}
+.ff-hours-card h3{margin:0 0 5px;font-size:18px}.ff-hours-card p{margin:0 0 16px;color:#63748a;font-size:13px}
+.ff-hours-person{display:grid;gap:6px;padding:12px 0;border-bottom:1px solid #e8edf3}
+.ff-hours-person:last-child{border-bottom:0}.ff-hours-person-top{display:flex;justify-content:space-between;gap:12px;font-size:14px}
+.ff-hours-person-top strong{overflow-wrap:anywhere}.ff-hours-person-track{height:9px;border-radius:30px;background:#ecf0f5;overflow:hidden}
+.ff-hours-person-fill{height:100%;background:linear-gradient(90deg,#f59a43,#e87a20);border-radius:30px}
+.ff-hours-tablewrap{overflow-x:auto;max-width:100%;border:1px solid #e3e9ef;border-radius:12px}
+.ff-hours-table{width:100%;border-collapse:collapse;font-size:13px;min-width:660px}
+.ff-hours-table th,.ff-hours-table td{text-align:left;padding:11px;border-bottom:1px solid #e7edf3;white-space:nowrap}
+.ff-hours-table th{background:#eef2f7;color:#293d55;font-weight:750}
+.ff-hours-table tr:last-child td{border-bottom:0}
+.ff-hours-statuspill{display:inline-block;padding:4px 8px;border-radius:30px;background:#eaf2ff;font-size:12px;font-weight:700}
+.ff-hours-statuspill[data-status=finished]{background:#e4f7ec;color:#23633e}
+.ff-hours-statuspill[data-status=running]{background:#fff1da;color:#895000}
+.ff-hours-statuspill[data-status=paused]{background:#eaf1fb;color:#305c8b}
+.ff-hours-empty{padding:22px;color:#64768c;text-align:center}
+.ff-hours-footnote{margin-top:14px;color:#60728b;font-size:12px;line-height:1.6}
+@media(max-width:950px){.ff-hours-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-hours-layout{grid-template-columns:1fr}}
+@media(max-width:520px){.ff-hours-top{gap:14px}.ff-hours-controls{display:grid;grid-template-columns:1fr 1fr;width:100%}.ff-hours-controls label{min-width:0}.ff-hours-controls label:nth-child(2){grid-column:1/-1}.ff-hours-controls input,.ff-hours-controls select{width:100%;min-width:0}.ff-hours-controls button{grid-column:span 1;width:100%}.ff-hours-kpis{gap:8px}.ff-hours-kpi{padding:12px}.ff-hours-card{padding:12px}.ff-hours-table{font-size:12px}}
