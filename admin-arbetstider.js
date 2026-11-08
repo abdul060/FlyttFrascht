@@ -16,7 +16,36 @@
  function token(){try{return JSON.parse(sessionStorage.getItem('flytt_admin_session')||'{}').token||''}catch{return ''}}
  function actualWork(r){let n=Math.max(0,Number(r.work_seconds)||0);if(r.status==='running'&&r.segment_started_at){n+=Math.max(0,(Date.parse(serverTime||new Date().toISOString())-Date.parse(r.segment_started_at))/1000)}return Math.floor(n)}
  function actualPause(r){let n=Math.max(0,Number(r.pause_seconds)||0);if(r.status==='paused'&&r.paused_at){n+=Math.max(0,(Date.parse(serverTime||new Date().toISOString())-Date.parse(r.paused_at))/1000)}return Math.floor(n)}
- const selected=()=>staff.value?entries.filter(r=>r.staff_uid===staff.value):entries;
+ const weekKey=value=>{const t=String(value||'').slice(0,10);if(!/^\d{4}-\d{2}-\d{2}$/.test(t))return '';const dt=new Date(t+'T12:00:00Z');if(Number.isNaN(dt.getTime()))return '';const wd=(dt.getUTCDay()+6)%7;dt.setUTCDate(dt.getUTCDate()-wd+3);const yr=dt.getUTCFullYear(), jan4=new Date(Date.UTC(yr,0,4));return yr+'-W'+String(1+Math.round((dt-jan4)/604800000)).padStart(2,'0')};
+ const extra=mk('div',undefined,'ff-hours-extra-controls');extra.id='ffHoursExtraControls';
+ const makeSelect=(id,title,choices)=>{const label=mk('label',title);const el=document.createElement('select');el.id=id;for(const [value,text] of choices){const o=mk('option',text);o.value=value;el.append(o)}label.append(el);extra.append(label);return el};
+ const searchLabel=mk('label','Sök bland arbetspassen'),search=document.createElement('input');search.type='search';search.id='ffHoursSearch';search.placeholder='Sök namn, tjänst eller datum…';search.autocomplete='off';searchLabel.append(search);extra.append(searchLabel);
+ const state=makeSelect('ffHoursState','Status',[['','Alla statusar'],['finished','Avslutade'],['running','Pågående'],['paused','Pausade'],['voided','Makulerade']]);
+ const week=makeSelect('ffHoursWeek','Vecka',[['','Alla veckor']]);
+ const clear=mk('button','Rensa filter','ff-hours-btn ff-hours-clear');clear.type='button';extra.append(clear);
+ panel.querySelector('.ff-hours-top')?.insertAdjacentElement('afterend',extra);
+ const selected=()=>entries.filter(r=>{
+  if(staff.value&&r.staff_uid!==staff.value)return false;
+  if(state.value&&(state.value==='voided'?!r.is_voided:(r.is_voided||r.status!==state.value)))return false;
+  if(week.value&&weekKey(r.pass_date)!==week.value)return false;
+  const query=search.value.trim().toLocaleLowerCase('sv-SE');
+  return !query||[r.staff_name,r.service,r.pass_date,String(r.pass_date||'').split('-').reverse().join('/')].some(x=>String(x||'').toLocaleLowerCase('sv-SE').includes(query));
+ });
+ const insights=mk('div',undefined,'ff-hours-insights');insights.id='ffHoursInsights';
+ const weekSection=mk('section',undefined,'ff-hours-card ff-hours-summary');
+ weekSection.append(mk('h3','Summering per vecka'),mk('p','Arbetad tid och pauser per kalendervecka (ISO).'));
+ const weeksRoot=mk('div',undefined,'ff-hours-weeks');weeksRoot.id='ffHoursWeeks';weekSection.append(weeksRoot);
+ const chartSection=mk('section',undefined,'ff-hours-card ff-hours-chart-card');
+ chartSection.append(mk('h3','Arbetade timmar per medarbetare'),mk('p','Staplarna visar tiden för det valda urvalet, utan makulerade pass.'));
+ const chartRoot=mk('div',undefined,'ff-hours-chart');chartRoot.id='ffHoursChart';chartRoot.setAttribute('role','img');chartRoot.setAttribute('aria-label','Diagram över arbetstimmar per medarbetare');chartSection.append(chartRoot);
+ insights.append(weekSection,chartSection);
+ panel.querySelector('.ff-hours-layout')?.insertAdjacentElement('beforebegin',insights);
+ const excelButton=mk('button','⬇ Excel (.xlsx)','outline ff-hours-excel');excelButton.type='button';excelButton.id='ffHoursExcel';
+ $('ffHoursExport')?.insertAdjacentElement('afterend',excelButton);
+ function populateWeeks(){const old=week.value;week.replaceChildren();const all=mk('option','Alla veckor');all.value='';week.append(all);const weeks=[...new Set(entries.map(r=>weekKey(r.pass_date)).filter(Boolean))].sort();for(const w of weeks){const o=mk('option',w.replace('-W',' · vecka '));o.value=w;week.append(o)}week.value=weeks.includes(old)?old:''}
+ const rerender=()=>redraw();
+ search.addEventListener('input',rerender);state.addEventListener('change',rerender);week.addEventListener('change',rerender);
+ clear.addEventListener('click',()=>{search.value='';state.value='';week.value='';staff.value='';redraw()});
  const sortedPeople=rows=>{const m=new Map();rows.forEach(r=>{const id=String(r.staff_uid||'');const x=m.get(id)||{name:String(r.staff_name||'Okänd'),sec:0,passes:0,finished:0};x.sec+=actualWork(r);x.passes++;x.finished+=r.status==='finished'?1:0;m.set(id,x)});return [...m.entries()].map(([id,v])=>({id,...v})).sort((a,b)=>b.sec-a.sec)};
  function kpi(label,value,help){const e=mk('article',undefined,'ff-hours-kpi');e.append(mk('span',label),mk('strong',value),mk('small',help));return e}
  function statusLabel(r){return r.is_voided?'Makulerad':r.status==='finished'?'Avslutad':r.status==='paused'?'Pausad':'Pågår'}
@@ -81,6 +110,21 @@
    kpi('Medarbetare',fmtInt(people.length),'Med registrerade pass')
   );
 
+  const weekly=new Map();
+  for(const r of rows){const key=weekKey(r.pass_date)||'Okänd vecka',x=weekly.get(key)||{seconds:0,pause:0,passes:0};x.seconds+=actualWork(r);x.pause+=actualPause(r);x.passes++;weekly.set(key,x)}
+  weeksRoot.replaceChildren();
+  if(!weekly.size)weeksRoot.append(mk('p','Inga arbetstider att summera.','ff-hours-empty'));
+  for(const [label,value] of [...weekly].sort((a,b)=>a[0].localeCompare(b[0]))){
+   const item=mk('article',undefined,'ff-hours-week');
+   item.append(mk('strong',label.replace('-W',' · vecka ')),mk('span',dur(value.seconds)),mk('small',`${value.passes} pass · ${dur(value.pause)} paus`));
+   weeksRoot.append(item);
+  }
+  chartRoot.replaceChildren();
+  if(!people.length)chartRoot.append(mk('p','Inga arbetstimmar att visa.','ff-hours-empty'));
+  const maxHours=Math.max(1,...people.map(p=>p.sec));
+  for(const person of people){const bar=mk('div',undefined,'ff-hours-chart-row'),top=mk('div',undefined,'ff-hours-chart-labels');top.append(mk('strong',person.name),mk('span',dur(person.sec)));
+   const track=mk('div',undefined,'ff-hours-chart-track'),fill=mk('div',undefined,'ff-hours-chart-fill');fill.style.width=`${Math.min(100,person.sec/maxHours*100)}%`;track.append(fill);bar.append(top,track);chartRoot.append(bar);
+  }
   const root=$('ffHoursPeople');root.replaceChildren();
   const max=Math.max(1,...people.map(p=>p.sec));
   if(!people.length)root.append(mk('p','Inga rapporter för det här urvalet.','ff-hours-empty'));
@@ -115,7 +159,7 @@
    mobileList.append(buildMobileCard(r));
   }
 
-  $('ffHoursExport').disabled=!rows.length;
+  $('ffHoursExport').disabled=!rows.length;excelButton.disabled=!rows.length;
   status.textContent=`${fmtInt(rows.length)} aktiva rapporter${allRows.length>rows.length?' · '+fmtInt(allRows.length-rows.length)+' makulerade':''} · Uppdaterad ${new Date().toLocaleTimeString('sv-SE',{hour:'2-digit',minute:'2-digit'})}${truncated?' · OBS! Fler än 10 000 rapporter; statistiken är ofullständig.':''}.`;
  }
  async function refresh(force=false){
@@ -132,7 +176,7 @@
    const names=new Map();entries.forEach(r=>names.set(r.staff_uid,r.staff_name||'Okänd'));
    for(const [id,name] of [...names].sort((a,b)=>String(a[1]).localeCompare(String(b[1]),'sv'))){const o=mk('option',name);o.value=id;staff.append(o)}
    if([...staff.options].some(o=>o.value===old))staff.value=old;
-   redraw();
+   populateWeeks();redraw();
   }catch(e){status.textContent='Kunde inte hämta arbetstider: '+e.message}
   finally{loading=false;$('ffHoursRefresh').disabled=false}
  }
@@ -144,6 +188,55 @@
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8'}), link=document.createElement('a'), url=URL.createObjectURL(blob);
   link.href=url;link.download=`FlyttFrascht-arbetstider-${month.value}.csv`;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
  }
+
+ // Skapar en faktisk .xlsx-fil utan externa bibliotek, uppkoppling eller uppladdning till tredje part.
+ const xmlEsc=v=>String(v??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&apos;');
+ const colRef=index=>{let s='';for(let n=index+1;n>0;n=Math.floor((n-1)/26))s=String.fromCharCode(65+(n-1)%26)+s;return s};
+ function xlsxSheet(rows){
+  let content='<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetData>';
+  for(let i=0;i<rows.length;i++){
+   content+=`<row r="${i+1}">`;
+   for(let j=0;j<rows[i].length;j++){
+    const val=rows[i][j];if(val===null||val===undefined||val==='')continue;
+    const ref=colRef(j)+(i+1);
+    if(typeof val==='number'&&Number.isFinite(val))content+=`<c r="${ref}"><v>${val}</v></c>`;
+    else content+=`<c r="${ref}" t="inlineStr"><is><t>${xmlEsc(val)}</t></is></c>`;
+   }
+   content+='</row>';
+  }
+  return content+'</sheetData></worksheet>';
+ }
+ const encoder=new TextEncoder();
+ const crcTable=(()=>{const arr=new Uint32Array(256);for(let i=0;i<256;i++){let c=i;for(let k=0;k<8;k++)c=c&1?0xedb88320^(c>>>1):c>>>1;arr[i]=c>>>0}return arr})();
+ const crc32=bytes=>{let c=0xffffffff;for(const b of bytes)c=crcTable[(c^b)&255]^(c>>>8);return(c^0xffffffff)>>>0};
+ function zipStore(files){
+  const parts=[],central=[];let offset=0;
+  for(const [name,text] of files){const n=encoder.encode(name),d=encoder.encode(text),crc=crc32(d);
+   const local=new Uint8Array(30+n.length),v=new DataView(local.buffer);v.setUint32(0,0x04034b50,true);v.setUint16(4,20,true);v.setUint32(14,crc,true);v.setUint32(18,d.length,true);v.setUint32(22,d.length,true);v.setUint16(26,n.length,true);local.set(n,30);
+   parts.push(local,d);
+   const header=new Uint8Array(46+n.length),h=new DataView(header.buffer);h.setUint32(0,0x02014b50,true);h.setUint16(4,20,true);h.setUint16(6,20,true);h.setUint32(16,crc,true);h.setUint32(20,d.length,true);h.setUint32(24,d.length,true);h.setUint16(28,n.length,true);h.setUint32(42,offset,true);header.set(n,46);central.push(header);
+   offset+=local.length+d.length;
+  }
+  const centralSize=central.reduce((n,a)=>n+a.length,0),end=new Uint8Array(22),e=new DataView(end.buffer);e.setUint32(0,0x06054b50,true);e.setUint16(8,files.length,true);e.setUint16(10,files.length,true);e.setUint32(12,centralSize,true);e.setUint32(16,offset,true);
+  return new Blob([...parts,...central,end],{type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+ }
+ function exportExcel(){
+  const rows=activeEntries();if(!rows.length)return;
+  const details=[['Datum','Medarbetare','Tjänst','Start','Slut','Arbete (timmar)','Paus (minuter)','Status'],...rows.map(r=>[dateOnly(r.pass_date),r.staff_name||'',r.service||'',date(r.started_at),date(r.finished_at),Math.round(actualWork(r)/36)/100,Math.round(actualPause(r)/60),statusLabel(r)])];
+  const w=new Map();for(const r of rows){const key=weekKey(r.pass_date)||'Okänd vecka',id=key+'|'+r.staff_uid,x=w.get(id)||{week:key,name:r.staff_name||'Okänd',seconds:0,pause:0,count:0};x.seconds+=actualWork(r);x.pause+=actualPause(r);x.count++;w.set(id,x)}
+  const weekRows=[['Vecka','Medarbetare','Pass','Arbetade timmar','Paus (minuter)'],...[...w.values()].sort((a,b)=>a.week.localeCompare(b.week)||a.name.localeCompare(b.name,'sv')).map(x=>[x.week,x.name,x.count,Math.round(x.seconds/36)/100,Math.round(x.pause/60)])];
+  const peopleRows=[['Medarbetare','Antal pass','Arbetade timmar'],...sortedPeople(rows).map(x=>[x.name,x.passes,Math.round(x.sec/36)/100])];
+  const sheets=[['Detaljer',details],['Veckor',weekRows],['Medarbetare',peopleRows]];
+  const files=[
+   ['[Content_Types].xml','<?xml version="1.0" encoding="UTF-8"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>'+sheets.map((_,i)=>`<Override PartName="/xl/worksheets/sheet${i+1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('')+'</Types>'],
+   ['_rels/.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>'],
+   ['xl/workbook.xml','<?xml version="1.0" encoding="UTF-8"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>'+sheets.map(([n],i)=>`<sheet name="${n}" sheetId="${i+1}" r:id="rId${i+1}"/>`).join('')+'</sheets></workbook>'],
+   ['xl/_rels/workbook.xml.rels','<?xml version="1.0" encoding="UTF-8"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">'+sheets.map((_,i)=>`<Relationship Id="rId${i+1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i+1}.xml"/>`).join('')+'</Relationships>'],
+   ...sheets.map(([,rows],i)=>[`xl/worksheets/sheet${i+1}.xml`,xlsxSheet(rows)])
+  ];
+  const blob=zipStore(files),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`FlyttFrascht-lonerapport-${month.value}.xlsx`;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);
+ }
+ excelButton.addEventListener('click',exportExcel);
  // Adminåtgärder: endast klientgränssnitt; backend verifierar alltid inloggning och adminbehörighet.
  const actionURL=base+'/functions/v1/admin-arbetstider-korrigera';
  async function apiAction(method,payload){
