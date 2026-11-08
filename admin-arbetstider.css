@@ -119,3 +119,114 @@
   .ff-hours-kpis{grid-template-columns:1fr}
   .ff-hours-entry-actions{grid-template-columns:1fr}
 }
+
+/* ==========================================================
+   DESKTOP + MOBIL: arbetspass som riktiga kort, INGEN avklippt tabell
+   Laddas sist och överstyr äldre tabelllayout.
+   ========================================================== */
+#workhoursPanel .ff-hours-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr);
+  gap:18px;
+  align-items:stretch;
+}
+#workhoursPanel .ff-hours-card{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  padding:clamp(15px,2.3vw,24px);
+  border-radius:20px;
+}
+#workhoursPanel .ff-hours-card:first-child{max-width:none}
+#workhoursPanel .ff-hours-tablewrap{display:none !important}
+#workhoursPanel .ff-hours-mobilelist{
+  display:grid !important;
+  grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));
+  gap:14px;
+  width:100%;
+  min-width:0;
+}
+#workhoursPanel .ff-hours-entry{
+  border:1px solid #d8e3ef;
+  background:#fff;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 5px 18px rgba(15,36,66,.05);
+  gap:14px;
+  min-width:0;
+}
+#workhoursPanel .ff-hours-entry-head{
+  flex-direction:row;
+  flex-wrap:wrap;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+#workhoursPanel .ff-hours-entry-date strong{font-size:16px;color:#152d4b}
+#workhoursPanel .ff-hours-entry-date span{font-size:12px;color:#697f99}
+#workhoursPanel .ff-hours-entry-service{display:none}
+#workhoursPanel .ff-hours-entry-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:8px;
+}
+#workhoursPanel .ff-hours-entry-meta{
+  padding:12px;
+  background:#f3f7fc;
+  border:1px solid #e4ecf5;
+  min-width:0;
+  border-radius:12px;
+}
+#workhoursPanel .ff-hours-entry-meta span{font-size:11px}
+#workhoursPanel .ff-hours-entry-meta strong{font-size:14px;line-height:1.3}
+#workhoursPanel .ff-hours-entry-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  border-top:1px solid #e8eef5;
+  padding-top:13px;
+}
+#workhoursPanel .ff-hours-entry-actions .ff-hours-btn{
+  flex:1 1 105px;
+  margin:0;
+  border-radius:10px;
+  min-height:43px;
+  font-size:13px;
+  white-space:normal;
+}
+#workhoursPanel .ff-hours-entry-actions .ff-hours-btn:nth-child(2){
+  background:#fff0e3;
+  border-color:#fac897;
+  color:#843d06;
+}
+#workhoursPanel .ff-hours-entry-actions .ff-hours-danger{background:#fff0ee;color:#a82727;border-color:#edc0bb}
+#workhoursPanel .ff-hours-top{align-items:stretch}
+#workhoursPanel .ff-hours-controls{gap:10px}
+#workhoursPanel .ff-hours-controls button{margin:0}
+@media(min-width:1100px){
+ #workhoursPanel .ff-hours-layout{grid-template-columns:minmax(0,1fr)}
+ #workhoursPanel .ff-hours-card:first-child #ffHoursPeople{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:22px}
+ #workhoursPanel .ff-hours-entry-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:700px){
+ #workhoursPanel .ff-hours-mobilelist{grid-template-columns:1fr}
+ #workhoursPanel .ff-hours-entry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #workhoursPanel .ff-hours-entry{padding:14px}
+ #workhoursPanel .ff-hours-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;align-items:end}
+ #workhoursPanel .ff-hours-controls label{min-width:0}
+ #workhoursPanel .ff-hours-controls label:nth-child(1),#workhoursPanel .ff-hours-controls label:nth-child(2){grid-column:span 1}
+ #workhoursPanel .ff-hours-controls button{grid-column:span 1;width:100%;min-width:0}
+}
+@media(max-width:440px){
+ #workhoursPanel .ff-hours-controls{grid-template-columns:1fr}
+ #workhoursPanel .ff-hours-controls label:nth-child(1),#workhoursPanel .ff-hours-controls label:nth-child(2){grid-column:1}
+ #workhoursPanel .ff-hours-controls button{grid-column:1}
+ #workhoursPanel .ff-hours-entry-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #workhoursPanel .ff-hours-entry-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #workhoursPanel .ff-hours-entry-actions .ff-hours-btn{min-width:0;width:100%}
+ #workhoursPanel .ff-hours-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:345px){
+ #workhoursPanel .ff-hours-entry-grid{grid-template-columns:1fr}
+ #workhoursPanel .ff-hours-entry-actions{grid-template-columns:1fr}
+}
