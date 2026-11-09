@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Admin – Flytt &amp; Fräscht</title><meta name="robots" content="noindex,nofollow">
-<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="admin-ui.css"><link rel="stylesheet" href="admin-refresh.css"><link rel="stylesheet" href="admin-features.css"><link rel="stylesheet" href="admin-delete.css"><link rel="stylesheet" href="admin-inbox.css"><link rel="stylesheet" href="admin-bell.css"><link rel="stylesheet" href="admin-oversikt.css"><link rel="stylesheet" href="admin-tillganglighet.css"><link rel="stylesheet" href="admin-statistik.css"><link rel="stylesheet" href="admin-arbetstider.css"><link rel="stylesheet" href="admin-jobbfoton.css"><link rel="stylesheet" href="admin-kundrut-kalender.css"><link rel="stylesheet" href="admin-fakturor.css"></head>
+<link rel="icon" href="favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="admin.css"><link rel="stylesheet" href="admin-ui.css"><link rel="stylesheet" href="admin-refresh.css"><link rel="stylesheet" href="admin-features.css"><link rel="stylesheet" href="admin-delete.css"><link rel="stylesheet" href="admin-inbox.css"><link rel="stylesheet" href="admin-bell.css"><link rel="stylesheet" href="admin-oversikt.css"><link rel="stylesheet" href="admin-oversikt-plus.css"><link rel="stylesheet" href="admin-tillganglighet.css"><link rel="stylesheet" href="admin-statistik.css"><link rel="stylesheet" href="admin-arbetstider.css"><link rel="stylesheet" href="admin-jobbfoton.css"><link rel="stylesheet" href="admin-kundrut-kalender.css"><link rel="stylesheet" href="admin-fakturor.css"></head>
 <body><a class="ff-skip-link" href="#admin-main">Hoppa till admininnehållet</a><header><a href="index.html" class="brand">Flytt &amp; <span>Fräscht</span></a><span>Administration</span></header>
 <main id="admin-main"><section id="loginPanel" class="panel small"><h1>Logga in</h1><p>Endast behörig administratör.</p>
 <form id="loginForm"><label for="username">Användarnamn</label><input id="username" autocomplete="username" required placeholder="Användarnamn">
@@ -20,7 +20,22 @@
   <section class="ff-overview-card"><div class="ff-overview-cardhead"><h3>Offerter som väntar på svar</h3><button type="button" class="ff-overview-textbutton" id="ffOverviewOffers">Visa offerter →</button></div><div id="ffOverviewOffersList" class="ff-overview-entries"></div></section>
   <section class="ff-overview-card"><div class="ff-overview-cardhead"><h3>Dagens uppdrag</h3><button type="button" class="ff-overview-textbutton" id="ffOverviewToday">Visa dagens uppdrag →</button></div><div id="ffOverviewTodayList" class="ff-overview-entries"></div></section>
   <section class="ff-overview-card"><div class="ff-overview-cardhead"><h3>Kommande 7 dagar</h3><button type="button" class="ff-overview-textbutton" id="ffOverviewBookings">Öppna kalendern →</button></div><div id="ffOverviewUpcoming" class="ff-overview-entries"></div></section>
- </div><p class="ff-overview-note">Översikten använder dina befintliga uppgifter och uppdateras automatiskt var 30:e sekund när adminpanelen är öppen. Kundsvar på offerter registrerar du manuellt.</p>
+ </div>
+ <section class="ff-overview-plus" aria-label="Avslutade jobb, ekonomi och Trustpilot">
+  <div class="ff-overview-plus-head"><h3>Avslutade jobb &amp; ekonomi</h3><span class="ff-overview-plus-sub">Senaste 30 dagarna för jobb · hela fakturaregistret för fakturor</span></div>
+  <div class="ff-overview-plus-kpis">
+   <div class="ff-overview-plus-stat"><span>Utförda jobb · 30 dagar</span><strong id="ffPlusCompleted">–</strong><small>Avslutade kalenderbokningar</small></div>
+   <div class="ff-overview-plus-stat"><span>Registrerade betalda fakturor</span><strong id="ffPlusInvoices">–</strong><small>Alla registrerade fakturor</small></div>
+   <div class="ff-overview-plus-stat"><span>Registrerat betalt belopp</span><strong id="ffPlusRevenue">–</strong><small>Inkl. moms · inte bokförd omsättning</small></div>
+   <div class="ff-overview-plus-stat"><span>Fakturor att mejla</span><strong id="ffPlusUnsent">–</strong><small>Registrerade, ej skickade</small></div>
+  </div>
+  <div class="ff-overview-plus-grid">
+   <section class="ff-overview-card"><div class="ff-overview-cardhead"><h3>Senast utförda uppdrag</h3><button class="ff-overview-textbutton" type="button" id="ffPlusCalendar">Bokningskalender →</button></div><div id="ffPlusRecent" class="ff-overview-entries"><p class="ff-overview-empty">Hämtar jobb…</p></div></section>
+   <section class="ff-overview-card"><div class="ff-overview-cardhead"><h3>Fakturor &amp; Trustpilot</h3><button class="ff-overview-textbutton" type="button" id="ffPlusInvoicesOpen">Fakturaregister →</button></div><p id="ffPlusInvoiceStatus" class="ff-overview-plus-message" role="status">Hämtar fakturor när översikten öppnas.</p><p class="ff-overview-plus-trust"><strong>Trustpilot</strong><span>Visa omdömesinbjudningar och recensioner i Trustpilot Business. Ingen automatisk statistik hämtas hit.</span><a href="https://businessapp.b2b.trustpilot.com/invitations/invitation-history" target="_blank" rel="noopener noreferrer">Öppna inbjudningsstatus ↗</a></p></section>
+  </div>
+  <p class="ff-overview-plus-foot">Beloppen bygger på sparade betalda fakturor, inte på offertvärden. Trustpilot och fakturor kan uppdateras vid olika tidpunkter.</p>
+ </section>
+ <p class="ff-overview-note">Översikten använder dina befintliga uppgifter och uppdateras automatiskt var 30:e sekund när adminpanelen är öppen. Kundsvar på offerter registrerar du manuellt.</p>
 </section>
 <section class="tab-content ff-statistics" id="statisticsPanel" hidden aria-labelledby="ffStatsTitle">
   <div class="ff-stats-header"><div><span class="ff-stats-eyebrow">RESULTAT & TRENDER</span><h2 id="ffStatsTitle">Företagsstatistik</h2><p class="minor">Bygger på dina förfrågningar, offerter och bokningar i Supabase.</p></div><div class="ff-stats-controls"><label for="ffStatsMonth">Välj månad</label><input type="month" id="ffStatsMonth"><button type="button" class="outline" id="ffStatsRefresh">↻ Uppdatera</button></div></div>
@@ -91,4 +106,4 @@
  <p id="quickReplyStatus" class="minor" role="status" aria-live="polite"></p>
  <div class="ff-reply-actions"><button type="button" class="outline" id="quickReplyCopy">Kopiera text</button><button type="button" id="quickReplyEmail">Öppna e-post</button></div>
 </dialog>
-<script src="config.js"></script><script src="admin-ui.js"></script><script src="admin.js"></script><script src="admin-statistik.js"></script><script src="admin-jobbfoton.js"></script><script src="admin-arbetstider.js"></script><script src="admin-kundrut-kalender.js"></script><script src="admin-fakturor.js"></script></body></html>
+<script src="config.js"></script><script src="admin-ui.js"></script><script src="admin.js"></script><script src="admin-statistik.js"></script><script src="admin-jobbfoton.js"></script><script src="admin-arbetstider.js"></script><script src="admin-kundrut-kalender.js"></script><script src="admin-fakturor.js"></script><script src="admin-oversikt-plus.js"></script></body></html>

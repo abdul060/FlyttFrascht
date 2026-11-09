@@ -172,6 +172,7 @@ function renderOverview(){
  drawEntries('ffOverviewOffersList',waiting,(o)=>[o.kundnamn||'Kund',o.tjanst||'Offert',o.skickad?'Skickad: '+dateFormat(o.skickad):'Väntar på svar'],'Inga skickade offerter väntar på kundsvar.');
  drawEntries('ffOverviewTodayList',todayJobs.sort((a,b)=>String(a.starttid).localeCompare(String(b.starttid))),(b)=>[b.kundnamn||'Kund',(b.starttid||'').slice(0,5)+'–'+(b.sluttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.personal?'Personal: '+b.personal:'Personal ej tilldelad'],'Inga aktiva bokningar idag.');
  drawEntries('ffOverviewUpcoming',upcoming,(b)=>[b.kundnamn||'Kund',b.datum+' kl. '+(b.starttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.status==='bekraftad'?'Bekräftad':'Status: '+(b.status||'planerad')],'Inga kommande bokningar de närmaste sju dagarna.');
+ window.dispatchEvent(new CustomEvent('ff:overview-updated',{detail:{bookings:bookings.map(b=>({datum:b.datum,status:b.status,kundnamn:b.kundnamn,tjanst:b.tjanst}))}}));
 }
 function render(){
  updateInbox();
