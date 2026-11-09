@@ -144,3 +144,186 @@ select {
 @media (max-width: 600px) {
   select { padding-right: 52px; background-position: right 18px center; }
 }
+
+
+/* Stilar som tidigare låg i index.html. */
+/* Mobilmeny – dold på dator */
+.mobile-contact-bar { display: none; }
+@media (max-width: 767px) {
+  .mobile-contact-bar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 9999; gap: 10px; padding: 12px 14px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #0B1B3F; box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  }
+  .mobile-contact-bar a {
+    display: flex; flex: 1; justify-content: center; align-items: center;
+    min-height: 48px; border-radius: 10px; font-family: inherit;
+    font-size: 15px; font-weight: 700; text-decoration: none;
+  }
+  .mobile-contact-quote { background: #FF7A00; color: #0B1B3F; }
+  .mobile-contact-call { background: #FFFFFF; color: #0B1B3F; }
+  body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+  #offert { scroll-margin-top: 90px; }
+}
+
+/* Varför välja Flytt & Fräscht */
+.why-section { padding: 85px 0; background: #0B1B3F; color: #fff; }
+.why-section h2 { color: #fff; }
+.why-section .lead { color: #dce5f5; max-width: 700px; }
+.why-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 35px; }
+.why-card { background: #172B55; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 25px; }
+.why-icon { display: block; font-size: 32px; margin-bottom: 16px; }
+.why-card h3 { color: #fff; font-size: 20px; margin: 0 0 12px; }
+.why-card p { color: #dce5f5; font-size: 15px; line-height: 1.6; margin: 0; }
+.why-cta { text-align: center; margin-top: 35px; }
+@media (max-width: 900px) { .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .why-section { padding: 55px 0; }
+  .why-grid { grid-template-columns: 1fr; gap: 14px; }
+  .why-card { padding: 20px; }
+}
+
+/* Tjänsteöversikt – mjuka mörkblå toner, utan bländande vita ytor */
+.service-overview {
+  padding: 76px 0;
+  background: #182940;
+  color: #dbe5f0;
+}
+.service-overview .eyebrow { color: #e6a76d; }
+.service-overview h2,
+.service-overview #service-overview-title { color: #edf2f8; }
+.service-overview .lead { max-width: 790px; color: #c1cfdf; }
+.service-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.service-overview-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 27px;
+  border: 1px solid #3a4f6a;
+  border-radius: 20px;
+  background: #243852;
+  box-shadow: 0 5px 18px rgba(5, 15, 30, .10);
+}
+.service-overview-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 19px;
+  border-radius: 16px;
+  background: #33445d;
+  font-size: 30px;
+}
+.service-overview-card h3 { margin: 0 0 12px; color: #edf2f8; font-size: 21px; line-height: 1.25; }
+.service-overview-card p { margin: 0 0 20px; color: #c6d2e1; line-height: 1.65; }
+.service-overview-card a {
+  margin-top: auto;
+  color: #ffc08a;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.service-overview-card a:hover,
+.service-overview-card a:focus-visible { color: #ffe0c3; }
+.service-overview-bottom {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+  padding: 21px 25px;
+  background: #293e59;
+  border: 1px solid #3a4f6a;
+  color: #d7e2ef;
+  border-radius: 16px;
+}
+.service-overview-bottom p { max-width: 650px; margin: 0; line-height: 1.6; }
+.service-overview-bottom .btn { flex-shrink: 0; }
+@media (max-width: 900px) { .service-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 650px) {
+  .service-overview { padding: 54px 0; }
+  .service-overview-grid { grid-template-columns: 1fr; gap: 14px; }
+  .service-overview-card { padding: 21px; }
+  .service-overview-bottom { flex-direction: column; align-items: stretch; padding: 19px; }
+  .service-overview-bottom .btn { text-align: center; }
+}
+
+/* Trustpilot-sektion på startsidan – utan påhittade betyg eller recensioner. */
+.ff-trustpilot {
+  background: #0b1b3f;
+  color: #fff;
+  padding: 76px 0;
+}
+.ff-trustpilot-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(220px, .8fr);
+  gap: clamp(26px, 5vw, 72px);
+  align-items: center;
+}
+.ff-trustpilot-eyebrow {
+  display: block;
+  color: #ffab65;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  margin-bottom: 12px;
+}
+.ff-trustpilot h2 {
+  color: #fff;
+  font-size: clamp(30px, 3.3vw, 44px);
+  line-height: 1.12;
+  margin: 0 0 20px;
+}
+.ff-trustpilot-copy p {
+  color: #dce6f7;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 0 28px;
+}
+.ff-trustpilot-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 13px 22px;
+  border-radius: 10px;
+  background: #ff7a00;
+  color: #0b1b3f;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.ff-trustpilot-button:hover { background: #ffab65; transform: translateY(-2px); }
+.ff-trustpilot-button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+.ff-trustpilot-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 260px;
+  padding: 30px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #172b55;
+  text-align: center;
+}
+.ff-trustpilot-symbol { color: #00b67a; font-size: 75px; line-height: 1; }
+.ff-trustpilot-visual strong { font-size: 29px; color: #fff; }
+.ff-trustpilot-label { color: #dce6f7; font-size: 14px; }
+@media (max-width: 700px) {
+  .ff-trustpilot { padding: 54px 0; }
+  .ff-trustpilot-layout { grid-template-columns: 1fr; }
+  .ff-trustpilot-copy p { font-size: 16px; }
+  .ff-trustpilot-visual { min-height: 170px; }
+  .ff-trustpilot-button { width: 100%; text-align: center; }
+}

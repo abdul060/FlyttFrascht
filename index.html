@@ -35,121 +35,7 @@
 <link rel="stylesheet" href="site-extras.css">
 <link rel="stylesheet" href="datumkalender.css">
 
-<style>
-/* Mobilmeny – dold på dator */
-.mobile-contact-bar { display: none; }
-@media (max-width: 767px) {
-  .mobile-contact-bar {
-    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
-    z-index: 9999; gap: 10px; padding: 12px 14px;
-    padding-bottom: calc(12px + env(safe-area-inset-bottom));
-    background: #0B1B3F; box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
-  }
-  .mobile-contact-bar a {
-    display: flex; flex: 1; justify-content: center; align-items: center;
-    min-height: 48px; border-radius: 10px; font-family: inherit;
-    font-size: 15px; font-weight: 700; text-decoration: none;
-  }
-  .mobile-contact-quote { background: #FF7A00; color: #0B1B3F; }
-  .mobile-contact-call { background: #FFFFFF; color: #0B1B3F; }
-  body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
-  #offert { scroll-margin-top: 90px; }
-}
-</style>
 
-
-<style>
-/* Varför välja Flytt & Fräscht */
-.why-section { padding: 85px 0; background: #0B1B3F; color: #fff; }
-.why-section h2 { color: #fff; }
-.why-section .lead { color: #dce5f5; max-width: 700px; }
-.why-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 35px; }
-.why-card { background: #172B55; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 25px; }
-.why-icon { display: block; font-size: 32px; margin-bottom: 16px; }
-.why-card h3 { color: #fff; font-size: 20px; margin: 0 0 12px; }
-.why-card p { color: #dce5f5; font-size: 15px; line-height: 1.6; margin: 0; }
-.why-cta { text-align: center; margin-top: 35px; }
-@media (max-width: 900px) { .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) {
-  .why-section { padding: 55px 0; }
-  .why-grid { grid-template-columns: 1fr; gap: 14px; }
-  .why-card { padding: 20px; }
-}
-</style>
-
-
-<style>
-/* Tjänsteöversikt – mjuka mörkblå toner, utan bländande vita ytor */
-.service-overview {
-  padding: 76px 0;
-  background: #182940;
-  color: #dbe5f0;
-}
-.service-overview .eyebrow { color: #e6a76d; }
-.service-overview h2,
-.service-overview #service-overview-title { color: #edf2f8; }
-.service-overview .lead { max-width: 790px; color: #c1cfdf; }
-.service-overview-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 20px;
-  margin-top: 32px;
-}
-.service-overview-card {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  padding: 27px;
-  border: 1px solid #3a4f6a;
-  border-radius: 20px;
-  background: #243852;
-  box-shadow: 0 5px 18px rgba(5, 15, 30, .10);
-}
-.service-overview-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 62px;
-  height: 62px;
-  margin-bottom: 19px;
-  border-radius: 16px;
-  background: #33445d;
-  font-size: 30px;
-}
-.service-overview-card h3 { margin: 0 0 12px; color: #edf2f8; font-size: 21px; line-height: 1.25; }
-.service-overview-card p { margin: 0 0 20px; color: #c6d2e1; line-height: 1.65; }
-.service-overview-card a {
-  margin-top: auto;
-  color: #ffc08a;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-.service-overview-card a:hover,
-.service-overview-card a:focus-visible { color: #ffe0c3; }
-.service-overview-bottom {
-  display: flex;
-  gap: 22px;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 26px;
-  padding: 21px 25px;
-  background: #293e59;
-  border: 1px solid #3a4f6a;
-  color: #d7e2ef;
-  border-radius: 16px;
-}
-.service-overview-bottom p { max-width: 650px; margin: 0; line-height: 1.6; }
-.service-overview-bottom .btn { flex-shrink: 0; }
-@media (max-width: 900px) { .service-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 650px) {
-  .service-overview { padding: 54px 0; }
-  .service-overview-grid { grid-template-columns: 1fr; gap: 14px; }
-  .service-overview-card { padding: 21px; }
-  .service-overview-bottom { flex-direction: column; align-items: stretch; padding: 19px; }
-  .service-overview-bottom .btn { text-align: center; }
-}
-</style>
 <link rel="stylesheet" href="design-refresh.css">
 <link rel="stylesheet" href="offert-dynamiskt.css">
 <link rel="stylesheet" href="offert-sammanfattning.css">
@@ -300,6 +186,23 @@
     </div>
   </div>
 </section>
+<!-- Trustpilot: inga betyg eller omdömen visas innan de finns publicerade. -->
+<section class="ff-trustpilot" id="omdomen" aria-labelledby="ff-trustpilot-title">
+  <div class="wrap ff-trustpilot-layout">
+    <div class="ff-trustpilot-copy">
+      <span class="ff-trustpilot-eyebrow">KUNDERNAS UPPLEVELSER</span>
+      <h2 id="ff-trustpilot-title">Din upplevelse är viktig för oss</h2>
+      <p>Vi på Flytt &amp; Fräscht vill göra varje flytt och städning trygg, smidig och professionell. Vi samlar in kundomdömen via Trustpilot för att du ska kunna läsa om kundernas egna upplevelser.</p>
+      <a class="ff-trustpilot-button" href="https://se.trustpilot.com/review/flyttfrascht.se" target="_blank" rel="noopener noreferrer" aria-label="Besök Flytt och Fräscht på Trustpilot (öppnas i ny flik)">Besök oss på Trustpilot <span aria-hidden="true">↗</span></a>
+    </div>
+    <div class="ff-trustpilot-visual" aria-hidden="true">
+      <span class="ff-trustpilot-symbol">★</span>
+      <strong>Trustpilot</strong>
+      <span class="ff-trustpilot-label">Ärliga kundupplevelser</span>
+    </div>
+  </div>
+</section>
+
 <section class="faq-section alt" id="fragor"><div class="wrap faq-layout"><div><div class="eyebrow rv">Vanliga frågor</div><h2 class="h rv">Bra att veta</h2><p class="lead rv">Här är svar på några vanliga frågor innan du skickar din offertförfrågan.</p><a class="text-link" href="mailto:flyttfrascht@gmail.com">Har du en annan fråga? Mejla oss →</a></div>
 <div class="faq-list"><details><summary>Är en offertförfrågan bindande?</summary><p>Nej, du berättar vad du behöver hjälp med. Vi återkommer med ett prisförslag som du får ta ställning till.</p></details><details>
   <summary>Vilka tjänster erbjuder ni?</summary>
