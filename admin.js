@@ -332,6 +332,14 @@ async function sendBookingConfirmation(id){
  if(!r.ok)throw Error(result.error||'Mejlet kunde inte skickas. Kontrollera Edge Function och Resend.');
  return result;
 }
+// Tackmejl skickas enbart efter administratörens uttryckliga bekräftelse.
+async function sendCompletedJobEmail(id){
+ const call=()=>fetch(url+'/functions/v1/skicka-avslutat-arbete',{method:'POST',headers:headers(token),body:JSON.stringify({booking_id:id})});
+ let r=await call();if(r.status===401&&await refresh())r=await call();
+ const result=await r.json().catch(()=>({}));
+ if(!r.ok)throw Error(result.error||'Kunde inte skicka tackmejlet (HTTP '+r.status+').');
+ return result;
+}
 function ymd(d){return [d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');}
 function monthTitle(d){return d.toLocaleDateString('sv-SE',{month:'long',year:'numeric'});}
 function fillBookingOptions(){const s=$('bookingRequest'),v=s.value;s.replaceChildren();const empty=el('option','Ingen – boka manuellt');empty.value='';s.append(empty);for(const r of records){const o=el('option',r.namn+' – '+r.tjanst+' ('+(r.onskat_datum||'utan datum')+')');o.value=r.id;s.append(o);}if([...s.options].some(o=>o.value===v))s.value=v;}
@@ -345,6 +353,21 @@ else if(b.status==='bekraftad'){
  const retry=el('button','Skicka bokningsbekräftelse','outline');
  retry.disabled=!b.epost;retry.title=b.epost?'':'Kundens e-postadress saknas';
  retry.addEventListener('click',async()=>{if(!await window.adminConfirm({title:'Skicka bokningsbekräftelse?',message:'Bekräftelsen skickas till kundens e-postadress.',details:[['Kund',b.kundnamn],['Mottagare',b.epost],['Datum',b.datum],['Tid',b.starttid.slice(0,5)+'–'+b.sluttid.slice(0,5)]],confirmLabel:'Ja, skicka mejl',kind:'send'}))return;retry.disabled=true;retry.textContent='Skickar…';try{const r=await sendBookingConfirmation(b.id);await reload(false);notice(r.already_sent?'Bekräftelsen hade redan skickats.':'Bokningsbekräftelsen skickades till '+b.epost+'.');}catch(e){notice('Bokningen finns kvar, men mejlet gick inte iväg: '+e.message);}finally{retry.disabled=false;retry.textContent='Skicka bokningsbekräftelse';}});ft.append(retry);
+}
+if(b.status==='utford'){
+ if(b.tackmejl_skickad){ft.append(el('span','Tackmejl skickat '+dateFormat(b.tackmejl_skickad),'meta'));}
+ else if(b.tackmejl_status==='sending'){ft.append(el('span','Tackmejl behandlas – kontrollera status innan nytt försök','meta'));}
+ else {
+  const thank=el('button','Skicka tackmejl','outline');thank.type='button';thank.disabled=!b.epost;
+  if(!b.epost)thank.title='Kundens e-postadress saknas';
+  thank.addEventListener('click',async()=>{
+   if(!await window.adminConfirm({title:'Skicka tackmejl efter utfört jobb?',message:'Ett tackmejl skickas till kunden. Faktura skickas separat efter betalning.',details:[['Kund',b.kundnamn],['Mottagare',b.epost],['Tjänst',b.tjanst],['Arbetsdatum',b.datum]],confirmLabel:'Ja, skicka tackmejl',kind:'send'}))return;
+   thank.disabled=true;thank.textContent='Skickar…';
+   try{const result=await sendCompletedJobEmail(b.id);await reload(false);notice(result.already_sent?'Tackmejl var redan skickat.':result.warning?'Mejlet accepterades, men status kunde inte sparas: '+result.warning:'Tackmejl skickat till '+b.epost+'.');}
+   catch(e){await reload(false);notice('Tackmejlet kunde inte skickas: '+e.message);}
+   finally{thank.disabled=false;thank.textContent='Skicka tackmejl';}
+  });ft.append(thank);
+ }
 }
 card.append(ft);root.append(card);}}
 function resetBooking(){editingBookingId=null;setTimeout(scheduleAvailability,0);$('bookingForm').reset();$('bookingFormTitle').textContent='Lägg till uppdrag';$('bookingSave').textContent='Spara bokning';$('bookingDelete').hidden=true;$('bookingError').textContent='';$('bookingDate').value=selectedBookingDate||ymd(new Date());$('bookingStart').value='09:00';$('bookingEnd').value='12:00';window.adminRefreshDates?.();}
@@ -418,6 +441,12 @@ if(data.status!=='avbokad' && data.personal){
 }
 const overlap=bookings.find(b=>b.id!==editingBookingId&&b.datum===data.datum&&b.status!=='avbokad'&&data.status!=='avbokad'&&data.starttid<b.sluttid.slice(0,5)&&data.sluttid>b.starttid.slice(0,5));if(overlap&&!await window.adminConfirm({title:'Överlappande bokning',message:'Det finns redan ett uppdrag som överlappar den här tiden ('+overlap.kundnamn+'). Vill du spara ändå?',confirmLabel:'Spara ändå',kind:'warning'}))return;
 const original=editingBookingId?bookings.find(b=>b.id===editingBookingId):null;
+const newlyCompleted=data.status==='utford'&&original?.status!=='utford';
+let sendThankAfterSave=false;
+if(newlyCompleted){
+ sendThankAfterSave=!!data.epost;
+ if(!await window.adminConfirm({title:'Markera uppdraget som utfört?',message:data.epost?'Uppdraget sparas som utfört och ett tackmejl skickas till kunden efter att du bekräftat. Fakturan skickas separat.':'Uppdraget sparas som utfört. Kundens mejladress saknas, så inget tackmejl kan skickas.',details:[['Kund',data.kundnamn],['Mottagare',data.epost||'Saknas'],['Tjänst',data.tjanst],['Arbetsdatum',data.datum]],confirmLabel:data.epost?'Ja, avsluta och mejla':'Ja, markera utfört',kind:'send'}))return;
+}
 let bookingId=editingBookingId;
 if(editingBookingId)await api('bokningar?id=eq.'+encodeURIComponent(editingBookingId),'PATCH',data);
 else {const created=await api('bokningar','POST',data);bookingId=created?.[0]?.id;if(!bookingId)throw Error('Bokningen sparades, men ID kunde inte läsas. Uppdatera sidan.');}
@@ -428,6 +457,13 @@ if(data.status==='bekraftad'&&!(original?.bekraftelse_skickad)){
  else {try{const sent=await sendBookingConfirmation(bookingId);message+=sent.warning?' Mejlet accepterades, men status kunde inte sparas: '+sent.warning:(sent.already_sent?' Bekräftelse var redan skickad.':' Bokningsbekräftelse skickad till '+data.epost+'.');await reload(false);}catch(err){message+=' OBS: Mejlet gick INTE iväg: '+err.message+' Välj bokningen och försök igen med knappen Skicka bokningsbekräftelse.';}}
 }else if(data.status==='bekraftad'&&original?.bekraftelse_skickad){
  message+=' Bekräftelse skickades tidigare. Ändrade tider skickas inte automatiskt på nytt; kontakta kunden vid ändringar.';
+}
+if(newlyCompleted){
+ if(!data.epost)message+=' Inget tackmejl skickades eftersom kundens mejladress saknas.';
+ else if(sendThankAfterSave){
+  try{const sent=await sendCompletedJobEmail(bookingId);message+=sent.already_sent?' Tackmejlet hade redan skickats.':sent.warning?' Tackmejlet accepterades, men status kunde inte sparas: '+sent.warning:' Tackmejl skickat till '+data.epost+'.';await reload(false);}
+  catch(err){message+=' Jobbet är sparat som utfört, men tackmejlet kunde inte skickas: '+err.message+' Försök igen via knappen Skicka tackmejl på uppdraget.';}
+ }
 }
 notice(message);}catch(e){$('bookingError').textContent=e.message;}finally{btn.disabled=false;}});
 $('bookingDelete').addEventListener('click',async()=>{if(!editingBookingId||!await window.adminConfirm({title:'Ta bort bokning?',message:'Bokningen tas bort permanent. Detta går inte att ångra.',confirmLabel:'Ja, ta bort bokningen',kind:'danger'}))return;const id=editingBookingId;try{await api('bokningar?id=eq.'+encodeURIComponent(id),'DELETE');resetBooking();await reload(false);notice('Bokningen har tagits bort.');}catch(e){$('bookingError').textContent=e.message;}});
