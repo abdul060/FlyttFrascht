@@ -1,0 +1,30 @@
+/* Flytt & Fräscht — Etapp 4 gratis: mörk, tillgänglig flyttguide */
+.ff-ai-section{background:#101e3b;color:#eef4fe;padding:clamp(50px,7vw,86px) 0}
+.ff-ai-wrap{max-width:1120px;margin:0 auto;padding:0 22px;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(22px,4vw,60px);align-items:center}
+.ff-ai-section h2{font-size:clamp(30px,4vw,48px);line-height:1.12;color:#fff;margin:12px 0 16px}
+.ff-ai-section p{color:#d2e0f1;line-height:1.7}
+.ff-ai-eyebrow{letter-spacing:.13em;text-transform:uppercase;font-weight:800;font-size:12px;color:#ffba7d!important}
+.ff-ai-notice{font-size:13px;margin-top:20px}
+.ff-ai-widget{background:#203654;border:1px solid #476180;border-radius:22px;padding:22px;box-shadow:0 16px 40px #030e2330;min-width:0}
+.ff-ai-widget h3{color:#fff;font-size:21px;margin:0}
+.ff-ai-panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px}
+.ff-ai-status{font-size:12px;color:#bcd0e7}
+.ff-ai-messages{height:260px;overflow-y:auto;background:#162a46;border:1px solid #395775;border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-color:#58718b transparent}
+.ff-ai-msg{padding:11px 13px;border-radius:12px;line-height:1.55;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere;max-width:94%}
+.ff-ai-msg[data-role="assistant"]{background:#2d4563;color:#eff5ff;align-self:flex-start}
+.ff-ai-msg[data-role="user"]{background:#e99a59;color:#14233d;align-self:flex-end}
+.ff-ai-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.ff-ai-widget button{cursor:pointer;font:inherit;min-height:42px}
+.ff-ai-chip{background:#2a4566!important;color:#edf4fe!important;border:1px solid #6883a0!important;border-radius:999px;padding:7px 12px!important;font-size:13px!important;flex:1 0 auto}
+.ff-ai-chip:hover{background:#365477!important}
+.ff-ai-form{display:flex;gap:8px;margin-top:12px}
+.ff-ai-form input{min-width:0;flex:1;background:#edf3fa;color:#142441;border:2px solid #a9b9ce;border-radius:10px;padding:10px 12px;font:inherit;font-size:15px}
+.ff-ai-send,.ff-ai-toquote{background:#e99a59!important;color:#14233d!important;border:none;border-radius:10px;padding:10px 15px!important;font-weight:800!important}
+.ff-ai-toquote{width:100%;margin-top:12px;min-height:48px!important}
+.ff-ai-note{font-size:12px!important;color:#cedbec!important;margin:12px 0 0!important;line-height:1.45!important}
+.ff-ai-widget :is(button,input):focus-visible{outline:3px solid #ffca92;outline-offset:3px}
+.ff-ai-widget button:disabled{opacity:.58;cursor:wait}
+@media(max-width:780px){.ff-ai-wrap{grid-template-columns:1fr}.ff-ai-messages{height:245px}.ff-ai-widget{padding:16px}.ff-ai-chip{flex:0 1 auto}}
+@media(prefers-reduced-motion:reduce){.ff-ai-section *{scroll-behavior:auto!important}}
+
+.ff-ai-widget .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
