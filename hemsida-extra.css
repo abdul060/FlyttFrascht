@@ -1,0 +1,44 @@
+/* Flytt & Fräscht – förbättringar 2,4,5,6,7. Inga ändringar i jobbfoton. */
+.ff-up-section{padding:76px 0;background:#0e2143;color:#ecf3ff}
+.ff-up-kicker{color:#ffb976;font-size:12px;font-weight:800;letter-spacing:.16em}
+.ff-up-section h2{font-size:clamp(28px,4vw,44px);line-height:1.12;letter-spacing:-.025em;color:#fff;margin:12px 0 19px}
+.ff-up-intro{font-size:clamp(16px,1.7vw,19px);line-height:1.65;color:#d5e1f3;max-width:800px;margin:0 0 22px}
+.ff-up-note{font-size:13px;line-height:1.6;color:#bfd1eb;margin:14px 0 0}
+.ff-areas{background:#101f3d}
+.ff-areas-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:25px}
+.ff-areas-grid button{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:75px;padding:17px 20px;background:#1d3354;border:1px solid #405878;border-radius:14px;color:#fff;font:700 16px inherit;font-family:inherit;font-size:16px;font-weight:700;text-align:left;cursor:pointer;transition:background .18s,border-color .18s}
+.ff-areas-grid button span{color:#ffbd78;font-size:21px}
+.ff-areas-grid button:hover{background:#294568;border-color:#ffb976}
+.ff-rut{background:#122748}
+.ff-rut-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:42px;align-items:start}
+.ff-rut p:not(.ff-up-intro):not(.ff-up-note){color:#d7e2f2;line-height:1.7}
+.ff-rut-official{display:inline-flex;margin-top:10px;color:#ffd0a1;font-weight:750;text-decoration:underline;text-underline-offset:4px}
+.ff-rut-panel{background:#20395c;border:1px solid #405f83;border-radius:17px;padding:26px;color:#fff}
+.ff-rut-panel h3{font-size:22px;color:#fff;margin:0 0 19px}
+.ff-rut-panel ol{padding:0;margin:0 0 26px;list-style:none;counter-reset:r}
+.ff-rut-panel li{counter-increment:r;display:grid;grid-template-columns:30px 1fr;gap:2px 12px;padding:0 0 17px}
+.ff-rut-panel li::before{content:counter(r);grid-row:span 2;display:grid;place-items:center;background:#314f73;color:#ffd2a6;border-radius:9px;font-weight:900;height:30px;width:30px}
+.ff-rut-panel li strong{color:#fff}
+.ff-rut-panel li span{color:#d4e1f3;font-size:14px;line-height:1.5}
+.ff-up-primary{display:inline-block;border-radius:11px;background:#ffa14d;color:#10203d!important;padding:13px 18px;font-weight:800;text-decoration:none}
+.ff-up-primary:hover{background:#ffba7d}
+.ff-contact-dock{position:fixed;right:19px;bottom:22px;z-index:39;font-family:inherit}
+.ff-contact-menu{position:relative}
+.ff-contact-menu>summary{list-style:none;cursor:pointer;padding:13px 17px;border-radius:999px;background:#f7a14e;color:#0b1b3f;box-shadow:0 4px 17px #08142f66;border:2px solid #0d1d3d;font-weight:850;font-size:14px}
+.ff-contact-menu>summary::-webkit-details-marker{display:none}
+.ff-contact-menu>summary span{margin-left:9px}
+.ff-contact-options{position:absolute;right:0;bottom:calc(100% + 12px);width:min(295px,calc(100vw - 35px));display:grid;gap:9px;padding:18px;border-radius:15px;border:1px solid #496385;background:#13294b;color:#fff;box-shadow:0 12px 32px #06112888}
+.ff-contact-options strong{font-size:15px}
+.ff-contact-options a{background:#284365;color:#fff!important;padding:12px 13px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:700}
+.ff-contact-options a:hover{background:#39597d}
+.ff-form-progress{margin:0 0 17px;padding:14px 16px;border-radius:12px;background:#1a3152;border:1px solid #46617f;color:#fff}
+.ff-form-progress-head{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:space-between;font-size:13px;margin:0 0 12px}
+.ff-form-progress-head strong{color:#fff}
+#ffFormProgressLabel{color:#d6e7fa}
+.ff-form-progress-track{height:7px;border-radius:100px;overflow:hidden;background:#405777}
+#ffFormProgressBar{display:block;height:100%;width:0;background:#ffb56d;border-radius:100px;transition:width .2s}
+.ff-contact-menu summary:focus-visible,.ff-areas-grid button:focus-visible,.ff-contact-options a:focus-visible,.ff-up-primary:focus-visible{outline:3px solid #ffc98d;outline-offset:3px}
+@media(max-width:850px){.ff-areas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-rut-grid{grid-template-columns:1fr;gap:22px}}
+@media(max-width:700px){.ff-up-section{padding:53px 0}.ff-contact-dock{bottom:87px;right:12px}.ff-contact-menu>summary{padding:11px 13px;font-size:13px}.ff-areas-grid button{padding:14px;min-height:65px;font-size:14px}}
+@media(max-width:420px){.ff-areas-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ff-areas-grid button,#ffFormProgressBar{transition:none}}
