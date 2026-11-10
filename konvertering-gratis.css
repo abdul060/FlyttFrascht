@@ -1,0 +1,20 @@
+/* Flytt & Fräscht – konverteringsförbättringar utan betalda tjänster */
+#offert .ff-optional {margin:16px 0;background:#15294a;border:1px solid #426080;border-radius:14px;color:#f5f8ff;overflow:hidden}
+#offert .ff-optional summary {cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:17px 18px;font-weight:700;color:#fff;list-style:none}
+#offert .ff-optional summary::-webkit-details-marker {display:none}
+#offert .ff-optional summary::after {content:'+';font-size:22px;color:#ffb67b}
+#offert .ff-optional[open] summary::after {content:'−'}
+#offert .ff-optional summary small {font-size:.8rem;font-weight:400;color:#d3e2f3}
+#offert .ff-optional-fields {border-top:1px solid #426080;padding:18px;display:grid;gap:14px}
+#offert .ff-hint,#offert .ff-draft-note {font-size:.82rem;color:#cbd9ed;line-height:1.5;margin:.4rem 0}
+#offert .ff-conversion-trust {display:flex;gap:8px 16px;flex-wrap:wrap;margin:16px 0 10px;color:#dce8f7;font-size:.88rem}
+#offert .ff-conversion-trust span {white-space:normal}
+#offert .ff-draft-row {display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 2px}
+#offert .ff-draft-row label {font-size:.86rem;display:inline-flex;align-items:center;gap:9px;line-height:1.4;color:#f2f7ff}
+#offert .ff-draft-row input {width:20px;height:20px;accent-color:#ed9b57;flex-shrink:0}
+#offert .ff-clear-draft {background:none;color:#ffb67b;border:0;text-decoration:underline;cursor:pointer;font:inherit;font-size:.85rem}
+#offert .ff-social-inline {display:flex;gap:9px 18px;flex-wrap:wrap;margin:10px 0 18px;font-size:.85rem}
+#offert .ff-social-inline a {color:#ffc594;text-decoration:underline;text-underline-offset:3px}
+#offert .ff-optional summary:focus-visible,#offert .ff-clear-draft:focus-visible,#offert .ff-social-inline a:focus-visible {outline:3px solid #ffc594;outline-offset:3px}
+@media(max-width:600px){#offert .ff-optional summary{flex-direction:column;align-items:flex-start;padding:14px}#offert .ff-optional summary::after{position:absolute;right:24px}#offert .ff-optional summary{padding-right:45px;position:relative}#offert .ff-optional-fields{padding:13px}#offert .ff-conversion-trust{gap:8px 12px;font-size:.81rem}}
+@media(prefers-reduced-motion:reduce){#offert .ff-optional *{scroll-behavior:auto}}

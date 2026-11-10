@@ -45,6 +45,7 @@
 <link rel="stylesheet" href="public-jobbfoton.css">
 <link rel="stylesheet" href="hemsida-premium.css">
 <link rel="stylesheet" href="hemsida-extra.css">
+<link rel="stylesheet" href="konvertering-gratis.css">
 <meta property="og:url" content="https://flyttfrascht.se/">
 <script type="application/ld+json">
 {
@@ -278,7 +279,7 @@
     Du kan kombinera flera tjänster och få
     ett personligt offertförslag.
   </p>
-</details><details><summary>Var arbetar ni?</summary><p>Vi utgår från Stockholm. Skriv gärna adress eller område i din förfrågan så kan vi bedöma om vi kan hjälpa dig där.</p></details><details><summary>Hur fungerar pris och RUT-avdrag?</summary><p>Priset anpassas efter uppdraget. Vissa hushållsnära tjänster kan omfattas av RUT-avdrag om Skatteverkets villkor är uppfyllda. Vi går igenom vad som gäller i just din offert.</p></details><details><summary>Kan jag önska ett särskilt datum?</summary><p>Ja. Fyll i önskat datum i formuläret. Vi kontrollerar tillgängligheten och återkommer med ett förslag.</p></details><details><summary>Hur kontaktar ni mig efteråt?</summary><p>Vi använder telefonnumret eller e-postadressen du lämnar för att återkomma om din förfrågan.</p></details></div></div></section>
+</details><details><summary>Var arbetar ni?</summary><p>Vi utgår från Stockholm. Vi får även förfrågningar om exempelvis Solna, Täby och Nacka. Ange ditt område så bekräftar vi om vi kan hjälpa till just där.</p></details><details><summary>Hur fungerar pris och RUT-avdrag?</summary><p>Priset anpassas efter uppdraget. Vissa hushållsnära tjänster kan omfattas av RUT-avdrag om Skatteverkets villkor är uppfyllda. Vi går igenom vad som gäller i just din offert.</p></details><details><summary>Kan jag önska ett särskilt datum?</summary><p>Ja. Fyll i önskat datum i formuläret. Vi kontrollerar tillgängligheten och återkommer med ett förslag.</p></details><details><summary>Hur kontaktar ni mig efteråt?</summary><p>Vi använder telefonnumret eller e-postadressen du lämnar för att återkomma om din förfrågan.</p></details></div></div></section>
 
 
 
@@ -372,7 +373,10 @@
 <div id="size-block"><div class="lb">Bostadens storlek</div><div class="out"><b id="mv">60</b><span>m²</span></div><input id="m" type="range" min="15" max="250" step="5" value="60" aria-label="Bostadens storlek i kvadratmeter"></div>
 <div id="rooms-block"><div class="lb" id="rl">Antal rum</div><div class="chips" role="radiogroup" aria-labelledby="rl">
 <input type="radio" name="r" id="r1" value="1"><label for="r1">1</label><input type="radio" name="r" id="r2" value="2" checked><label for="r2">2</label><input type="radio" name="r" id="r3" value="3"><label for="r3">3</label><input type="radio" name="r" id="r4" value="4"><label for="r4">4</label><input type="radio" name="r" id="r5" value="5+"><label for="r5">5+</label></div></div>
-<div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div class="date-field"><label for="date-open">Önskat datum</label><input id="d" type="date"><button type="button" id="date-open" class="date-open" aria-haspopup="dialog" aria-controls="date-dialog"><span class="date-open-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2M14 14h2M8 18h2"/></svg></span><span id="date-choice">Välj ett datum</span><span class="date-open-arrow" aria-hidden="true">▾</span></button></div></div>
+<div class="r2"><div id="single-address"><label for="a">Adress eller område</label><input id="a" maxlength="200" autocomplete="address-level2"></div><div class="date-field"><label for="date-open">Önskat datum (ej bokningsbekräftelse)</label><input id="d" type="date"><button type="button" id="date-open" class="date-open" aria-haspopup="dialog" aria-controls="date-dialog"><span class="date-open-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M7 3v4M17 3v4M3 10h18"/><path d="M8 14h2M14 14h2M8 18h2"/></svg></span><span id="date-choice">Välj ett datum</span><span class="date-open-arrow" aria-hidden="true">▾</span></button></div></div>
+<details class="ff-optional" id="ffExtraDetails">
+  <summary><span>Fler uppgifter (valfritt)</span><small>Budget, önskemål och alternativt datum</small></summary>
+  <div class="ff-optional-fields">
 <div>
   <label for="k">Din ungefärliga budget (valfritt)</label>
   <div class="kr">
@@ -382,8 +386,15 @@
   <p class="hint">Du behöver inte ange någon budget. Vi återkommer med ett personligt prisförslag.</p>
 </div>
 <div><label for="g">Övriga önskemål eller information (valfritt)</label><textarea id="g" maxlength="1800"></textarea></div>
+<div><label for="ff-alt-date">Alternativt datum (valfritt)</label><input id="ff-alt-date" type="date"><p class="ff-hint">Vi kontrollerar tillgänglighet innan bokningen bekräftas.</p></div>
+  </div>
+</details>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
+<div class="ff-conversion-trust" role="note"><span>✓ Kostnadsfri förfrågan</span><span>✓ Inte bindande</span><span>✓ Personlig offert</span></div>
+<div class="ff-draft-row"><label for="ff-save-draft"><input type="checkbox" id="ff-save-draft"> Kom ihåg mina uppgifter på den här enheten i högst 24 timmar</label><button type="button" id="ff-clear-draft" class="ff-clear-draft" hidden>Radera sparade uppgifter</button></div>
+<p class="ff-draft-note" id="ff-draft-status" role="status" aria-live="polite">Spara bara på en enhet du själv använder. Uppgifterna lagras i din webbläsare.</p>
+<div class="ff-social-inline"><a href="#ffPublicGallery" id="ff-gallery-shortcut" hidden>Se våra publicerade jobb ↗</a><a href="https://se.trustpilot.com/review/flyttfrascht.se" target="_blank" rel="noopener noreferrer">Läs om oss på Trustpilot ↗</a></div>
 <button class="btn" id="sendBtn" type="submit">Granska och skicka ✦</button>
 <p class="hint" id="err" role="alert" style="color:var(--ortext);margin:0"></p>
 <div id="res" role="status" aria-live="polite"><b>✓ Tack för din offertförfrågan!</b><p class="hint" style="margin:8px 0 0">Vi har tagit emot din förfrågan och kommer att behandla den så snart som möjligt. Vi återkommer till dig via dina kontaktuppgifter.</p><p id="saveNote" class="hint" style="margin-top:8px" role="status"></p></div>
@@ -549,5 +560,6 @@
 <script src="hemsida-premium.js" defer></script>
 <script src="hemsida-extra.js" defer></script>
 <script src="hemsida-tillvaxt.js" defer></script>
+<script src="konvertering-gratis.js" defer></script>
 </body>
 </html>
