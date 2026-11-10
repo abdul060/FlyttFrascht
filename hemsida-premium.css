@@ -166,3 +166,62 @@
     color:#102447!important;
   }
 }
+
+
+/* ================================================================
+   MÖRK KONTRAST – snabbval på startsidan
+   Ersätter de tidigare ljusa kortfärgerna och behåller tydliga länkar.
+   ================================================================ */
+.ff-quick {
+  background: #111f3d;
+  color: #f5f8ff;
+}
+.ff-quick .ff-mini-eyebrow {
+  color: #ffb46c;
+}
+.ff-quick .ff-quick-head h2 {
+  color: #ffffff;
+}
+.ff-quick .ff-quick-head p {
+  color: #d4dfef;
+}
+.ff-quick .ff-quick-choice,
+.ff-quick a.ff-quick-choice {
+  background: #203657;
+  color: #ffffff !important;
+  border: 1px solid #415b7b;
+  box-shadow: 0 5px 18px rgba(0, 7, 21, .13);
+}
+.ff-quick .ff-quick-choice:hover,
+.ff-quick .ff-quick-choice:focus-visible {
+  background: #2b466d;
+  border-color: #f5aa61;
+  box-shadow: 0 9px 22px rgba(0, 7, 21, .18);
+}
+.ff-quick .ff-quick-choice strong {
+  color: #ffffff;
+}
+.ff-quick .ff-quick-choice small {
+  color: #dce6f4;
+}
+.ff-quick .ff-quick-emoji {
+  background: #30496d;
+}
+.ff-quick .ff-quick-arrow {
+  color: #ffb06a;
+}
+.ff-quick .ff-quick-phone {
+  background: #203657;
+  color: #ffffff;
+  border: 1px solid #6780a3;
+}
+.ff-quick .ff-quick-phone:hover,
+.ff-quick .ff-quick-phone:focus-visible {
+  background: #2b466d;
+  border-color: #ffb06a;
+}
+.ff-quick .ff-quick-choice:focus-visible,
+.ff-quick .ff-quick-phone:focus-visible {
+  outline: 3px solid #ffb46c;
+  outline-offset: 3px;
+}
