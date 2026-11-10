@@ -327,3 +327,19 @@ select {
   .ff-trustpilot-visual { min-height: 170px; }
   .ff-trustpilot-button { width: 100%; text-align: center; }
 }
+
+
+/* Google-recensioner och sociala medier – startsidan */
+.ff-review-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.ff-google-review-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:13px 22px;border:1.5px solid rgba(255,255,255,.65);border-radius:10px;background:transparent;color:#fff;font-weight:800;text-decoration:none;transition:background .2s ease,transform .2s ease}
+.ff-google-review-button:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.ff-google-review-button:focus-visible{outline:3px solid #ffab65;outline-offset:4px}
+.ff-social-col{min-width:min(100%,220px)}
+.ff-social-title{margin:0 0 10px;font-size:17px;line-height:1.3;color:#fff}
+.ff-social-col p{margin:0 0 16px;max-width:280px;color:#dce4f5;line-height:1.55}
+.ff-social-links{display:flex;flex-wrap:wrap;gap:10px}
+footer .ff-social-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid rgba(255,255,255,.27);border-radius:10px;color:#fff;text-decoration:none;line-height:1.2;transition:background .2s ease,border-color .2s ease}
+footer .ff-social-links a:hover{background:rgba(255,122,0,.16);border-color:#ff9a40}
+footer .ff-social-links a:focus-visible{outline:3px solid #ff9a40;outline-offset:3px}
+.ff-social-links svg{flex:none}
+@media (max-width:700px){.ff-review-actions{flex-direction:column;align-items:stretch}.ff-google-review-button{width:100%;text-align:center}}
