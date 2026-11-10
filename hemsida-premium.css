@@ -68,3 +68,101 @@
 }
 @media(max-width:380px){.ff-quick-grid{grid-template-columns:1fr}.ff-quick-choice{min-height:auto;flex-direction:row;align-items:center;gap:14px}.ff-quick-arrow{position:static;margin-left:auto}.ff-quick-emoji{flex:none}}
 @media(prefers-reduced-motion:reduce){.ff-quick-choice{transition:none}.ff-quick-choice:hover{transform:none}}
+
+/* ================================================================
+   Flytt & Fräscht – behagligare kontrast och mindre bländning
+   2026-11-10
+   Anpassar ljusa ytor och planeringskort utan att ändra funktioner.
+   ================================================================ */
+
+/* Mildare ljus palett. Respekterar både systemets och sidans mörka läge. */
+:root:not([data-theme="dark"]) {
+  --bg:#eaf0f7;
+  --bg2:#dfe8f3;
+  --card:#f3f6fa;
+  --line:#c6d3e2;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#08122b;
+    --bg2:#0b1b3f;
+    --card:#10224a;
+    --line:#26386b;
+  }
+}
+
+/* Snabbval: nedtonad yta istället för stora kritvita fält. */
+.ff-quick {
+  background:#e6edf6;
+  color:#102447;
+}
+.ff-quick-head h2,
+.ff-quick-choice strong { color:#102447; }
+.ff-quick-head p { color:#3d5270; }
+.ff-quick-choice {
+  background:#f0f4f9;
+  border-color:#c9d6e6;
+  box-shadow:0 5px 18px rgba(11,27,63,.055);
+}
+.ff-quick-choice:hover {
+  background:#e9f0f8;
+  border-color:#a6b9d1;
+  box-shadow:0 9px 24px rgba(11,27,63,.10);
+}
+.ff-quick-choice small { color:#405674; }
+.ff-quick-emoji {
+  background:#e5eaf2;
+}
+.ff-quick-arrow { color:#a84908; }
+.ff-quick-phone {
+  background:#e9f0f8;
+  border-color:#b5c6db;
+  color:#102447;
+}
+.ff-quick-phone:hover { background:#dce8f4; border-color:#8ba3c1; }
+
+/* Planeringsresultat: samma mörkblå ton som övriga sajten i
+   stället för en mycket ljus orange yta mitt i mörk sektion. */
+.ff-guide-live {
+  background:#1c3358;
+  color:#f4f7fc;
+  border:1px solid #3d5576;
+  border-left:4px solid #e68a35;
+  box-shadow:0 5px 15px rgba(4,15,35,.11);
+}
+.ff-guide-live .ff-mini-eyebrow {
+  color:#ffbd80;
+}
+.ff-guide-live strong,
+.ff-guide-live #ff-guide-scope {
+  color:#ffffff;
+}
+.ff-guide-live p,
+.ff-guide-live #ff-guide-result {
+  color:#e0eaf7;
+}
+
+/* Fokus skall vara tydligt även för tangentbordsanvändare. */
+.ff-quick-choice:focus-visible,
+.ff-quick-phone:focus-visible,
+.ff-mobile-actions a:focus-visible,
+.ff-guide-more select:focus-visible {
+  outline:3px solid #a94a00;
+  outline-offset:3px;
+}
+
+/* Matcha de mildare färgerna i mobila kontaktfält. */
+@media (max-width:700px) {
+  .ff-mobile-actions {
+    background:rgba(229,237,247,.97);
+    border-top-color:#bdcddd;
+  }
+  .ff-mobile-call {
+    background:#f0f4f9;
+    border-color:#b5c6db;
+  }
+  .ff-mobile-quote {
+    background:#f0a15b;
+    color:#102447!important;
+  }
+}
