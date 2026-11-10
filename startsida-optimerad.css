@@ -1033,3 +1033,71 @@ button.quote-review-confirm:hover {background:#ffad6a;}
   overflow:hidden!important;
   clip-path:inset(50%)!important;
 }
+
+
+/* ============================================================
+   Flytt & Fräscht — finslipning: mobil, offert, galleri, tillgänglighet
+   Bevarar befintliga HTML-ID:n, JS-kopplingar och formulärflöde.
+   ============================================================ */
+/* Formfält: inga element får bli bredare än sin kolumn */
+#offert form,
+#offert form .r2,
+#offert form .r2 > div,
+#offert form .ff-optional-fields,
+#offert form .ff-optional-fields > div {min-width:0;max-width:100%;box-sizing:border-box}
+#offert form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+#offert form select,
+#offert form textarea,
+#offert form .kr,
+#offert form .date-open {max-width:100%;box-sizing:border-box}
+#offert form textarea {resize:vertical;min-height:105px}
+#offert .ff-optional-fields .kr {overflow:hidden}
+#offert form :is(input, select, textarea, button):focus-visible,
+.ff-quick-choice:focus-visible,
+.ff-pg-section a:focus-visible,
+.hero .cta a:focus-visible,
+.ff-mobile-panel a:focus-visible {
+  outline:3px solid #ffbf86;outline-offset:3px;
+}
+/* Kunder kan läsa fälten tydligt, utan stora tomma utrymmen. */
+#offert .ff-optional-fields {gap:16px}
+#offert .ff-optional-fields label {line-height:1.35}
+#offert .ff-optional-fields .hint,
+#offert .ff-optional-fields .ff-hint {line-height:1.5}
+/* Befintligt jobb-galleri: endast presentation; public-jobbfoton.js lämnas orörd. */
+#ffPublicGallery .ff-pg-grid {align-items:start}
+#ffPublicGallery .ff-pg-card {
+  overflow:hidden;border-radius:18px;background:#1b3252;
+  border:1px solid #476080;
+  box-shadow:0 8px 20px rgba(0,0,0,.13);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+#ffPublicGallery .ff-pg-card img {width:100%;aspect-ratio:4/3;object-fit:cover;display:block;height:auto}
+#ffPublicGallery .ff-pg-card figcaption {padding:13px 16px 16px;line-height:1.5;overflow-wrap:anywhere}
+@media (hover:hover) and (pointer:fine) {
+  #ffPublicGallery .ff-pg-card:hover {transform:translateY(-3px);border-color:#8da1bc;box-shadow:0 14px 26px rgba(0,0,0,.2)}
+}
+/* Kompakt, läsbar mobilvy utan extra fasta knappar. */
+@media(max-width:600px) {
+  #hem.hero .sub {font-size:clamp(16px,4.15vw,18px);line-height:1.57;margin-bottom:18px}
+  #hem.hero .cta {gap:10px}
+  #hem.hero .hero-tags {gap:6px;margin-bottom:17px}
+  #hem.hero .hero-note {font-size:12px!important;line-height:1.5}
+  #offert form {max-width:100%;min-width:0;overflow-wrap:break-word}
+  #offert form .r2 {min-width:0}
+  #offert form .r2 > div {width:100%}
+  #offert form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  #offert form select, #offert form textarea {font-size:16px}
+  #offert .ff-optional summary small {line-height:1.4}
+  #offert .ff-optional-fields textarea {min-height:90px}
+  #offert #sendBtn {min-height:48px}
+  #ffPublicGallery .ff-pg-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  #ffPublicGallery .ff-pg-card figcaption {padding:11px 12px;font-size:13px}
+}
+@media(max-width:380px) {
+  #ffPublicGallery .ff-pg-grid {grid-template-columns:1fr}
+  #ffPublicGallery .ff-pg-card img {aspect-ratio:16/10}
+}
+@media(prefers-reduced-motion:reduce) {
+  #ffPublicGallery .ff-pg-card {transition:none}
+}
