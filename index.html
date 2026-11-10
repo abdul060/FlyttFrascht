@@ -65,6 +65,7 @@
   ]
 }
 </script>
+<link rel="stylesheet" href="hemsida-tillvaxt.css">
 </head>
 <body>
 <a class="ff-skip-link" href="#huvudinnehall">Hoppa till innehållet</a>
@@ -311,6 +312,54 @@
   </p>
 </details><details><summary>Var arbetar ni?</summary><p>Vi utgår från Stockholm. Skriv gärna adress eller område i din förfrågan så kan vi bedöma om vi kan hjälpa dig där.</p></details><details><summary>Hur fungerar pris och RUT-avdrag?</summary><p>Priset anpassas efter uppdraget. Vissa hushållsnära tjänster kan omfattas av RUT-avdrag om Skatteverkets villkor är uppfyllda. Vi går igenom vad som gäller i just din offert.</p></details><details><summary>Kan jag önska ett särskilt datum?</summary><p>Ja. Fyll i önskat datum i formuläret. Vi kontrollerar tillgängligheten och återkommer med ett förslag.</p></details><details><summary>Hur kontaktar ni mig efteråt?</summary><p>Vi använder telefonnumret eller e-postadressen du lämnar för att återkomma om din förfrågan.</p></details></div></div></section>
 
+
+<!-- Tillväxtverktyg, etapp 1: inga påhittade priser eller tillgängliga tider -->
+<section id="flyttplaneraren" class="ff-growth-section" aria-labelledby="ff-grow-title">
+ <div class="wrap">
+  <div class="ff-grow-heading"><span class="ff-grow-eyebrow">PLANERA SMARTARE</span><h2 id="ff-grow-title">Gör flytten enklare redan idag</h2><p>Välj vad du behöver och få hjälp att sammanställa rätt information för en personlig offert.</p></div>
+  <div class="ff-grow-layout">
+   <div class="ff-grow-card">
+    <h3>Bygg ditt eget tjänstepaket</h3><p>Kombinera tjänster i en enda förfrågan. Du får alltid en personlig offert.</p>
+    <fieldset class="ff-grow-services"><legend>Vad vill du ha hjälp med?</legend>
+     <label><input type="checkbox" value="Komplett flytt & transport" id="ff-grow-move"> Flytt och transport</label>
+     <label><input type="checkbox" value="Flyttstädning" id="ff-grow-clean"> Flyttstädning</label>
+     <label><input type="checkbox" value="Packhjälp / bärhjälp" id="ff-grow-pack"> Packhjälp eller bärhjälp</label>
+     <label><input type="checkbox" value="Fönsterputs" id="ff-grow-windows"> Fönsterputs</label>
+     <label><input type="checkbox" value="Hemstädning" id="ff-grow-home"> Hemstädning</label>
+    </fieldset>
+    <div class="ff-grow-inputrow"><label for="ff-grow-date">Önskat datum</label><input id="ff-grow-date" type="date"><small>Datumet är ett önskemål, inte en bekräftad ledig tid.</small></div>
+    <div class="ff-grow-inputrow"><label for="ff-grow-from">Från (adress eller område, valfritt)</label><input id="ff-grow-from" autocomplete="off" maxlength="150" placeholder="T.ex. Solna"></div>
+    <div class="ff-grow-inputrow"><label for="ff-grow-to">Till (adress eller område, valfritt)</label><input id="ff-grow-to" autocomplete="off" maxlength="150" placeholder="T.ex. Täby"></div>
+    <p id="ff-grow-status" class="ff-grow-status" role="status" aria-live="polite">Välj minst en tjänst för att fortsätta.</p>
+    <button type="button" id="ff-grow-apply" class="ff-grow-primary">Ta med valen till offerten <span aria-hidden="true">→</span></button>
+   </div>
+   <div class="ff-grow-card ff-grow-side">
+    <h3>Din personliga flyttchecklista</h3><p>En kostnadsfri lista som du kan bocka av. Den sparas bara på den här enheten.</p>
+    <div class="ff-grow-checklist" id="ff-grow-checklist">
+     <label><input type="checkbox" data-step="1"> Bestäm önskat flyttdatum</label>
+     <label><input type="checkbox" data-step="2"> Inventera möbler och kartonger</label>
+     <label><input type="checkbox" data-step="3"> Kontrollera hiss, trappor och parkering</label>
+     <label><input type="checkbox" data-step="4"> Planera packning och flyttstädning</label>
+     <label><input type="checkbox" data-step="5"> Gör adressändring vid behov</label>
+     <label><input type="checkbox" data-step="6"> Begär offert och bekräfta upplägget</label>
+    </div>
+    <div class="ff-grow-meter"><div id="ff-grow-meter" role="progressbar" aria-valuemin="0" aria-valuemax="6" aria-valuenow="0" aria-label="Klara punkter"><span id="ff-grow-meter-bar"></span></div><span id="ff-grow-meter-label" aria-live="polite">0 av 6 klara</span></div>
+    <button type="button" id="ff-grow-print" class="ff-grow-secondary">Skriv ut checklistan</button>
+   </div>
+  </div>
+ </div>
+</section>
+<section class="ff-growth-section ff-grow-trust" id="trygghet" aria-labelledby="ff-grow-trust-title">
+ <div class="wrap"><div class="ff-grow-heading"><span class="ff-grow-eyebrow">SVAR FÖRE BOKNING</span><h2 id="ff-grow-trust-title">Bra att veta innan du bestämmer dig</h2><p>Raka svar på vanliga frågor – detaljerna för just ditt uppdrag bekräftar vi i offerten.</p></div>
+ <div class="ff-grow-faq">
+  <details><summary>Är datumet jag väljer garanterat ledigt?</summary><p>Nej. Du anger ett önskat datum. Vi kontrollerar vår kapacitet och bekräftar datumet i samband med bokningen.</p></details>
+  <details><summary>Får jag ett pris direkt från paketbyggaren?</summary><p>Nej. Vi tar fram ett personligt prisförslag baserat på vad du behöver, bostadens förutsättningar och tillgänglighet.</p></details>
+  <details><summary>Hur fungerar avbokning och ombokning?</summary><p>Kontakta oss så går vi igenom vad som gäller för din bokning. Eventuella villkor framgår av offerten eller bokningsbekräftelsen.</p></details>
+  <details><summary>Vad händer om något skadas?</summary><p>Kontakta oss så snart som möjligt och beskriv händelsen. Vi går igenom ärendet och de villkor som gäller för uppdraget.</p></details>
+ </div></div>
+</section>
+<div class="ff-grow-help" id="ff-grow-help" hidden><p>Behöver du hjälp med offertförfrågan?</p><a href="#kontakt">Kontakta oss</a><button type="button" id="ff-grow-help-close" aria-label="Stäng hjälpen">×</button></div>
+
 <section id="offert"><div class="wrap fgrid">
 <div class="side">
 <div class="eyebrow rv">Offertförfrågan</div>
@@ -546,5 +595,6 @@
 <script src="public-jobbfoton.js" defer></script>
 <script src="hemsida-premium.js" defer></script>
 <script src="hemsida-extra.js" defer></script>
+<script src="hemsida-tillvaxt.js" defer></script>
 </body>
 </html>
