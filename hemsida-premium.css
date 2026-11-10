@@ -225,3 +225,10 @@
   outline: 3px solid #ffb46c;
   outline-offset: 3px;
 }
+
+
+/* 2026-11-10: Gamla fasta Ring / Begär offert-knappar är borttagna. */
+.ff-mobile-actions,.mobile-contact-bar {display:none !important}
+@media (max-width:860px) {
+  body, body:not(.service-page), body.service-page {padding-bottom:0 !important}
+}

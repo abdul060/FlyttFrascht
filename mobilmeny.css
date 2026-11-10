@@ -1,30 +1,41 @@
-/* Flytt & Fräscht: mobilnavigering - behåller den nedre offert-/ringmenyn. */
-.ff-menu-toggle,.ff-mobile-panel,.ff-menu-backdrop{display:none}
-@media(max-width:860px){
-  header .bar{gap:12px}
-  .ff-menu-toggle{display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;gap:9px;border:1px solid rgba(255,255,255,.25);border-radius:13px;padding:9px 12px;min-height:44px;background:#213457;color:#fff;font:700 14px 'Barlow',sans-serif;cursor:pointer}
-  .ff-menu-lines{display:grid;gap:4px}
-  .ff-menu-lines span{display:block;width:19px;height:2px;border-radius:2px;background:#FF9A46;transition:transform .2s,opacity .2s}
-  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:first-child{transform:translateY(6px) rotate(45deg)}
-  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:nth-child(2){opacity:0}
-  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:last-child{transform:translateY(-6px) rotate(-45deg)}
-  .ff-menu-backdrop:not([hidden]){display:block;position:fixed;inset:calc(68px + env(safe-area-inset-top,0px)) 0 0;background:rgba(2,9,24,.52);z-index:65}
-  .ff-mobile-panel{display:flex;flex-direction:column;gap:3px;position:fixed;top:calc(68px + env(safe-area-inset-top,0px));right:12px;left:12px;max-height:calc(100dvh - 92px - env(safe-area-inset-top,0px));overflow-y:auto;overscroll-behavior:contain;background:#142743;color:#F1F5FB;border:1px solid #355072;border-radius:0 0 20px 20px;box-shadow:0 18px 40px rgba(0,0,0,.35);padding:16px;z-index:66;visibility:hidden;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .18s,transform .18s,visibility .18s}
-  .ff-mobile-panel.is-open{visibility:visible;opacity:1;transform:translateY(0);pointer-events:auto}
-  .ff-mobile-panel-heading{font-size:12px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase;color:#E9AA76;margin-bottom:6px}
-  .ff-mobile-panel>a{display:flex;align-items:center;gap:12px;min-height:46px;padding:10px 12px;text-decoration:none;border-radius:10px;font-weight:650;font-size:16px;color:#F1F5FB;background:#203752}
-  .ff-mobile-panel>a:hover,.ff-mobile-panel>a:focus-visible{background:#314F70}
-  .ff-mobile-panel-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:10px}
-  .ff-mobile-panel-actions a{display:grid;place-items:center;min-height:48px;padding:10px;text-align:center;text-decoration:none;border-radius:11px;font-size:14px;font-weight:800}
-  .ff-menu-quote{background:#FF8A1F;color:#10213D}
-  .ff-menu-call{background:#E6EDF8;color:#10213D}
-  body.ff-menu-open{overflow:hidden}
+/* Flytt & Fräscht – modern mobilmeny, utan emojis eller fasta nederknappar. */
+.ff-menu-toggle,.ff-mobile-panel,.ff-menu-backdrop {display:none}
+@media (max-width:860px) {
+  header .bar {gap:12px}
+  .ff-menu-toggle {display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;gap:10px;border:1px solid #526484;border-radius:12px;padding:9px 13px;min-height:44px;background:#1b3053;color:#fff;font:700 14px 'Barlow',sans-serif;cursor:pointer;transition:background .18s,border-color .18s}
+  .ff-menu-toggle:hover {background:#294467;border-color:#8093b4}
+  .ff-menu-lines {display:grid;gap:4px}
+  .ff-menu-lines span {display:block;width:19px;height:2px;border-radius:3px;background:#ffac67;transition:transform .2s,opacity .2s}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:first-child {transform:translateY(6px) rotate(45deg)}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:nth-child(2) {opacity:0}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:last-child {transform:translateY(-6px) rotate(-45deg)}
+  .ff-menu-backdrop:not([hidden]) {display:block;position:fixed;inset:0;background:rgba(3,11,28,.72);z-index:9991}
+  .ff-mobile-panel {display:flex;flex-direction:column;gap:0;position:fixed;top:max(10px,env(safe-area-inset-top,0px));right:10px;left:10px;max-width:480px;margin:0 auto;max-height:calc(100dvh - max(20px,env(safe-area-inset-top,0px)) - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;background:#132643;color:#f4f7ff;border:1px solid #425a7c;border-radius:20px;box-shadow:0 24px 65px rgba(0,0,0,.48);padding:19px;z-index:9992;visibility:hidden;opacity:0;transform:translateY(-12px) scale(.98);pointer-events:none;transition:opacity .19s,transform .19s,visibility .19s}
+  .ff-mobile-panel.is-open {visibility:visible;opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .ff-mobile-panel-top {display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:3px 0 18px;border-bottom:1px solid #3c5170}
+  .ff-mobile-overline {display:block;margin-bottom:7px;font-size:11px;letter-spacing:1.3px;font-weight:800;color:#ffb575}
+  .ff-mobile-panel-heading {font-size:23px;font-weight:800;line-height:1.15;color:#fff;letter-spacing:-.3px}
+  .ff-menu-close {flex:none;display:grid;place-items:center;width:44px;height:44px;background:#263c5c;color:#fff;border:1px solid #59708e;border-radius:12px;font-size:29px;line-height:1;cursor:pointer}
+  .ff-menu-close:hover {background:#365275}
+  .ff-mobile-link-list {display:grid;gap:6px;padding:18px 0}
+  .ff-mobile-link-list>a {display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:50px;padding:12px 15px;text-decoration:none;border:1px solid #365073;border-radius:11px;font-weight:650;font-size:16px;color:#f7f9fe;background:#203857;transition:background .16s,border-color .16s}
+  .ff-mobile-link-list>a:hover,.ff-mobile-link-list>a:focus-visible {background:#304a6d;border-color:#90a4c2}
+  .ff-menu-chevron {display:block;width:9px;height:9px;border-top:2px solid #ffb575;border-right:2px solid #ffb575;transform:rotate(45deg);margin-right:3px}
+  .ff-mobile-panel-actions {display:block;padding-top:15px;border-top:1px solid #3c5170}
+  .ff-mobile-panel-actions a {display:flex;align-items:center;justify-content:center;gap:8px;min-height:49px;padding:12px 16px;text-align:center;text-decoration:none;border-radius:12px;font-size:15px;font-weight:800}
+  .ff-menu-quote {background:#f2a15c;color:#11233e}
+  .ff-menu-quote:hover {background:#ffb77d}
+  .ff-mobile-menu-note {margin:15px 0 0;text-align:center;color:#b5c4da;font-size:12px;letter-spacing:.2px}
+  .ff-menu-toggle:focus-visible,.ff-menu-close:focus-visible,.ff-mobile-panel a:focus-visible {outline:3px solid #ffb575;outline-offset:3px}
+  body.ff-menu-open {overflow:hidden}
 }
-@media(max-width:600px){
- header .bar{height:68px}
- header .brand{font-size:clamp(18px,5.2vw,24px);gap:7px;white-space:nowrap}
- header .brand svg{width:30px;height:30px}
- header .bar>nav{display:none}
- .ff-menu-toggle{margin-left:auto}
+@media (max-width:600px) {
+  header .bar {height:68px}
+  header .brand {font-size:clamp(18px,5.2vw,24px);gap:7px;white-space:nowrap}
+  header .brand svg {width:30px;height:30px}
+  header .bar>nav {display:none}
+  .ff-menu-toggle {margin-left:auto}
 }
-@media(prefers-reduced-motion:reduce){.ff-mobile-panel,.ff-menu-lines span{transition:none}}
+@media (prefers-reduced-motion:reduce) {
+  .ff-mobile-panel,.ff-menu-lines span,.ff-mobile-link-list>a {transition:none}
+}
