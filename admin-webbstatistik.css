@@ -1,0 +1,12 @@
+/* Etapp 3: webbstatistik i adminpanelen */
+.ff-webstats { margin:24px 0; padding:22px; color:#f1f5fd; background:#142644; border:1px solid #334d71; border-radius:16px; }
+.ff-webstats h2 { margin:0 0 8px; color:#fff; font-size:1.4rem; }
+.ff-webstats p { color:#cbd9eb; margin:6px 0 14px; }
+.ff-webstats-summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; }
+.ff-webstats-summary div { padding:14px; background:#203756; border:1px solid #435b79; border-radius:12px; }
+.ff-webstats-summary strong { display:block; color:#fff; font-size:1.75rem; font-variant-numeric:tabular-nums; }
+.ff-webstats-summary span { display:block; color:#dae5f4; font-size:.93rem; }
+.ff-webstats button { margin-top:12px; background:#ed9a55; color:#13243f; border:0; border-radius:9px; padding:10px 15px; font-weight:700; cursor:pointer; }
+.ff-webstats button:focus-visible { outline:3px solid #fff; outline-offset:3px; }
+.ff-webstats-status { min-height:1.6em; }
+.ff-webstats-details { font-size:.88rem; color:#ccd9e9; }
