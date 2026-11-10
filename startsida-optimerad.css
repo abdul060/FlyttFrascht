@@ -1001,3 +1001,35 @@ button.quote-review-confirm:hover {background:#ffad6a;}
 @media(max-width:740px){.ff-grow-layout,.ff-grow-faq{grid-template-columns:1fr}.ff-growth-section{padding:45px 0}.ff-grow-card{padding:20px}.ff-grow-help{bottom:16px;left:16px;right:16px;max-width:none}}
 @media print{.ff-grow-card:first-child,.ff-grow-trust,.ff-grow-help,.ff-grow-primary,.ff-grow-secondary{display:none!important}.ff-grow-layout{display:block}.ff-grow-side{background:white;color:#111;border:0;box-shadow:none}.ff-grow-side h3,.ff-grow-side p,.ff-grow-checklist label{color:#111!important}.ff-grow-checklist label{border-color:#aaa;background:white}}
 @media(prefers-reduced-motion:reduce){.ff-grow-meter>div span{transition:none}}
+
+/* ===== Rättad bredd och enhetlig kalender i valfria offertfält ===== */
+#offert .ff-optional-fields,
+#offert .ff-optional-fields > div,
+#offert .ff-optional-fields .kr {
+  min-width:0;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+#offert .ff-optional-fields input,
+#offert .ff-optional-fields textarea,
+#offert .ff-optional-fields button.date-open {
+  display:block;
+  min-width:0;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+#offert .ff-optional-fields button.date-open {display:flex}
+#offert .ff-optional-fields textarea {resize:vertical}
+/* Göm bara det alternativa native-fältet när den egna kalendern är aktiv. */
+#offert .ff-alt-date-field.ff-custom-calendar-ready #ff-alt-date {
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  min-height:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  clip-path:inset(50%)!important;
+}
