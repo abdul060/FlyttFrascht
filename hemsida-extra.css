@@ -39,6 +39,6 @@
 #ffFormProgressBar{display:block;height:100%;width:0;background:#ffb56d;border-radius:100px;transition:width .2s}
 .ff-contact-menu summary:focus-visible,.ff-areas-grid button:focus-visible,.ff-contact-options a:focus-visible,.ff-up-primary:focus-visible{outline:3px solid #ffc98d;outline-offset:3px}
 @media(max-width:850px){.ff-areas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-rut-grid{grid-template-columns:1fr;gap:22px}}
-@media(max-width:700px){.ff-up-section{padding:53px 0}.ff-contact-dock{bottom:87px;right:12px}.ff-contact-menu>summary{padding:11px 13px;font-size:13px}.ff-areas-grid button{padding:14px;min-height:65px;font-size:14px}}
+@media(max-width:700px){.ff-up-section{padding:53px 0}.ff-contact-dock{bottom:calc(12px + env(safe-area-inset-bottom, 0px));right:12px}.ff-contact-menu>summary{padding:11px 13px;font-size:13px}.ff-areas-grid button{padding:14px;min-height:65px;font-size:14px}}
 @media(max-width:420px){.ff-areas-grid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){.ff-areas-grid button,#ffFormProgressBar{transition:none}}
