@@ -1,0 +1,19 @@
+/* Flytt & Fräscht – etapp 2: kontrastanpassad offertplanering */
+.ff-e2-fieldset{min-width:0;border:1px solid #435b79;border-radius:16px;padding:clamp(16px,3vw,24px);background:#1c3150;color:#f1f6fc;margin:20px 0}
+.ff-e2-fieldset[hidden],.ff-e2-fieldset [hidden]{display:none!important}
+.ff-e2-fieldset legend{color:#fff;font-size:1.12rem;font-weight:800;padding:0 7px}
+.ff-e2-fieldset p.ff-e2-lead{color:#d3e1f0;margin:0 0 18px;line-height:1.6}
+.ff-e2-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-bottom:14px}
+.ff-e2-grid>div,.ff-e2-fieldset>div:has(>label){min-width:0}
+.ff-e2-fieldset label{display:block;color:#e8f1fc;margin-bottom:8px;font-weight:700;font-size:.92rem}
+.ff-e2-fieldset select,.ff-e2-fieldset textarea{box-sizing:border-box;display:block;width:100%;max-width:100%;border:2px solid #bdcce0;background:#edf2f8;color:#142a48;border-radius:10px;padding:11px 12px;min-height:46px;font:inherit;color-scheme:light}
+.ff-e2-fieldset textarea{resize:vertical;line-height:1.5;min-height:85px}
+.ff-e2-fieldset select:focus-visible,.ff-e2-fieldset textarea:focus-visible,.ff-e2-outline:focus-visible{outline:3px solid #ffb77b;outline-offset:3px}
+.ff-e2-maprow{border:1px solid #516a86;border-radius:12px;padding:14px;margin:8px 0 17px;background:#233d5c}
+.ff-e2-maprow p{color:#f4f7fc;margin:0 0 8px}.ff-e2-maprow small{display:block;color:#c9d9ea;font-size:.8rem;margin-top:8px;line-height:1.4}
+.ff-e2-outline{background:#314d6d;color:#fff;font:inherit;font-weight:700;border:1px solid #87a3c2;border-radius:10px;padding:10px 14px;min-height:44px;cursor:pointer;max-width:100%;text-align:left}
+.ff-e2-outline:hover{background:#405e80}
+.ff-e2-fieldset .ff-e2-status{color:#ffc590;margin:8px 0 0;font-size:.85rem}
+.ff-e2-fieldset .ff-e2-summary{color:#cae4ff;margin:14px 0 0;font-size:.88rem;line-height:1.5}
+@media(max-width:600px){.ff-e2-grid{grid-template-columns:1fr}.ff-e2-fieldset{padding:16px}}
+@media(prefers-reduced-motion:reduce){.ff-e2-fieldset *{scroll-behavior:auto}}

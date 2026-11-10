@@ -66,6 +66,7 @@
 }
 </script>
 <link rel="stylesheet" href="hemsida-tillvaxt.css">
+<link rel="stylesheet" href="hemsida-etapp2.css">
 </head>
 <body>
 <a class="ff-skip-link" href="#huvudinnehall">Hoppa till innehållet</a>
@@ -448,6 +449,26 @@
   </div>
   <p class="hint">Du behöver inte ange någon budget. Vi återkommer med ett personligt prisförslag.</p>
 </div>
+<!-- Tillväxt etapp 2: extra planeringsfrågor. Svar fogas till befintliga meddelandefältet, ingen ny databas krävs. -->
+<fieldset class="ff-e2-fieldset" id="ff-e2-details">
+ <legend>Hjälp oss planera ditt uppdrag bättre</legend>
+ <p class="ff-e2-lead" id="ff-e2-context">Fyll i det du vet. Frågorna anpassas efter vald tjänst och är frivilliga.</p>
+ <div id="ff-e2-move" hidden>
+  <div class="ff-e2-grid">
+   <div><label for="ff-e2-parking-from">Parkering vid hämtning</label><select id="ff-e2-parking-from"><option value="">Inte angivet</option><option>Nära porten</option><option>En bit att gå</option><option>Osäkert / behöver undersökas</option></select></div>
+   <div><label for="ff-e2-parking-to">Parkering vid avlämning</label><select id="ff-e2-parking-to"><option value="">Inte angivet</option><option>Nära porten</option><option>En bit att gå</option><option>Osäkert / behöver undersökas</option></select></div>
+   <div><label for="ff-e2-heavy">Tunga eller skrymmande saker</label><select id="ff-e2-heavy"><option value="">Inte angivet</option><option>Nej</option><option>Ja – beskriv nedan</option><option>Vet inte ännu</option></select></div>
+   <div><label for="ff-e2-boxes">Ungefär antal flyttkartonger</label><select id="ff-e2-boxes"><option value="">Inte angivet</option><option>0–10</option><option>11–25</option><option>26–50</option><option>51–100</option><option>Över 100</option><option>Vet inte ännu</option></select></div>
+  </div>
+  <div class="ff-e2-maprow"><p>Vill du kontrollera din resväg?</p><button id="ff-e2-route" class="ff-e2-outline" type="button">Öppna vägbeskrivning i Google Maps</button><small>Adresserna öppnas endast om du själv trycker på knappen.</small><p id="ff-e2-route-status" class="ff-e2-status" role="status" aria-live="polite"></p></div>
+ </div>
+ <div id="ff-e2-clean" hidden><div class="ff-e2-grid">
+  <div><label for="ff-e2-pets">Finns det husdjur hemma?</label><select id="ff-e2-pets"><option value="">Inte angivet</option><option>Ja</option><option>Nej</option></select></div>
+  <div><label for="ff-e2-key">Hur kan vi få tillträde?</label><select id="ff-e2-key"><option value="">Inte bestämt</option><option>Någon möter upp</option><option>Nyckelöverlämning behöver planeras</option><option>Vi kommer överens senare</option></select></div>
+ </div></div>
+ <div><label for="ff-e2-notes">Fler detaljer om uppdraget (valfritt)</label><textarea id="ff-e2-notes" maxlength="400" rows="3" placeholder="T.ex. piano, lång gångväg, många trappor eller särskilda önskemål"></textarea></div>
+ <p class="ff-e2-summary" id="ff-e2-summary" aria-live="polite">Dina planeringsuppgifter läggs till när du granskar offerten.</p>
+</fieldset>
 <div><label for="g">Övriga önskemål eller information (valfritt)</label><textarea id="g" maxlength="1800"></textarea></div>
 <p class="privacy-note">Vi använder dina uppgifter för att svara på förfrågan och planera ditt uppdrag. Läs vår <a href="integritet.html">integritetsinformation</a>.</p>
 <div class="spam-field" aria-hidden="true"><label for="website">Lämna detta fält tomt</label><input id="website" name="_gotcha" type="text" tabindex="-1" autocomplete="off"></div>
@@ -596,5 +617,6 @@
 <script src="hemsida-premium.js" defer></script>
 <script src="hemsida-extra.js" defer></script>
 <script src="hemsida-tillvaxt.js" defer></script>
+<script src="hemsida-etapp2.js" defer></script>
 </body>
 </html>
