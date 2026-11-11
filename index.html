@@ -98,7 +98,12 @@
 <div class="pill">✦ Flytt · Städ · Transport i Stockholm</div>
 <h1 class="h"><span class="ln"><span>Hjälp med</span></span><span class="ln"><span>flytt &amp; städ</span></span><span class="ln"><span>i Stockholm</span></span></h1>
 <p class="sub">Flytthjälp, transport och städning med personlig kontakt. Berätta kort vad du behöver – vi återkommer med ett prisförslag.</p><div class="hero-tags"><span>Flytt &amp; transport</span><span>Flyttstädning</span><span>Bärhjälp</span></div>
-<div class="cta"><a class="btn" href="#offert" id="ff-ab-hero-cta">Få offert på din flytt →</a><a class="btn ghost" href="#tjanster">Se våra tjänster →</a></div><p class="hero-note"><span aria-hidden="true">✓</span> Kostnadsfri förfrågan · Inte en bindande bokning</p>
+<div class="cta"><a class="btn" href="#offert" id="ff-ab-hero-cta">Få offert på din flytt →</a><a class="btn ghost" href="#tjanster">Se våra tjänster →</a></div>
+<div class="ff-discount-hero" data-ff-discount-2026 hidden>
+  <span class="ff-discount-percent">20 % RABATT</span>
+  <span class="ff-discount-hero-text">På våra flytt- och städtjänster · Gäller t.o.m. 31 december 2026</span>
+</div>
+<p class="hero-note"><span aria-hidden="true">✓</span> Kostnadsfri förfrågan · Inte en bindande bokning</p>
 </div>
 <div style="position:relative">
 <div class="badge"><div class="orbit"></div>
@@ -282,6 +287,7 @@
 <p aria-live="polite" class="ff-draft-note" id="ff-draft-status" role="status">Spara bara på din egen enhet. Uppgifterna lagras i webbläsaren.</p>
 <div class="ff-social-inline"><a hidden="" href="#ffPublicGallery" id="ff-gallery-shortcut">Se våra publicerade jobb ↗</a><a href="https://se.trustpilot.com/review/flyttfrascht.se" rel="noopener noreferrer" target="_blank">Läs om oss på Trustpilot ↗</a></div>
 </div>
+<p class="ff-discount-form" data-ff-discount-2026 hidden><strong>20 % kampanjrabatt</strong> på våra flytt- och städtjänster. Gäller för offertförfrågningar som skickas senast <strong>31 december 2026</strong>. Rabatten specificeras i vårt personliga prisförslag.</p>
 <button class="btn" id="sendBtn" type="submit">Granska och skicka ✦</button>
 <p class="hint" id="err" role="alert" style="color:var(--ortext);margin:0"></p>
 <div aria-live="polite" id="res" role="status"><b>✓ Tack för din offertförfrågan!</b><p class="hint" style="margin:8px 0 0">Vi har tagit emot din förfrågan och kommer att behandla den så snart som möjligt. Vi återkommer till dig via dina kontaktuppgifter.</p><p class="hint" id="saveNote" role="status" style="margin-top:8px"></p></div>
@@ -437,5 +443,19 @@
 <dialog aria-label="Begär offert – Flytt och Fräscht" class="ff-fast-quote-dialog" id="ff-fast-quote-dialog">
 <div class="ff-fast-quote-toolbar"><span>FLYTT &amp; FRÄSCHT · OFFERT</span><button aria-label="Stäng offertformuläret" id="ff-fast-quote-close" type="button">×</button></div>
 <div id="ff-fast-quote-slot"></div>
-</dialog><script defer="" src="snabb-offert.js"></script></body>
+</dialog><script defer="" src="snabb-offert.js"></script><script>
+/* Visa kampanjen till och med 2026-12-31 enligt svensk tid.
+   Rabatten räknas i den personliga offerten, inte automatiskt i formuläret. */
+(function () {
+  var today = new Intl.DateTimeFormat('sv-SE', {
+    timeZone: 'Europe/Stockholm', year: 'numeric', month: '2-digit', day: '2-digit'
+  }).format(new Date());
+  if (today <= '2026-12-31') {
+    document.querySelectorAll('[data-ff-discount-2026]').forEach(function (item) {
+      item.hidden = false;
+    });
+  }
+})();
+</script>
+</body>
 </html>

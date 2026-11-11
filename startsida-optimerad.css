@@ -1246,3 +1246,31 @@ button.quote-review-confirm:hover {background:#ffad6a;}
   #offert .ff-form-final-details .ff-conversion-trust { gap: 6px 12px; }
   #offert .ff-form-final-details .ff-draft-note { margin-top: -3px; }
 }
+
+
+/* Kampanj t.o.m. 31 december 2026: diskret i startvyn och vid offert. */
+[data-ff-discount-2026][hidden] { display:none !important; }
+.ff-discount-hero {
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;
+  max-width:750px;margin:13px 0 7px;padding:11px 15px;
+  border:1px solid rgba(255,171,101,.52);border-radius:13px;
+  background:rgba(255,122,0,.10);color:#eef4ff;line-height:1.42;
+}
+.ff-discount-percent {
+  display:inline-flex;align-items:center;flex-shrink:0;
+  font-size:13px;letter-spacing:.045em;font-weight:900;
+  color:#ffbe86;
+}
+.ff-discount-hero-text {font-size:14px;color:#e4ebf8;}
+#offert .ff-discount-form {
+  box-sizing:border-box;width:100%;max-width:100%;margin:0;
+  padding:12px 15px;border-left:3px solid #ff963e;
+  border-radius:10px;background:#223e61;color:#f1f5fc;
+  font-size:14px;line-height:1.5;
+}
+#offert .ff-discount-form strong {color:#ffc28d;}
+@media(max-width:600px){
+  .ff-discount-hero{gap:5px 8px;padding:10px 12px}
+  .ff-discount-hero-text{font-size:13px}
+  #offert .ff-discount-form{font-size:13px;padding:11px 12px}
+}
