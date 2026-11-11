@@ -1274,3 +1274,41 @@ button.quote-review-confirm:hover {background:#ffad6a;}
   .ff-discount-hero-text{font-size:13px}
   #offert .ff-discount-form{font-size:13px;padding:11px 12px}
 }
+
+/* 2026-11-12: Desktop – scrolla enbart innehållet, inte dialog + sticky verktygsrad.
+   Detta minskar behovet av att rita om verktygsraden under varje scrollsteg.
+   Begränsat till Få offert-dialogen på dator; mobilläget förblir oförändrat. */
+@media (min-width: 851px) {
+  #ff-fast-quote-dialog[open] {
+    display: flex;
+    flex-direction: column;
+    height: min(94dvh, 1000px);
+    max-height: min(94dvh, 1000px);
+    overflow: hidden;
+  }
+  #ff-fast-quote-dialog .ff-fast-quote-toolbar {
+    flex: 0 0 auto;
+    position: relative; /* Slipper sticky-omritningar vid scroll */
+    top: auto;
+  }
+  #ff-fast-quote-dialog #ff-fast-quote-slot {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scroll-behavior: auto;
+  }
+  #ff-fast-quote-dialog::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+  /* Bakgrundsrörelser pausas bara medan popupen visas. */
+  body:has(#ff-fast-quote-dialog[open]) .blob,
+  body:has(#ff-fast-quote-dialog[open]) .badge,
+  body:has(#ff-fast-quote-dialog[open]) .orbit,
+  body:has(#ff-fast-quote-dialog[open]) .sp,
+  body:has(#ff-fast-quote-dialog[open]) .mq div {
+    animation-play-state: paused;
+  }
+}
