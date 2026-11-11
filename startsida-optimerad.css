@@ -189,7 +189,6 @@ select {
   .why-card { padding: 20px; }
 }
 
-
 /* Tjänsteöversikt – mjuka mörkblå toner, utan bländande vita ytor */
 .service-overview {
   padding: 76px 0;
@@ -913,6 +912,7 @@ button.quote-review-confirm:hover {background:#ffad6a;}
   outline-offset: 3px;
 }
 
+
 /* 2026-11-10: Gamla fasta Ring / Begär offert-knappar är borttagna. */
 .ff-mobile-actions,.mobile-contact-bar {display:none !important}
 @media (max-width:860px) {
@@ -1177,3 +1177,59 @@ button.quote-review-confirm:hover {background:#ffad6a;}
  #varfor-oss,#om-oss,#sa-funkar-det{padding-top:45px;padding-bottom:45px}
 }
 @media(prefers-reduced-motion:reduce){.ff-fast-quote-dialog::backdrop{backdrop-filter:none}}
+
+
+/* =============================================================
+   Offertformulär: finjustering 2026-11-11
+   1) Kortare bostadsreglage ENDAST inne i snabboffertens popup.
+   2) Samlade informationsrader längst ned i formuläret, både
+      på startsidan och när samma formulär visas i popupen.
+   Inga ändringar i fält, datum, värden eller sändningslogik.
+   ============================================================= */
+
+/* Begränsa inte reglaget på vanliga startsidan. */
+.ff-fast-quote-dialog #offert #size-block {
+  width: min(100%, 540px);
+  max-width: 100%;
+  min-width: 0;
+}
+.ff-fast-quote-dialog #offert #size-block input[type="range"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* En kompakt grupp som ersätter formulärets stora grid-avstånd
+   just mellan integritet, fördelar, utkast och Trustpilot. */
+#offert .ff-form-final-details {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+}
+#offert .ff-form-final-details .privacy-note,
+#offert .ff-form-final-details .ff-conversion-trust,
+#offert .ff-form-final-details .ff-draft-row,
+#offert .ff-form-final-details .ff-draft-note,
+#offert .ff-form-final-details .ff-social-inline {
+  margin: 0;
+}
+#offert .ff-form-final-details .ff-conversion-trust {
+  gap: 6px 15px;
+  align-items: center;
+}
+#offert .ff-form-final-details .ff-draft-row {
+  gap: 8px 14px;
+}
+#offert .ff-form-final-details .ff-draft-note {
+  margin-top: -5px;
+}
+#offert .ff-form-final-details .ff-social-inline {
+  margin-top: 2px;
+}
+@media (max-width: 600px) {
+  #offert .ff-form-final-details { gap: 9px; }
+  #offert .ff-form-final-details .ff-conversion-trust { gap: 6px 12px; }
+  #offert .ff-form-final-details .ff-draft-note { margin-top: -3px; }
+}
