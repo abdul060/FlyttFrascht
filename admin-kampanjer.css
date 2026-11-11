@@ -1,0 +1,22 @@
+/* Enbart adminfliken Kampanjer. Rör inte offertpopupens CSS. */
+.ff-campaign-panel{padding:18px 0}
+.ff-campaign-panel .ff-campaign-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:5px 0 16px}
+.ff-campaign-panel .ff-campaign-heading p{max-width:680px;color:var(--muted,#8792a4);line-height:1.5;margin:5px 0 0}
+.ff-campaign-panel #ffCampaignStatus{min-height:25px;margin:8px 0 14px}
+.ff-campaign-panel .ff-campaign-columns{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.ff-campaign-panel .panel{min-width:0;margin:0}
+.ff-campaign-panel .panel h3{margin:0 0 16px}
+.ff-campaign-panel input:not([type=checkbox]),.ff-campaign-panel textarea{width:100%;box-sizing:border-box}
+.ff-campaign-panel label{display:block;margin-top:12px}
+.ff-campaign-panel .ff-campaign-dates{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ff-campaign-panel .ff-campaign-check{display:flex;align-items:center;gap:8px}
+.ff-campaign-panel .ff-campaign-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.ff-campaign-panel .ff-campaign-item{padding:15px 0;border-bottom:1px solid rgba(140,151,171,.24)}
+.ff-campaign-panel .ff-campaign-item:first-child{padding-top:0}
+.ff-campaign-panel .ff-campaign-item-header{display:flex;gap:12px;align-items:flex-start;justify-content:space-between}
+.ff-campaign-panel .ff-campaign-item-header strong{overflow-wrap:anywhere}
+.ff-campaign-panel .ff-campaign-item p{margin:8px 0;line-height:1.5;overflow-wrap:anywhere}
+.ff-campaign-panel .ff-campaign-item small{display:block;opacity:.8}
+.ff-campaign-panel .ff-campaign-state{white-space:nowrap;font-size:12px;border:1px solid #b8c2d1;border-radius:20px;padding:3px 7px}
+.ff-campaign-panel .ff-campaign-delete{background:#9d2837;color:#fff;border-color:#9d2837}
+@media(max-width:850px){.ff-campaign-panel .ff-campaign-columns{grid-template-columns:1fr}.ff-campaign-panel .ff-campaign-heading{flex-wrap:wrap}}

@@ -443,19 +443,6 @@
 <dialog aria-label="Begär offert – Flytt och Fräscht" class="ff-fast-quote-dialog" id="ff-fast-quote-dialog">
 <div class="ff-fast-quote-toolbar"><span>FLYTT &amp; FRÄSCHT · OFFERT</span><button aria-label="Stäng offertformuläret" id="ff-fast-quote-close" type="button">×</button></div>
 <div id="ff-fast-quote-slot"></div>
-</dialog><script defer="" src="snabb-offert.js"></script><script>
-/* Visa kampanjen till och med 2026-12-31 enligt svensk tid.
-   Rabatten räknas i den personliga offerten, inte automatiskt i formuläret. */
-(function () {
-  var today = new Intl.DateTimeFormat('sv-SE', {
-    timeZone: 'Europe/Stockholm', year: 'numeric', month: '2-digit', day: '2-digit'
-  }).format(new Date());
-  if (today <= '2026-12-31') {
-    document.querySelectorAll('[data-ff-discount-2026]').forEach(function (item) {
-      item.hidden = false;
-    });
-  }
-})();
-</script>
+</dialog><script defer="" src="snabb-offert.js"></script><script defer src="kampanjer.js"></script>
 </body>
 </html>
