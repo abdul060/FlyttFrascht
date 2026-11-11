@@ -138,9 +138,15 @@ function openPendingRequests(){
 // Etapp 2: Skrivskyddad startsida som återanvänder redan inlästa uppgifter.
 function renderOverview(){
  const today=ymd(new Date()),weekEnd=ymd(new Date(new Date().getFullYear(),new Date().getMonth(),new Date().getDate()+7));
- const openRequests=records.filter(r=>r.status==='ny');
+ // Visa de äldsta obesvarade ärendena först, inte den senast inkomna.
+ const oldestFirst=(a,b)=>{
+  const ad=Date.parse(a)||0,bd=Date.parse(b)||0;
+  return ad-bd;
+ };
+ const openRequests=records.filter(r=>r.status==='ny').sort((a,b)=>oldestFirst(a.skapad,b.skapad));
  const aged=openRequests.filter(r=>{const d=Date.parse(r.skapad);return Number.isFinite(d)&&Date.now()-d>=86400000;});
- const waiting=offers.filter(o=>o.status==='skickad'&&(!o.kundbeslut||o.kundbeslut==='ej_svar'));
+ const waiting=offers.filter(o=>o.status==='skickad'&&(!o.kundbeslut||o.kundbeslut==='ej_svar')).sort((a,b)=>oldestFirst(a.skickad||a.skapad,b.skickad||b.skapad));
+ const elapsedDays=s=>{const d=Date.parse(s);return Number.isFinite(d)?Math.max(0,Math.floor((Date.now()-d)/86400000)):null;};
  const todayJobs=bookings.filter(b=>b.datum===today&&b.status!=='avbokad');
  const upcoming=bookings.filter(b=>b.datum>today&&b.datum<=weekEnd&&b.status!=='avbokad').sort((a,b)=>String(a.datum+' '+a.starttid).localeCompare(String(b.datum+' '+b.starttid)));
  $('ffOverviewDate').textContent=new Date().toLocaleDateString('sv-SE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
@@ -164,12 +170,35 @@ function renderOverview(){
    const [name,desc,tag]=format(it);
    item.append(el('strong',name||'–'),el('span',desc||'–','ff-overview-desc'));
    if(tag)item.append(el('small',tag,'ff-overview-tag'));
+   if(id==='ffOverviewPending'){
+    const open=el('button','Öppna förfrågan →','ff-overview-textbutton');
+    open.type='button';
+    open.style.justifySelf='start';
+    open.style.marginTop='5px';
+    open.setAttribute('aria-label','Öppna förfrågan för '+String(it.namn||'kunden'));
+    open.addEventListener('click',()=>{
+     $('search').value=it.epost||it.telefon||it.namn||'';
+     $('filter').value='ny';
+     markedRequests.clear();
+     switchTab('requests');
+     $('requestsPanel').scrollIntoView({behavior:'smooth',block:'start'});
+    });
+    item.append(open);
+   }
    target.append(item);
   }
   if(items.length>4)target.append(el('p','+'+(items.length-4)+' till – öppna fliken för att se alla.','ff-overview-more'));
  }
- drawEntries('ffOverviewPending',openRequests,(r)=>[r.namn||'Ny kund',r.tjanst||'Offertförfrågan',aged.includes(r)?'Väntat minst 24 timmar':'Inkommen: '+dateFormat(r.skapad)],'Inga obehandlade förfrågningar. Bra jobbat!');
- drawEntries('ffOverviewOffersList',waiting,(o)=>[o.kundnamn||'Kund',o.tjanst||'Offert',o.skickad?'Skickad: '+dateFormat(o.skickad):'Väntar på svar'],'Inga skickade offerter väntar på kundsvar.');
+ drawEntries('ffOverviewPending',openRequests,(r)=>{
+  const days=elapsedDays(r.skapad);
+  const status=days!==null&&days>=1?'⚠ Väntat '+days+' '+(days===1?'dag':'dagar')+' – följ upp':'Inkommen: '+dateFormat(r.skapad);
+  return [r.namn||'Ny kund',r.tjanst||'Offertförfrågan',status];
+ },'Inga obehandlade förfrågningar. Bra jobbat!');
+ drawEntries('ffOverviewOffersList',waiting,(o)=>{
+  const days=elapsedDays(o.skickad||o.skapad);
+  const status=days!==null&&days>=3?'⚠ Väntat '+days+' dagar – dags att följa upp':o.skickad?'Skickad: '+dateFormat(o.skickad):'Väntar på svar';
+  return [o.kundnamn||'Kund',o.tjanst||'Offert',status];
+ },'Inga skickade offerter väntar på kundsvar.');
  drawEntries('ffOverviewTodayList',todayJobs.sort((a,b)=>String(a.starttid).localeCompare(String(b.starttid))),(b)=>[b.kundnamn||'Kund',(b.starttid||'').slice(0,5)+'–'+(b.sluttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.personal?'Personal: '+b.personal:'Personal ej tilldelad'],'Inga aktiva bokningar idag.');
  drawEntries('ffOverviewUpcoming',upcoming,(b)=>[b.kundnamn||'Kund',b.datum+' kl. '+(b.starttid||'').slice(0,5)+' · '+(b.tjanst||'Uppdrag'),b.status==='bekraftad'?'Bekräftad':'Status: '+(b.status||'planerad')],'Inga kommande bokningar de närmaste sju dagarna.');
  window.dispatchEvent(new CustomEvent('ff:overview-updated',{detail:{bookings:bookings.map(b=>({datum:b.datum,status:b.status,kundnamn:b.kundnamn,tjanst:b.tjanst}))}}));
