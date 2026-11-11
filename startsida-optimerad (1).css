@@ -1,0 +1,1299 @@
+/* Flytt & Fräscht | sammanslagna stilmallar för startsidan
+   Ordning identisk med de 14 ursprungliga CSS-länkarna.
+   Ändra inte ordningen utan att testa. */
+
+/* ===== style.css ===== */
+:root{--bg:#F5F7FB;--bg2:#E8EDF7;--card:#FFFFFF;--text:#0B1B3F;--muted:#44527A;--line:#D3DAEA;--ortext:#B93C00;
+--navy:#0B1B3F;--navy2:#10224A;--or:#FF7A00;--or2:#FF8A1F;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#08122B;--bg2:#0B1B3F;--card:#10224A;--text:#F2F5FB;--muted:#B5C0DA;--line:#26386B;--ortext:#FF8A1F}}
+:root[data-theme="dark"]{--bg:#08122B;--bg2:#0B1B3F;--card:#10224A;--text:#F2F5FB;--muted:#B5C0DA;--line:#26386B;--ortext:#FF8A1F}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 80px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Barlow',system-ui,Arial,sans-serif;font-size:17px;line-height:1.55;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:60}
+.h{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-style:italic;font-weight:800;text-transform:uppercase;letter-spacing:.5px;line-height:.95}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--or);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+section{padding:88px 0}
+.eyebrow{color:var(--ortext);font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:14px}
+h2{font-size:clamp(38px,6vw,60px);margin:6px 0 14px}
+.lead{color:var(--muted);max-width:640px;font-size:19px}
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(11,27,63,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:background .3s,box-shadow .3s;color:#fff}
+header.sc{background:rgba(11,27,63,.96);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.bar{display:flex;align-items:center;justify-content:space-between;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-size:26px}
+.brand svg{width:38px;height:38px}
+nav{display:flex;align-items:center;gap:26px}
+nav a{text-decoration:none;font-weight:600;font-size:16px;opacity:.9}
+nav a:hover{opacity:1;color:var(--or2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 26px;border:0;border-radius:999px;background:var(--or);color:var(--navy);font:700 17px 'Barlow',sans-serif;cursor:pointer;text-decoration:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
+.btn::after{content:"";position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);transition:left .6s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,122,0,.45)}
+.btn:hover::after{left:130%}
+.btn.ghost{background:transparent;color:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.45)}
+.btn.ghost:hover{box-shadow:inset 0 0 0 2px var(--or2),0 10px 28px rgba(0,0,0,.25)}
+.btn.sm{min-height:42px;padding:8px 20px;font-size:15px}
+/* hero */
+.hero{position:relative;background:var(--navy);color:#fff;overflow:hidden;padding:72px 0 96px;isolation:isolate}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(520px circle at var(--mx,70%) var(--my,30%),rgba(255,122,0,.28),transparent 60%)}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5;z-index:-2;animation:drift 16s ease-in-out infinite alternate}
+.b1{width:420px;height:420px;background:#1D4ED8;left:-120px;top:-80px}
+.b2{width:360px;height:360px;background:#FF7A00;right:-100px;bottom:-120px;animation-delay:-6s;opacity:.35}
+@keyframes drift{to{transform:translate(60px,40px) scale(1.15)}}
+.grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.pill{display:inline-block;padding:7px 16px;border-radius:999px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.25);font-weight:600;font-size:15px;margin-bottom:22px}
+h1{font-size:clamp(54px,9.5vw,112px);margin:0 0 22px}
+h1 .ln{display:block;overflow:hidden}
+h1 .ln span{display:inline-block;animation:up .9s cubic-bezier(.2,.8,.2,1) both}
+h1 .ln:nth-child(2) span{animation-delay:.15s;color:var(--or2)}
+h1 .ln:nth-child(3) span{animation-delay:.3s}
+@keyframes up{from{transform:translateY(110%)}}
+.hero p.sub{font-size:20px;max-width:540px;color:#DCE4F5;margin:0 0 30px;animation:fade 1s .5s both}
+.cta{display:flex;flex-wrap:wrap;gap:14px;animation:fade 1s .7s both}
+@keyframes fade{from{opacity:0;transform:translateY(14px)}}
+.badge{position:relative;width:min(380px,80vw);aspect-ratio:1;margin:0 auto;animation:float 6s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-16px) rotate(1.5deg)}}
+.badge .disc{position:absolute;inset:0;border-radius:50%;background:var(--navy2);box-shadow:0 0 0 10px var(--or),0 30px 80px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+.badge .disc svg{width:44%}
+.badge .disc .h{font-size:clamp(34px,6vw,52px);text-align:center}
+.orbit{position:absolute;inset:-34px;border-radius:50%;border:2px dashed rgba(255,255,255,.28);animation:spin 28s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.sp{position:absolute;width:var(--s,26px);height:var(--s,26px);color:#fff;animation:tw 2.8s ease-in-out infinite;animation-delay:var(--d,0s)}
+.sp svg{width:100%;height:100%}
+@keyframes tw{0%,100%{opacity:.15;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.1) rotate(25deg)}}
+/* marquee */
+.mq{background:var(--or);color:var(--navy);overflow:hidden;white-space:nowrap;padding:14px 0}
+.mq div{display:inline-flex;gap:44px;padding-right:44px;animation:mq 26s linear infinite;font-size:30px}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(235px,1fr));gap:18px;margin-top:40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:28px;transition:transform .25s,box-shadow .25s,border-color .25s;transform-style:preserve-3d;will-change:transform}
+.card:hover{border-color:var(--or);box-shadow:0 18px 44px rgba(255,122,0,.18)}
+.ic{width:56px;height:56px;border-radius:16px;background:var(--navy);color:var(--or2);display:grid;place-items:center;margin-bottom:18px}
+.ic svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.card h3{font-size:32px;margin:0 0 8px}
+.card p{margin:0;color:var(--muted)}
+.alt{background:var(--bg2)}
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-top:40px}
+.step{counter-increment:s;background:var(--card);border-radius:22px;padding:26px 26px 26px 26px;border:1px solid var(--line)}
+.step::before{content:counter(s);display:grid;place-items:center;width:46px;height:46px;border-radius:50%;background:var(--or);color:var(--navy);font:800 24px 'Barlow Condensed',sans-serif;margin-bottom:14px}
+.step b{display:block;font-size:21px;margin-bottom:4px}
+.step span{color:var(--muted)}
+.deal{margin-top:36px;border-radius:26px;padding:32px;background:linear-gradient(120deg,var(--navy),#16306E);color:#fff;display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between;position:relative;overflow:hidden}
+.deal .h{font-size:clamp(34px,5vw,54px)}
+.deal .h em{color:var(--or2);font-style:inherit}
+/* form */
+.fgrid{display:grid;grid-template-columns:.8fr 1.2fr;gap:36px;align-items:start}
+form{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:30px;display:grid;gap:18px;box-shadow:0 20px 60px rgba(11,27,63,.12)}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label,.lb{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+input,select,textarea{width:100%;min-height:48px;padding:11px 14px;border-radius:14px;border:1.5px solid var(--line);background:var(--bg);color:var(--text);font:500 17px 'Barlow',sans-serif}
+textarea{min-height:90px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--or);outline:none;box-shadow:0 0 0 4px rgba(255,122,0,.2)}
+.out{display:flex;align-items:baseline;gap:8px}
+.out b{font:800 46px 'Barlow Condensed',sans-serif;font-style:italic;color:var(--ortext)}
+input[type=range]{padding:0;min-height:34px;border:0;background:transparent;-webkit-appearance:none;appearance:none}
+input[type=range]::-webkit-slider-runnable-track{height:10px;border-radius:10px;background:linear-gradient(90deg,var(--or) var(--p,20%),var(--line) var(--p,20%))}
+input[type=range]::-moz-range-track{height:10px;border-radius:10px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:10px;border-radius:10px;background:var(--or)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;margin-top:-9px;border-radius:50%;background:#fff;border:5px solid var(--or);box-shadow:0 3px 10px rgba(0,0,0,.3)}
+input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;background:#fff;border:5px solid var(--or)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips input{position:absolute;opacity:0;width:1px;height:1px;min-height:0}
+.chips label{margin:0;min-width:52px;text-align:center;padding:10px 16px;border-radius:999px;border:1.5px solid var(--line);cursor:pointer;transition:all .2s}
+.chips input:checked+label{background:var(--or);border-color:var(--or);color:var(--navy)}
+.chips input:focus-visible+label{outline:3px solid var(--or);outline-offset:2px}
+.kr{position:relative}
+.kr input{padding-right:52px}
+.kr span{position:absolute;right:16px;top:50%;transform:translateY(-50%);font-weight:700;color:var(--muted)}
+.hint{font-size:14px;color:var(--muted);margin:6px 0 0}
+#res{display:none;border-radius:20px;border:2px solid var(--or);padding:22px;background:var(--bg)}
+#res.on{display:block;animation:fade .6s both}
+#res pre{white-space:pre-wrap;font:500 15px 'Barlow',sans-serif;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;max-height:240px;overflow:auto}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.acts .btn{color:var(--navy)}
+.acts .btn.o{background:transparent;color:var(--text);box-shadow:inset 0 0 0 2px var(--line)}
+.side .item{display:flex;gap:14px;margin-top:22px}
+.side .item i{flex:none;width:44px;height:44px;border-radius:14px;background:var(--or);display:grid;place-items:center;color:var(--navy);font-style:normal;font-weight:800;font-size:20px}
+.side .item b{display:block}
+.side .item span{color:var(--muted)}
+footer{background:var(--navy);color:#DCE4F5;padding:56px 0 calc(40px + env(safe-area-inset-bottom,0px))}
+footer .fl{display:flex;flex-wrap:wrap;gap:30px;justify-content:space-between}
+footer a{color:#fff;font-weight:600}
+footer small{display:block;margin-top:30px;opacity:.65}
+/* reveal */
+.rv{opacity:0;transform:translateY(34px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1);transition-delay:var(--dl,0s)}
+.rv.in{opacity:1;transform:none}
+@media (max-width:860px){nav a.l{display:none}.grid,.fgrid{grid-template-columns:1fr}.badge{width:min(300px,76vw);margin-top:16px}.r2{grid-template-columns:1fr}section{padding:64px 0}form{padding:22px}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}html{scroll-behavior:auto}}
+
+/* Offert: skickas via Formspree */
+.spam-field{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+#sendBtn:disabled{opacity:.65;cursor:wait;transform:none;box-shadow:none}
+#res b{font-size:22px;color:var(--text)}
+
+
+/* Flytt & Fräscht – enhetliga dropdown-pilar med luft till höger. */
+select {
+  -webkit-appearance: none;
+  appearance: none;
+  padding-right: 56px;
+  background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22m6%209%206%206%206-6%22%20fill%3D%22none%22%20stroke%3D%22%23E8F0FF%22%20stroke-width%3D%222.4%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%2F%3E%3C%2Fsvg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  background-size: 19px 19px;
+}
+@media (max-width: 600px) {
+  select { padding-right: 52px; background-position: right 18px center; }
+}
+
+
+/* Stilar som tidigare låg i index.html. */
+/* Mobilmeny – dold på dator */
+.mobile-contact-bar { display: none; }
+@media (max-width: 767px) {
+  .mobile-contact-bar {
+    display: flex; position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 9999; gap: 10px; padding: 12px 14px;
+    padding-bottom: calc(12px + env(safe-area-inset-bottom));
+    background: #0B1B3F; box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  }
+  .mobile-contact-bar a {
+    display: flex; flex: 1; justify-content: center; align-items: center;
+    min-height: 48px; border-radius: 10px; font-family: inherit;
+    font-size: 15px; font-weight: 700; text-decoration: none;
+  }
+  .mobile-contact-quote { background: #FF7A00; color: #0B1B3F; }
+  .mobile-contact-call { background: #FFFFFF; color: #0B1B3F; }
+  body { padding-bottom: calc(82px + env(safe-area-inset-bottom)); }
+  #offert { scroll-margin-top: 90px; }
+}
+
+/* Varför välja Flytt & Fräscht */
+.why-section { padding: 85px 0; background: #0B1B3F; color: #fff; }
+.why-section h2 { color: #fff; }
+.why-section .lead { color: #dce5f5; max-width: 700px; }
+.why-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 35px; }
+.why-card { background: #172B55; border: 1px solid rgba(255,255,255,.12); border-radius: 18px; padding: 25px; }
+.why-icon { display: block; font-size: 32px; margin-bottom: 16px; }
+.why-card h3 { color: #fff; font-size: 20px; margin: 0 0 12px; }
+.why-card p { color: #dce5f5; font-size: 15px; line-height: 1.6; margin: 0; }
+.why-cta { text-align: center; margin-top: 35px; }
+@media (max-width: 900px) { .why-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) {
+  .why-section { padding: 55px 0; }
+  .why-grid { grid-template-columns: 1fr; gap: 14px; }
+  .why-card { padding: 20px; }
+}
+
+/* Tjänsteöversikt – mjuka mörkblå toner, utan bländande vita ytor */
+.service-overview {
+  padding: 76px 0;
+  background: #182940;
+  color: #dbe5f0;
+}
+.service-overview .eyebrow { color: #e6a76d; }
+.service-overview h2,
+.service-overview #service-overview-title { color: #edf2f8; }
+.service-overview .lead { max-width: 790px; color: #c1cfdf; }
+.service-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+.service-overview-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 27px;
+  border: 1px solid #3a4f6a;
+  border-radius: 20px;
+  background: #243852;
+  box-shadow: 0 5px 18px rgba(5, 15, 30, .10);
+}
+.service-overview-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin-bottom: 19px;
+  border-radius: 16px;
+  background: #33445d;
+  font-size: 30px;
+}
+.service-overview-card h3 { margin: 0 0 12px; color: #edf2f8; font-size: 21px; line-height: 1.25; }
+.service-overview-card p { margin: 0 0 20px; color: #c6d2e1; line-height: 1.65; }
+.service-overview-card a {
+  margin-top: auto;
+  color: #ffc08a;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.service-overview-card a:hover,
+.service-overview-card a:focus-visible { color: #ffe0c3; }
+.service-overview-bottom {
+  display: flex;
+  gap: 22px;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 26px;
+  padding: 21px 25px;
+  background: #293e59;
+  border: 1px solid #3a4f6a;
+  color: #d7e2ef;
+  border-radius: 16px;
+}
+.service-overview-bottom p { max-width: 650px; margin: 0; line-height: 1.6; }
+.service-overview-bottom .btn { flex-shrink: 0; }
+@media (max-width: 900px) { .service-overview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 650px) {
+  .service-overview { padding: 54px 0; }
+  .service-overview-grid { grid-template-columns: 1fr; gap: 14px; }
+  .service-overview-card { padding: 21px; }
+  .service-overview-bottom { flex-direction: column; align-items: stretch; padding: 19px; }
+  .service-overview-bottom .btn { text-align: center; }
+}
+
+/* Trustpilot-sektion på startsidan – utan påhittade betyg eller recensioner. */
+.ff-trustpilot {
+  background: #0b1b3f;
+  color: #fff;
+  padding: 76px 0;
+}
+.ff-trustpilot-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(220px, .8fr);
+  gap: clamp(26px, 5vw, 72px);
+  align-items: center;
+}
+.ff-trustpilot-eyebrow {
+  display: block;
+  color: #ffab65;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .12em;
+  margin-bottom: 12px;
+}
+.ff-trustpilot h2 {
+  color: #fff;
+  font-size: clamp(30px, 3.3vw, 44px);
+  line-height: 1.12;
+  margin: 0 0 20px;
+}
+.ff-trustpilot-copy p {
+  color: #dce6f7;
+  font-size: 17px;
+  line-height: 1.7;
+  max-width: 680px;
+  margin: 0 0 28px;
+}
+.ff-trustpilot-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 13px 22px;
+  border-radius: 10px;
+  background: #ff7a00;
+  color: #0b1b3f;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background .2s ease, transform .2s ease;
+}
+.ff-trustpilot-button:hover { background: #ffab65; transform: translateY(-2px); }
+.ff-trustpilot-button:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+.ff-trustpilot-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 260px;
+  padding: 30px;
+  border-radius: 22px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: #172b55;
+  text-align: center;
+}
+.ff-trustpilot-symbol { color: #00b67a; font-size: 75px; line-height: 1; }
+.ff-trustpilot-visual strong { font-size: 29px; color: #fff; }
+.ff-trustpilot-label { color: #dce6f7; font-size: 14px; }
+@media (max-width: 700px) {
+  .ff-trustpilot { padding: 54px 0; }
+  .ff-trustpilot-layout { grid-template-columns: 1fr; }
+  .ff-trustpilot-copy p { font-size: 16px; }
+  .ff-trustpilot-visual { min-height: 170px; }
+  .ff-trustpilot-button { width: 100%; text-align: center; }
+}
+
+
+/* Google-recensioner och sociala medier – startsidan */
+.ff-review-actions{display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+.ff-google-review-button{display:inline-flex;align-items:center;justify-content:center;gap:12px;min-height:48px;padding:13px 22px;border:1.5px solid rgba(255,255,255,.65);border-radius:10px;background:transparent;color:#fff;font-weight:800;text-decoration:none;transition:background .2s ease,transform .2s ease}
+.ff-google-review-button:hover{background:rgba(255,255,255,.12);transform:translateY(-2px)}
+.ff-google-review-button:focus-visible{outline:3px solid #ffab65;outline-offset:4px}
+.ff-social-col{min-width:min(100%,220px)}
+.ff-social-title{margin:0 0 10px;font-size:17px;line-height:1.3;color:#fff}
+.ff-social-col p{margin:0 0 16px;max-width:280px;color:#dce4f5;line-height:1.55}
+.ff-social-links{display:flex;flex-wrap:wrap;gap:10px}
+footer .ff-social-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 12px;border:1px solid rgba(255,255,255,.27);border-radius:10px;color:#fff;text-decoration:none;line-height:1.2;transition:background .2s ease,border-color .2s ease}
+footer .ff-social-links a:hover{background:rgba(255,122,0,.16);border-color:#ff9a40}
+footer .ff-social-links a:focus-visible{outline:3px solid #ff9a40;outline-offset:3px}
+.ff-social-links svg{flex:none}
+@media (max-width:700px){.ff-review-actions{flex-direction:column;align-items:stretch}.ff-google-review-button{width:100%;text-align:center}}
+
+/* ===== site-extras.css ===== */
+/* Flytt & Fräscht – tillägg på kundsidan. Adminpanelen påverkas inte. */
+:root{scroll-padding-top:90px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 26px}.hero-tags span{display:inline-block;border:1px solid rgba(255,255,255,.23);border-radius:999px;padding:7px 13px;color:#f6f8ff;font-weight:600;font-size:13px;background:rgba(255,255,255,.055)}.hero-note{font-size:14px!important;color:#c9d3e8!important;margin:16px 0 0!important}.service-cta{margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:22px 26px;border:1px solid var(--line);border-radius:22px;background:var(--card)}.service-cta p{margin:0;max-width:650px;color:var(--muted)}.text-link{font-weight:800;color:var(--ortext);text-underline-offset:4px}.about-section{background:linear-gradient(150deg,#0B1B3F 5%,#142d5d);color:#fff}.about-layout{display:grid;grid-template-columns:minmax(230px,.75fr) 1.25fr;gap:75px;align-items:center}.about-section .lead,.about-copy{color:#d6e0f4}.about-copy{max-width:650px;margin-bottom:26px}.about-section .eyebrow{color:#ffad65}.about-symbol{aspect-ratio:1;border-radius:34px;background:radial-gradient(circle at 25% 15%,#254d8e,#12244a 70%);display:grid;place-items:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.15)}.about-symbol>svg{width:48%;filter:drop-shadow(0 16px 18px rgba(0,0,0,.3))}.about-ring{position:absolute;bottom:28px;text-transform:uppercase;font-size:12px;letter-spacing:2.8px;color:#dce4f5}.price-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:22px;margin-top:30px;align-items:stretch}.price-panel,.price-message{border-radius:26px;padding:30px;border:1px solid var(--line);background:var(--card)}.price-panel{display:grid;gap:13px}.price-panel label{margin:4px 0 0}.price-panel .btn{margin-top:6px}.guide-size-row{display:flex;align-items:center;gap:16px}.guide-size-row input{flex:1}.guide-size-row output{white-space:nowrap;font-weight:800;color:var(--ortext)}.price-message{background:#0B1B3F;border-color:#273b63;color:#fff;display:flex;flex-direction:column;justify-content:center}.price-message h3{font-family:'Barlow Condensed',Arial,sans-serif;font-style:italic;font-size:clamp(30px,4vw,42px);text-transform:uppercase;line-height:1.1;margin:14px 0}.price-message p{color:#d8e2f2}.price-message ul{padding-left:20px;line-height:2}.mini-label{color:#ffa14b;letter-spacing:2px;font-size:12px;font-weight:800;text-transform:uppercase}.price-footnote{color:#cad5e9;font-size:13px}.gallery-section{background:var(--bg2)}.gallery-placeholders{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:28px}.gallery-tile{min-height:220px;border-radius:24px;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-end;padding:24px;background:linear-gradient(155deg,#203d71,#0b1b3f);color:#fff;border:1px solid rgba(255,255,255,.1);position:relative;overflow:hidden}.gallery-tile:nth-child(2){background:linear-gradient(150deg,#3a4b69,#10224a)}.gallery-tile:nth-child(3){background:linear-gradient(150deg,#203b62,#0c2940)}.gallery-tile>span{font-size:74px;position:absolute;right:16px;top:0;color:rgba(255,138,31,.55)}.gallery-tile strong{font-family:'Barlow Condensed';font-size:30px;font-style:italic;text-transform:uppercase}.gallery-tile small{color:#d9e3f4}.faq-layout{display:grid;grid-template-columns:.8fr 1.2fr;gap:48px}.faq-list{display:grid;gap:10px;align-content:start}.faq-list details{border:1px solid var(--line);border-radius:16px;background:var(--card);padding:0 20px}.faq-list summary{cursor:pointer;font-weight:750;list-style:none;padding:19px 26px 19px 0;position:relative}.faq-list summary::-webkit-details-marker{display:none}.faq-list summary::after{content:'+';position:absolute;right:0;font-weight:800;color:var(--ortext)}.faq-list details[open] summary::after{content:'−'}.faq-list p{margin:0 0 18px;color:var(--muted)}.privacy-note{margin:0;font-size:13px;color:var(--muted)}.privacy-note a{color:var(--ortext)}.btn:disabled{opacity:.6;cursor:wait}#res.on{border-color:#22935c}.hero .badge .orbit{pointer-events:none}
+@media(max-width:860px){.about-layout,.price-grid,.faq-layout{grid-template-columns:1fr;gap:25px}.about-symbol{max-width:280px;width:100%;margin:auto}.gallery-placeholders{grid-template-columns:1fr}.gallery-tile{min-height:150px}.price-panel,.price-message{padding:23px}.service-cta{padding:20px}nav{gap:12px}nav a.l{display:none}.hero-tags span{font-size:12px}}
+@media(max-width:420px){.guide-size-row{display:flex;gap:12px}.guide-size-row output{display:block;text-align:right}.about-section,.price-section,.gallery-section,.faq-section{overflow:hidden}.hero-tags{gap:5px}}
+
+/* Mobilfix: datumfält ska aldrig spränga offertformuläret */
+#offert .r2 { grid-template-columns:repeat(2,minmax(0,1fr)); min-width:0; }
+#offert .r2 > div, #offert form, #offert input[type="date"] { min-width:0; max-width:100%; }
+#offert input[type="date"] { width:100%; box-sizing:border-box; -webkit-appearance:none; appearance:none; }
+@media (max-width:860px) {
+  #offert .r2 { grid-template-columns:minmax(0,1fr); }
+  #offert input[type="date"] { display:block; width:100%; }
+}
+/* Prisguidens storleksreglage: spåret färgas dynamiskt och går att dra på mobil */
+.guide-size-row { display:flex; align-items:center; min-width:0; }
+.guide-size-row input[type="range"] { flex:1 1 auto; min-width:0; width:100%; touch-action:pan-y; cursor:pointer; }
+.guide-size-row output { flex:0 0 auto; }
+
+/* Tjanstesidor lanhkar under respektive tjanstkort */
+.service-card-link{display:inline-block;margin-top:16px;font-weight:800;color:#ff8a1f;text-decoration:underline;text-underline-offset:4px;}
+.service-card-link:focus-visible{outline:3px solid #ff7a00;outline-offset:4px;}
+
+/* Flyttformulär: från-/tilladress, våning och hiss */
+#move-details.move-details{border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:14px;min-width:0;margin:0}
+#move-details.move-details[hidden],#single-address[hidden]{display:none!important}
+#move-details legend{font-weight:800;padding:0 8px;color:var(--text)}
+#move-details .move-intro{font-size:14px;color:var(--muted);margin:0}
+#move-details .r2,#move-details .r2>div{min-width:0}
+#move-details input,#move-details select{min-width:0;max-width:100%}
+#move-details .move-check{display:flex;align-items:center;gap:10px;font-weight:600;cursor:pointer}
+#move-details .move-check input{width:20px;height:20px;min-height:20px;flex:0 0 20px;accent-color:var(--or)}
+@media(max-width:860px){#move-details .r2{grid-template-columns:minmax(0,1fr)}}
+
+/* ===== datumkalender.css ===== */
+/* Flytt & Fräscht – mörk, kantfri och mobilanpassad datumkalender */
+.date-field { min-width: 0; position: relative; }
+.date-field #d { position:absolute !important; width:1px !important; height:1px !important; opacity:0 !important; pointer-events:none !important; overflow:hidden !important; clip-path:inset(50%) !important; }
+
+/* Datumfältet på formuläret: mörkblått och med centrerad ikon */
+button.date-open {
+  display:flex; align-items:center; gap:12px; width:100%; min-height:54px;
+  border:1px solid #42608f; border-radius:14px; padding:11px 14px;
+  background:#0b1b3f; color:#ffffff; text-align:left;
+  font:inherit; font-weight:600; cursor:pointer; box-sizing:border-box;
+  box-shadow:0 5px 16px rgba(5,15,40,.15);
+}
+button.date-open:hover { background:#132954; border-color:#ff7a00; }
+button.date-open:focus-visible { outline:3px solid #ff9c47; outline-offset:3px; }
+.date-open-icon { display:flex; align-items:center; justify-content:center; flex:0 0 38px; width:38px; height:38px; padding:0; border-radius:11px; color:#ff9a36; background:#243b67; line-height:1; }
+.date-open-icon svg { display:block; flex:none; width:22px; height:22px; margin:0; }
+.date-open-arrow { margin-left:auto; color:#ffb775; font-size:17px; line-height:1; }
+
+/* Popup: sätt alla ytor mörka, ta bort browserns vita ram och padding */
+dialog.date-dialog,
+dialog.date-dialog[open] {
+  position:fixed; inset:0; margin:auto; padding:0 !important;
+  width:min(430px, calc(100vw - 28px)); max-width:calc(100vw - 28px);
+  max-height:calc(100dvh - 30px); box-sizing:border-box;
+  border:0 !important; outline:0; border-radius:22px;
+  background:#0b1b3f !important; color:#f4f7ff;
+  box-shadow:0 26px 85px rgba(3,10,27,.5); overflow-x:hidden; overflow-y:auto;
+  color-scheme:dark;
+}
+dialog.date-dialog::backdrop { background:rgba(2,10,29,.79); backdrop-filter:blur(5px); }
+.date-dialog *, .date-dialog *::before, .date-dialog *::after { box-sizing:border-box; }
+.date-dialog-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; padding:23px 22px 18px; background:#102653; color:#fff; border-bottom:1px solid #2d4776; }
+.date-eyebrow { font-size:11px; font-weight:800; letter-spacing:.15em; color:#ffac5f; }
+.date-dialog-head h2 { margin:6px 0 5px; padding:0; color:#fff; font-size:24px; line-height:1.22; }
+.date-dialog-head p { margin:0; color:#c7d7f3; font-size:14px; }
+.date-dialog button { font-family:inherit; -webkit-tap-highlight-color:transparent; }
+button.date-close { flex:0 0 36px; display:flex; align-items:center; justify-content:center; width:36px; height:36px; margin:0; padding:0; border:1px solid #4b6590; border-radius:50%; color:#fff; background:#243b67; font-size:25px; font-weight:400; line-height:1; cursor:pointer; }
+button.date-close:hover { background:#344e7f; }
+.date-calendar-nav { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:17px 20px 11px; }
+.date-calendar-nav strong { flex:1; text-align:center; color:#fff; font-size:17px; font-weight:800; text-transform:capitalize; }
+.date-calendar-nav button { display:flex; justify-content:center; align-items:center; flex:0 0 40px; width:40px; height:40px; margin:0; padding:0; border:1px solid #38527d; border-radius:12px; background:#1b3563; color:#fff; font-size:26px; line-height:1; cursor:pointer; }
+.date-calendar-nav button:disabled { opacity:.3; cursor:not-allowed; }
+.date-calendar-nav button:hover:not(:disabled) { border-color:#ff7a00; background:#2a4777; }
+.date-weekdays,.date-grid { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:4px; margin:0 17px; }
+.date-weekdays span { display:flex; align-items:center; justify-content:center; min-width:0; padding:7px 0; color:#a9c1e5; font-size:12px; font-weight:800; }
+.date-grid > span { min-height:42px; }
+.date-grid button { display:flex; align-items:center; justify-content:center; width:100%; aspect-ratio:1; min-width:0; min-height:42px; margin:0; padding:0; border:1px solid transparent; border-radius:12px; background:#172e59; color:#fff; font:inherit; font-size:15px; font-weight:600; line-height:1; cursor:pointer; }
+.date-grid button:hover:not(:disabled) { background:#294675; border-color:#ff9b42; }
+.date-grid button.is-selected { background:#ff7a00; color:#081735; border-color:#ff7a00; font-weight:800; }
+.date-grid button.is-today:not(.is-selected) { border:2px solid #ff7a00; color:#ffc58b; }
+.date-grid button:disabled { opacity:.2; cursor:not-allowed; }
+.date-dialog button:focus-visible { outline:2px solid #ffac61; outline-offset:2px; }
+.date-picked { margin:18px 20px 0; padding:14px 15px; background:#1c3665; border:1px solid #314c7c; border-radius:13px; color:#bdd0ec; font-size:13px; }
+.date-picked strong { display:block; margin-top:3px; color:#fff; font-size:16px; }
+.date-actions { display:flex; gap:10px; padding:18px 20px 22px; background:#0b1b3f; }
+.date-actions button { display:flex; align-items:center; justify-content:center; flex:1; min-width:0; min-height:48px; margin:0; padding:10px; border-radius:12px; font:inherit; font-weight:800; cursor:pointer; }
+#date-cancel { background:#233d6c; color:#fff; border:1px solid #3b5684; }
+#date-apply { background:#ff7a00; color:#0b1b3f; border:1px solid #ff7a00; }
+#date-apply:disabled { opacity:.38; cursor:not-allowed; }
+@media(max-width:400px) {
+  dialog.date-dialog { width:calc(100vw - 18px); max-width:calc(100vw - 18px); border-radius:17px; }
+  .date-dialog-head { padding:18px 17px 15px; }
+  .date-dialog-head h2 { font-size:21px; }
+  .date-calendar-nav { margin-inline:14px; }
+  .date-weekdays,.date-grid { gap:3px; margin-inline:10px; }
+  .date-grid button { min-height:38px; }
+  .date-picked { margin-inline:14px; }
+  .date-actions { padding-inline:14px; }
+}
+
+/* ===== design-refresh.css ===== */
+/* Flytt & Fräscht — designförfining 2026-11-07.
+   Endast presentation; ändrar inte offertlogik, datalagring eller beteende. */
+:root{--ff-soft-shadow:0 10px 36px rgba(5,17,42,.09)}
+/* Mjukare övergångar mellan de mörka partierna */
+.why-section{background:linear-gradient(145deg,#132640 0%,#172f4c 100%);padding-block:clamp(54px,7vw,86px)}
+.why-section .eyebrow{color:#f2b47d}
+.why-section h2{color:#f1f5fb}
+.why-section .lead{color:#c9d5e4}
+.why-grid{gap:16px}
+.why-card{background:#213a56;border:1px solid #39516c;border-radius:20px;box-shadow:0 8px 24px rgba(4,14,32,.12);transition:transform .18s ease,border-color .18s ease}
+.why-card p{color:#d0dbea;line-height:1.65}
+.why-card h3{color:#f5f7fd}
+.why-card:hover{transform:translateY(-2px);border-color:#6b809b}
+/* Tjänstekorten har dämpat ljus och mjukare skillnad mellan ytorna */
+.service-overview{background:linear-gradient(160deg,#182b42,#1b3048);padding-block:clamp(58px,7vw,80px)}
+.service-overview-card{background:#283f58;border-color:#415975;border-radius:22px;box-shadow:0 8px 26px rgba(4,15,29,.09);transition:transform .18s ease,border-color .18s ease}
+.service-overview-card:hover{transform:translateY(-2px);border-color:#7990a7}
+.service-overview-icon{background:#344b62;border:1px solid #4e6580}
+.service-overview-bottom{background:#263d55;border-color:#415975}
+.service-overview-card p,.service-overview .lead{color:#d0dae7}
+/* Lättlästa formulär på små skärmar */
+#offert form{min-width:0}
+#offert input,#offert select,#offert textarea{max-width:100%}
+#offert input:focus-visible,#offert textarea:focus-visible,#offert select:focus-visible{outline:3px solid #ff9a43;outline-offset:2px}
+#offert .privacy-note{line-height:1.65}
+#offert .btn[type="submit"]{min-height:52px}
+/* Övriga informationskort */
+.price-panel,.price-message,.service-cta{box-shadow:var(--ff-soft-shadow)}
+.faq-list details{transition:border-color .18s ease,box-shadow .18s ease}
+.faq-list details[open]{border-color:#8192ab;box-shadow:var(--ff-soft-shadow)}
+.faq-list summary{line-height:1.45}
+/* Ge mobilens fasta kontaktmeny mjukare hörn och tydliga fokusmarkeringar */
+@media(max-width:767px){
+ .mobile-contact-bar{gap:10px;border-top:1px solid rgba(255,255,255,.14)}
+ .mobile-contact-bar a{font-size:15px;min-height:50px}
+ .mobile-contact-bar a:focus-visible{outline:3px solid #ffb574;outline-offset:-3px}
+ .service-overview-grid{gap:14px}
+ .why-card,.service-overview-card{padding:21px}
+}
+@media(prefers-reduced-motion:reduce){.why-card,.service-overview-card,.faq-list details{transition:none}.why-card:hover,.service-overview-card:hover{transform:none}}
+
+/* ===== offert-dynamiskt.css ===== */
+/* Dynamiskt offertformulär – mjuka färger från webbplatsens tema */
+#offert .service-help { margin: -4px 0 0; padding: 11px 14px; border-left: 3px solid #e88b35; background: var(--bg2); border-radius: 0 10px 10px 0; color: var(--muted); font-size: 14px; }
+#offert .adaptive-panel { min-width: 0; margin: 0; border: 1px solid var(--line); border-radius: 18px; padding: 17px; display: grid; gap: 14px; background: var(--bg2); }
+#offert .adaptive-panel legend { padding: 0 9px; font-weight: 800; color: var(--text); }
+#offert .adaptive-panel .panel-intro { margin: 0; color: var(--muted); font-size: 14px; }
+#offert .adaptive-panel .r2, #offert .adaptive-panel .r2 > div { min-width: 0; }
+#offert .adaptive-panel :is(input,select,textarea) { max-width: 100%; min-width: 0; }
+#offert .service-choice-list { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+#offert .service-choice-list label { display: flex; align-items: center; gap: 10px; margin: 0; padding: 12px 13px; border: 1px solid var(--line); border-radius: 12px; background: var(--card); color: var(--text); font-size: 14px; line-height: 1.35; cursor: pointer; }
+#offert .service-choice-list input { flex: 0 0 19px; width: 19px; height: 19px; min-height: 19px; padding: 0; margin: 0; accent-color: #ff7a00; }
+#offert .service-choice-list label:has(input:checked) { border-color: #e88b35; box-shadow: inset 0 0 0 1px #e88b35; }
+#offert #multi-details[hidden],
+#offert #clean-details[hidden],
+#offert #home-details[hidden],
+#offert #window-details[hidden],
+#offert #carry-details[hidden],
+#offert #move-details[hidden],
+#offert #size-block[hidden],
+#offert #rooms-block[hidden],
+#offert #single-address[hidden] { display: none !important; }
+@media (max-width: 860px) {
+  #offert .adaptive-panel .r2 { grid-template-columns: minmax(0,1fr); }
+}
+@media (max-width: 500px) {
+  #offert .service-choice-list { grid-template-columns: minmax(0,1fr); }
+  #offert .adaptive-panel { padding: 15px; }
+}
+
+/* ===== offert-sammanfattning.css ===== */
+/* Offertgranskning: mörkblå, mobilanpassad och helt separat från adminpanelen. */
+#quote-review-dialog,
+#quote-review-dialog[open] {
+  box-sizing: border-box;
+  width: min(570px, calc(100vw - 28px));
+  max-width: calc(100vw - 28px);
+  max-height: min(88dvh, 820px);
+  margin: auto;
+  padding: 0;
+  overflow-y: auto;
+  border: 1px solid #3c5173;
+  border-radius: 22px;
+  background: #142640;
+  color: #edf3fb;
+  box-shadow: 0 30px 100px rgba(2,9,22,.65);
+  font-family: 'Barlow', system-ui, sans-serif;
+  line-height: 1.5;
+  overscroll-behavior: contain;
+}
+#quote-review-dialog::backdrop { background: rgba(4,12,29,.78); backdrop-filter: blur(4px); }
+#quote-review-dialog *,
+#quote-review-dialog *::before,
+#quote-review-dialog *::after { box-sizing: border-box; }
+.quote-review-header {
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:15px;
+  padding:25px 25px 19px;
+  background:#192e4f;
+  border-bottom:1px solid #385070;
+}
+.quote-review-heading {min-width:0;}
+.quote-review-eyebrow {display:block; margin:0 0 10px; color:#f6b27a; letter-spacing:.11em; font-size:11px; font-weight:800;}
+#quote-review-title {margin:0 0 7px; color:#f6f8fd; font-size:clamp(22px,5vw,27px); line-height:1.2; font-weight:800;}
+#quote-review-description {margin:0; color:#c6d5e7; font-size:14px;}
+button.quote-review-close {flex:0 0 40px; width:40px; height:40px; padding:0; margin:0; background:#2b4263; color:#fff; border:1px solid #486082; border-radius:12px; display:grid;place-items:center; font-size:28px; line-height:1; cursor:pointer;}
+.quote-review-content {padding:22px 25px 12px;}
+.quote-review-section-label {margin:0 0 11px; color:#f6b27a; font-size:12px; font-weight:800; text-transform:uppercase; letter-spacing:.07em;}
+.quote-review-rows {margin:0; display:grid; gap:7px;}
+.quote-review-row {min-width:0; display:grid; grid-template-columns: 39% minmax(0,1fr); gap:12px; align-items:start; padding:12px 13px; background:#223751; border:1px solid #344b68; border-radius:11px;}
+.quote-review-row dt {min-width:0; color:#c3d1e2; margin:0; font-size:13px; font-weight:600;}
+.quote-review-row dd {min-width:0; overflow-wrap:anywhere; white-space:pre-wrap; margin:0; font-size:14px; line-height:1.45; font-weight:700; color:#f7f9fe;}
+.quote-review-privacy {margin:18px 0 4px; color:#bdccdf; font-size:12px; line-height:1.6;}
+.quote-review-actions {display:flex;gap:10px; padding:14px 25px 24px; background:#142640;}
+#quote-review-dialog button {font-family:inherit; -webkit-tap-highlight-color:transparent;}
+.quote-review-actions button {min-height:50px;flex:1; margin:0; padding:11px 13px; border-radius:12px; font-size:14px; line-height:1.3; font-weight:800; cursor:pointer;}
+button.quote-review-edit {background:#2b4263; color:#eff4fa; border:1px solid #556b88;}
+button.quote-review-confirm {background:#ff8b36; color:#10213e; border:1px solid #ff8b36;}
+button.quote-review-edit:hover,button.quote-review-close:hover {background:#365374;}
+button.quote-review-confirm:hover {background:#ffad6a;}
+#quote-review-dialog button:focus-visible {outline:3px solid #ffb77e; outline-offset:3px;}
+@media (max-width: 520px) {
+  #quote-review-dialog, #quote-review-dialog[open] {width:calc(100vw - 16px); max-width:calc(100vw - 16px); max-height:90dvh; border-radius:17px;}
+  .quote-review-header {padding:20px 17px 16px;}
+  .quote-review-content {padding:18px 16px 10px;}
+  .quote-review-row {grid-template-columns: 1fr; gap:3px; padding:11px 12px;}
+  .quote-review-row dt {font-size:12px;}
+  .quote-review-row dd {font-size:15px;}
+  .quote-review-actions {padding:11px 16px 19px; flex-direction:column-reverse;}
+  .quote-review-actions button {flex:none; width:100%; min-height:50px;}
+}
+@media (prefers-reduced-motion: reduce) {
+  #quote-review-dialog::backdrop {backdrop-filter:none;}
+}
+
+/* ===== mobilmeny.css ===== */
+/* Flytt & Fräscht – modern mobilmeny, utan emojis eller fasta nederknappar. */
+.ff-menu-toggle,.ff-mobile-panel,.ff-menu-backdrop {display:none}
+@media (max-width:860px) {
+  header .bar {gap:12px}
+  .ff-menu-toggle {display:inline-flex;flex-shrink:0;align-items:center;justify-content:center;gap:10px;border:1px solid #526484;border-radius:12px;padding:9px 13px;min-height:44px;background:#1b3053;color:#fff;font:700 14px 'Barlow',sans-serif;cursor:pointer;transition:background .18s,border-color .18s}
+  .ff-menu-toggle:hover {background:#294467;border-color:#8093b4}
+  .ff-menu-lines {display:grid;gap:4px}
+  .ff-menu-lines span {display:block;width:19px;height:2px;border-radius:3px;background:#ffac67;transition:transform .2s,opacity .2s}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:first-child {transform:translateY(6px) rotate(45deg)}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:nth-child(2) {opacity:0}
+  .ff-menu-toggle[aria-expanded="true"] .ff-menu-lines span:last-child {transform:translateY(-6px) rotate(-45deg)}
+  .ff-menu-backdrop:not([hidden]) {display:block;position:fixed;inset:0;background:rgba(3,11,28,.72);z-index:9991}
+  .ff-mobile-panel {display:flex;flex-direction:column;gap:0;position:fixed;top:max(10px,env(safe-area-inset-top,0px));right:10px;left:10px;max-width:480px;margin:0 auto;max-height:calc(100dvh - max(20px,env(safe-area-inset-top,0px)) - env(safe-area-inset-bottom,0px));overflow-y:auto;overscroll-behavior:contain;background:#132643;color:#f4f7ff;border:1px solid #425a7c;border-radius:20px;box-shadow:0 24px 65px rgba(0,0,0,.48);padding:19px;z-index:9992;visibility:hidden;opacity:0;transform:translateY(-12px) scale(.98);pointer-events:none;transition:opacity .19s,transform .19s,visibility .19s}
+  .ff-mobile-panel.is-open {visibility:visible;opacity:1;transform:translateY(0) scale(1);pointer-events:auto}
+  .ff-mobile-panel-top {display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:3px 0 18px;border-bottom:1px solid #3c5170}
+  .ff-mobile-overline {display:block;margin-bottom:7px;font-size:11px;letter-spacing:1.3px;font-weight:800;color:#ffb575}
+  .ff-mobile-panel-heading {font-size:23px;font-weight:800;line-height:1.15;color:#fff;letter-spacing:-.3px}
+  .ff-menu-close {flex:none;display:grid;place-items:center;width:44px;height:44px;background:#263c5c;color:#fff;border:1px solid #59708e;border-radius:12px;font-size:29px;line-height:1;cursor:pointer}
+  .ff-menu-close:hover {background:#365275}
+  .ff-mobile-link-list {display:grid;gap:6px;padding:18px 0}
+  .ff-mobile-link-list>a {display:flex;align-items:center;justify-content:space-between;gap:15px;min-height:50px;padding:12px 15px;text-decoration:none;border:1px solid #365073;border-radius:11px;font-weight:650;font-size:16px;color:#f7f9fe;background:#203857;transition:background .16s,border-color .16s}
+  .ff-mobile-link-list>a:hover,.ff-mobile-link-list>a:focus-visible {background:#304a6d;border-color:#90a4c2}
+  .ff-menu-chevron {display:block;width:9px;height:9px;border-top:2px solid #ffb575;border-right:2px solid #ffb575;transform:rotate(45deg);margin-right:3px}
+  .ff-mobile-panel-actions {display:block;padding-top:15px;border-top:1px solid #3c5170}
+  .ff-mobile-panel-actions a {display:flex;align-items:center;justify-content:center;gap:8px;min-height:49px;padding:12px 16px;text-align:center;text-decoration:none;border-radius:12px;font-size:15px;font-weight:800}
+  .ff-menu-quote {background:#f2a15c;color:#11233e}
+  .ff-menu-quote:hover {background:#ffb77d}
+  .ff-mobile-menu-note {margin:15px 0 0;text-align:center;color:#b5c4da;font-size:12px;letter-spacing:.2px}
+  .ff-menu-toggle:focus-visible,.ff-menu-close:focus-visible,.ff-mobile-panel a:focus-visible {outline:3px solid #ffb575;outline-offset:3px}
+  body.ff-menu-open {overflow:hidden}
+}
+@media (max-width:600px) {
+  header .bar {height:68px}
+  header .brand {font-size:clamp(18px,5.2vw,24px);gap:7px;white-space:nowrap}
+  header .brand svg {width:30px;height:30px}
+  header .bar>nav {display:none}
+  .ff-menu-toggle {margin-left:auto}
+}
+@media (prefers-reduced-motion:reduce) {
+  .ff-mobile-panel,.ff-menu-lines span,.ff-mobile-link-list>a {transition:none}
+}
+
+/* ===== offert-bekraftelse.css ===== */
+/* Bekräftelse efter att offertförfrågan skickats */
+.ff-success-dialog{box-sizing:border-box;position:fixed;inset:0;margin:auto;width:min(94vw,490px);max-height:min(90dvh,760px);padding:0;border:1px solid #324866;border-radius:24px;background:#172a45;color:#f7f9ff;box-shadow:0 24px 70px rgba(8,17,32,.46);overflow-y:auto;overscroll-behavior:contain}
+.ff-success-dialog::backdrop{background:rgba(6,14,28,.74);backdrop-filter:blur(5px)}
+.ff-success-inner{padding:clamp(20px,5vw,34px)}
+.ff-success-top{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.ff-success-icon{width:66px;height:66px;flex:0 0 66px;border-radius:22px;background:#2d624b;color:#d6ffe4;display:grid;place-items:center;font-weight:900;font-size:34px;line-height:1;border:1px solid #4d9370}
+.ff-success-x{width:40px;height:40px;border:1px solid #50607c;border-radius:13px;background:#293d59;color:#eaf0f8;font-size:25px;line-height:1;cursor:pointer}
+.ff-success-kicker{margin:20px 0 7px;color:#ffb37b;font-size:12px;letter-spacing:.13em;font-weight:800;text-transform:uppercase}
+.ff-success-dialog h2{margin:0;color:#fff;font-weight:800;line-height:1.15;font-size:clamp(25px,6vw,32px)}
+.ff-success-lead{margin:13px 0 18px;color:#dce7f2;font-size:15px;line-height:1.6}
+.ff-success-steps{background:#233a56;border:1px solid #3e536e;border-radius:16px;padding:17px 18px;margin:0 0 18px}
+.ff-success-steps h3{font-size:15px;color:#fff;margin:0 0 14px}
+.ff-success-step{display:flex;align-items:flex-start;gap:11px;margin:12px 0;color:#dce7f2;font-size:14px;line-height:1.45}
+.ff-success-step:last-child{margin-bottom:0}
+.ff-success-n{flex:0 0 26px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:#ff9a4b;color:#172a45;font-weight:800;font-size:13px}
+.ff-success-small{font-size:13px;color:#b9cce1;line-height:1.5;margin:0 0 17px}
+.ff-success-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ff-success-actions button,.ff-success-actions a{appearance:none;display:flex;align-items:center;justify-content:center;min-height:46px;text-align:center;border-radius:12px;padding:10px 12px;font-weight:800;font-size:14px;text-decoration:none;cursor:pointer}
+.ff-success-done{background:#ff922f;border:1px solid #ff922f;color:#152642}
+.ff-success-call{background:#304764;border:1px solid #5c7392;color:#fff}
+.ff-success-x:focus-visible,.ff-success-actions button:focus-visible,.ff-success-actions a:focus-visible{outline:3px solid #ffbf83;outline-offset:3px}
+@media(max-width:360px){.ff-success-inner{padding:19px}.ff-success-actions{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:no-preference){.ff-success-dialog[open]{animation:ff-success-pop .18s ease-out}@keyframes ff-success-pop{from{opacity:.1;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}}
+
+/* ===== webbforbattringar.css ===== */
+/* Flytt & Fräscht: små, säkra tillgänglighetsförbättringar. */
+.ff-skip-link{position:fixed;z-index:20000;top:10px;left:10px;transform:translateY(-160%);background:#fff;color:#0b1b3f;padding:12px 17px;border:3px solid #ff7a00;border-radius:10px;font-weight:700;text-decoration:none;box-shadow:0 5px 24px #0003}
+.ff-skip-link:focus{transform:translateY(0)}
+:where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid #ff9a45;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){html:focus-within{scroll-behavior:auto!important}*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* ===== public-jobbfoton.css ===== */
+
+.ff-pg-section{padding:74px 0;background:#102441;color:#fff}
+.ff-pg-section[hidden]{display:none!important}
+.ff-pg-head{max-width:680px;margin-bottom:24px}
+.ff-pg-head h2{color:#fff;margin:.3em 0;font-size:clamp(26px,4vw,38px)}
+.ff-pg-head p{color:#cbd9ec;line-height:1.6}
+.ff-pg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ff-pg-card{margin:0;min-width:0;background:#1d3556;border:1px solid #375172;border-radius:16px;overflow:hidden}
+.ff-pg-card img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block}
+.ff-pg-card figcaption{padding:15px;color:#f8f9ff;font-weight:600;line-height:1.4}
+#ffPublicGalleryStatus{color:#c4d3e8}
+@media(max-width:760px){.ff-pg-section{padding:50px 0}.ff-pg-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}}
+@media(max-width:420px){.ff-pg-grid{grid-template-columns:1fr}.ff-pg-card img{aspect-ratio:16/10}}
+
+/* ===== hemsida-premium.css ===== */
+/* Flytt & Fräscht – Premium 2026: kompletterande, avgränsad CSS för webbplatsens publika sidor. */
+:root{--ff-premium-navy:#0b1b3f;--ff-premium-orange:#ff7a00;--ff-premium-cream:#f7f9fd}
+#hem.hero{padding-top:82px;position:relative;isolation:isolate}
+#hem.hero .sub{max-width:630px}
+#hem.hero .btn{box-shadow:0 12px 28px rgba(5,15,35,.14)}
+#hem.hero .hero-note{display:flex;align-items:center;gap:8px;line-height:1.5}
+#hem.hero .hero-note span{color:#ff9b44;font-weight:900}
+.ff-quick{padding:62px 0;background:#f7f9fd;color:#0b1b3f}
+.ff-mini-eyebrow{display:block;font-weight:800;font-size:12px;letter-spacing:.13em;color:#c25b00;text-transform:uppercase;margin-bottom:10px}
+.ff-quick-head{display:flex;justify-content:space-between;gap:26px;align-items:end;margin-bottom:25px}
+.ff-quick-head h2{font-size:clamp(28px,3.7vw,44px);line-height:1.1;letter-spacing:-.035em;margin:0 0 10px;font-weight:850}
+.ff-quick-head p{margin:0;color:#51617e;font-size:16px}
+.ff-quick-phone{flex:none;border:1px solid #d3dce9;padding:12px 17px;border-radius:11px;color:#0b1b3f;text-decoration:none;font-weight:800}
+.ff-quick-phone:hover{border-color:#ff7a00}
+.ff-quick-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.ff-quick-choice{display:flex;flex-direction:column;gap:13px;min-height:190px;border-radius:19px;border:1px solid #e0e7f0;background:#fff;padding:22px;text-decoration:none;color:#0b1b3f!important;box-shadow:0 12px 35px rgba(9,29,69,.055);position:relative;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.ff-quick-choice:hover{transform:translateY(-4px);box-shadow:0 20px 36px rgba(9,29,69,.12);border-color:#ff7a00}
+.ff-quick-emoji{font-size:28px;background:#fff3e6;border-radius:12px;width:49px;height:49px;display:grid;place-items:center}
+.ff-quick-choice strong{display:block;font-size:19px;margin-bottom:7px}
+.ff-quick-choice small{display:block;color:#576985;font-size:13px;line-height:1.45;max-width:195px}
+.ff-quick-arrow{position:absolute;top:21px;right:23px;font-size:23px;color:#c75b00}
+.ff-promise{background:#0b1b3f;color:white;padding:29px 0}
+.ff-promise-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.ff-promise-grid>div{padding:14px 20px;border-left:1px solid rgba(255,255,255,.17)}
+.ff-promise-grid>div:first-child{border-left:0}
+.ff-promise-grid span{color:#ff9b43;font-weight:900;margin-right:8px}
+.ff-promise-grid strong{font-size:17px;color:#fff}
+.ff-promise-grid p{font-size:13px;line-height:1.55;color:#d5e0ef;margin:8px 0 0}
+.ff-guide-more{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:14px 0 15px}
+.ff-guide-more>div{min-width:0}
+.ff-guide-more label{display:block;margin:0 0 8px;font-weight:700}
+.ff-guide-more select{max-width:100%;width:100%;min-width:0}
+.ff-guide-live{padding:19px 19px 15px;background:#fff7eb;border-left:4px solid #ff7a00;border-radius:11px;margin:16px 0;color:#0b1b3f}
+.ff-guide-live strong{font-size:23px;display:block;margin:0 0 7px}
+.ff-guide-live p{font-size:14px;color:#405572;line-height:1.55;margin:0}
+.ff-guide-disclaimer{font-size:12px;line-height:1.55;color:#526581;margin:0 0 16px}
+.ff-mobile-actions{display:none}
+.ff-svc-social{display:flex;flex-direction:column;gap:9px;min-width:180px}
+.ff-svc-social strong{color:#fff}
+.ff-svc-social div{display:flex;gap:9px 13px;flex-wrap:wrap}
+.ff-svc-social a{font-size:14px;color:#d9e7ff;text-decoration:underline;text-underline-offset:3px}
+.ff-svc-help{padding:30px 0 76px;background:#0e1b37;color:#fff}
+.ff-svc-help-inner{background:#132c54;border:1px solid #34507c;border-radius:22px;padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px}
+.ff-svc-help h2{font-size:clamp(27px,3.4vw,38px);margin:0 0 10px;line-height:1.1;color:#fff}
+.ff-svc-help p{margin:0;color:#d6e3f7;font-size:16px;max-width:600px;line-height:1.6}
+.ff-svc-help .service-button{flex:none}
+/* Fokusring och rörelseanpassning */
+.ff-quick-choice:focus-visible,.ff-quick-phone:focus-visible,.ff-mobile-actions a:focus-visible{outline:3px solid #ff7a00;outline-offset:3px}
+@media(max-width:900px){.ff-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-promise-grid{gap:6px}.ff-svc-help-inner{align-items:start;flex-direction:column}}
+@media(max-width:700px){
+ #hem.hero{padding-top:52px}
+ .ff-quick{padding:44px 0}
+ .ff-quick-head{align-items:start;flex-direction:column;gap:15px}
+ .ff-quick-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .ff-quick-choice{min-height:161px;padding:15px;border-radius:14px}
+ .ff-quick-choice strong{font-size:16px}.ff-quick-choice small{font-size:12px}
+ .ff-quick-emoji{height:42px;width:42px;font-size:23px}
+ .ff-promise-grid{grid-template-columns:1fr;gap:0}
+ .ff-promise-grid>div,.ff-promise-grid>div:first-child{border:0;border-bottom:1px solid rgba(255,255,255,.15);padding:17px 0}
+ .ff-guide-more{grid-template-columns:1fr}
+ .ff-mobile-actions{position:fixed;z-index:90;bottom:0;left:0;right:0;display:grid;grid-template-columns:1fr 1.5fr;gap:9px;padding:10px max(12px,env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom));background:rgba(247,250,255,.97);box-shadow:0 -9px 28px rgba(12,28,59,.14);border-top:1px solid #d9e3ee;backdrop-filter:blur(12px)}
+ .ff-mobile-actions a{display:flex;align-items:center;justify-content:center;gap:5px;min-height:46px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:800}
+ .ff-mobile-call{border:1px solid #bcc9dd;color:#0b1b3f!important;background:white}
+ .ff-mobile-quote{background:#ff7a00;color:#0b1b3f!important}
+ body:not(.service-page){padding-bottom:82px}
+ body.service-page{padding-bottom:80px}
+ .ff-svc-help{padding:20px 0 52px}.ff-svc-help-inner{padding:23px}
+}
+@media(max-width:380px){.ff-quick-grid{grid-template-columns:1fr}.ff-quick-choice{min-height:auto;flex-direction:row;align-items:center;gap:14px}.ff-quick-arrow{position:static;margin-left:auto}.ff-quick-emoji{flex:none}}
+@media(prefers-reduced-motion:reduce){.ff-quick-choice{transition:none}.ff-quick-choice:hover{transform:none}}
+
+/* ================================================================
+   Flytt & Fräscht – behagligare kontrast och mindre bländning
+   2026-11-10
+   Anpassar ljusa ytor och planeringskort utan att ändra funktioner.
+   ================================================================ */
+
+/* Mildare ljus palett. Respekterar både systemets och sidans mörka läge. */
+:root:not([data-theme="dark"]) {
+  --bg:#eaf0f7;
+  --bg2:#dfe8f3;
+  --card:#f3f6fa;
+  --line:#c6d3e2;
+}
+@media (prefers-color-scheme:dark) {
+  :root:not([data-theme="light"]) {
+    --bg:#08122b;
+    --bg2:#0b1b3f;
+    --card:#10224a;
+    --line:#26386b;
+  }
+}
+
+/* Snabbval: nedtonad yta istället för stora kritvita fält. */
+.ff-quick {
+  background:#e6edf6;
+  color:#102447;
+}
+.ff-quick-head h2,
+.ff-quick-choice strong { color:#102447; }
+.ff-quick-head p { color:#3d5270; }
+.ff-quick-choice {
+  background:#f0f4f9;
+  border-color:#c9d6e6;
+  box-shadow:0 5px 18px rgba(11,27,63,.055);
+}
+.ff-quick-choice:hover {
+  background:#e9f0f8;
+  border-color:#a6b9d1;
+  box-shadow:0 9px 24px rgba(11,27,63,.10);
+}
+.ff-quick-choice small { color:#405674; }
+.ff-quick-emoji {
+  background:#e5eaf2;
+}
+.ff-quick-arrow { color:#a84908; }
+.ff-quick-phone {
+  background:#e9f0f8;
+  border-color:#b5c6db;
+  color:#102447;
+}
+.ff-quick-phone:hover { background:#dce8f4; border-color:#8ba3c1; }
+
+/* Planeringsresultat: samma mörkblå ton som övriga sajten i
+   stället för en mycket ljus orange yta mitt i mörk sektion. */
+.ff-guide-live {
+  background:#1c3358;
+  color:#f4f7fc;
+  border:1px solid #3d5576;
+  border-left:4px solid #e68a35;
+  box-shadow:0 5px 15px rgba(4,15,35,.11);
+}
+.ff-guide-live .ff-mini-eyebrow {
+  color:#ffbd80;
+}
+.ff-guide-live strong,
+.ff-guide-live #ff-guide-scope {
+  color:#ffffff;
+}
+.ff-guide-live p,
+.ff-guide-live #ff-guide-result {
+  color:#e0eaf7;
+}
+
+/* Fokus skall vara tydligt även för tangentbordsanvändare. */
+.ff-quick-choice:focus-visible,
+.ff-quick-phone:focus-visible,
+.ff-mobile-actions a:focus-visible,
+.ff-guide-more select:focus-visible {
+  outline:3px solid #a94a00;
+  outline-offset:3px;
+}
+
+/* Matcha de mildare färgerna i mobila kontaktfält. */
+@media (max-width:700px) {
+  .ff-mobile-actions {
+    background:rgba(229,237,247,.97);
+    border-top-color:#bdcddd;
+  }
+  .ff-mobile-call {
+    background:#f0f4f9;
+    border-color:#b5c6db;
+  }
+  .ff-mobile-quote {
+    background:#f0a15b;
+    color:#102447!important;
+  }
+}
+
+
+/* ================================================================
+   MÖRK KONTRAST – snabbval på startsidan
+   Ersätter de tidigare ljusa kortfärgerna och behåller tydliga länkar.
+   ================================================================ */
+.ff-quick {
+  background: #111f3d;
+  color: #f5f8ff;
+}
+.ff-quick .ff-mini-eyebrow {
+  color: #ffb46c;
+}
+.ff-quick .ff-quick-head h2 {
+  color: #ffffff;
+}
+.ff-quick .ff-quick-head p {
+  color: #d4dfef;
+}
+.ff-quick .ff-quick-choice,
+.ff-quick a.ff-quick-choice {
+  background: #203657;
+  color: #ffffff !important;
+  border: 1px solid #415b7b;
+  box-shadow: 0 5px 18px rgba(0, 7, 21, .13);
+}
+.ff-quick .ff-quick-choice:hover,
+.ff-quick .ff-quick-choice:focus-visible {
+  background: #2b466d;
+  border-color: #f5aa61;
+  box-shadow: 0 9px 22px rgba(0, 7, 21, .18);
+}
+.ff-quick .ff-quick-choice strong {
+  color: #ffffff;
+}
+.ff-quick .ff-quick-choice small {
+  color: #dce6f4;
+}
+.ff-quick .ff-quick-emoji {
+  background: #30496d;
+}
+.ff-quick .ff-quick-arrow {
+  color: #ffb06a;
+}
+.ff-quick .ff-quick-phone {
+  background: #203657;
+  color: #ffffff;
+  border: 1px solid #6780a3;
+}
+.ff-quick .ff-quick-phone:hover,
+.ff-quick .ff-quick-phone:focus-visible {
+  background: #2b466d;
+  border-color: #ffb06a;
+}
+.ff-quick .ff-quick-choice:focus-visible,
+.ff-quick .ff-quick-phone:focus-visible {
+  outline: 3px solid #ffb46c;
+  outline-offset: 3px;
+}
+
+
+/* 2026-11-10: Gamla fasta Ring / Begär offert-knappar är borttagna. */
+.ff-mobile-actions,.mobile-contact-bar {display:none !important}
+@media (max-width:860px) {
+  body, body:not(.service-page), body.service-page {padding-bottom:0 !important}
+}
+
+/* ===== hemsida-extra.css ===== */
+/* Flytt & Fräscht – förbättringar 2,4,5,6,7. Inga ändringar i jobbfoton. */
+.ff-up-section{padding:76px 0;background:#0e2143;color:#ecf3ff}
+.ff-up-kicker{color:#ffb976;font-size:12px;font-weight:800;letter-spacing:.16em}
+.ff-up-section h2{font-size:clamp(28px,4vw,44px);line-height:1.12;letter-spacing:-.025em;color:#fff;margin:12px 0 19px}
+.ff-up-intro{font-size:clamp(16px,1.7vw,19px);line-height:1.65;color:#d5e1f3;max-width:800px;margin:0 0 22px}
+.ff-up-note{font-size:13px;line-height:1.6;color:#bfd1eb;margin:14px 0 0}
+.ff-areas{background:#101f3d}
+.ff-areas-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:25px}
+.ff-areas-grid button{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:75px;padding:17px 20px;background:#1d3354;border:1px solid #405878;border-radius:14px;color:#fff;font:700 16px inherit;font-family:inherit;font-size:16px;font-weight:700;text-align:left;cursor:pointer;transition:background .18s,border-color .18s}
+.ff-areas-grid button span{color:#ffbd78;font-size:21px}
+.ff-areas-grid button:hover{background:#294568;border-color:#ffb976}
+.ff-rut{background:#122748}
+.ff-rut-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:42px;align-items:start}
+.ff-rut p:not(.ff-up-intro):not(.ff-up-note){color:#d7e2f2;line-height:1.7}
+.ff-rut-official{display:inline-flex;margin-top:10px;color:#ffd0a1;font-weight:750;text-decoration:underline;text-underline-offset:4px}
+.ff-rut-panel{background:#20395c;border:1px solid #405f83;border-radius:17px;padding:26px;color:#fff}
+.ff-rut-panel h3{font-size:22px;color:#fff;margin:0 0 19px}
+.ff-rut-panel ol{padding:0;margin:0 0 26px;list-style:none;counter-reset:r}
+.ff-rut-panel li{counter-increment:r;display:grid;grid-template-columns:30px 1fr;gap:2px 12px;padding:0 0 17px}
+.ff-rut-panel li::before{content:counter(r);grid-row:span 2;display:grid;place-items:center;background:#314f73;color:#ffd2a6;border-radius:9px;font-weight:900;height:30px;width:30px}
+.ff-rut-panel li strong{color:#fff}
+.ff-rut-panel li span{color:#d4e1f3;font-size:14px;line-height:1.5}
+.ff-up-primary{display:inline-block;border-radius:11px;background:#ffa14d;color:#10203d!important;padding:13px 18px;font-weight:800;text-decoration:none}
+.ff-up-primary:hover{background:#ffba7d}
+.ff-contact-dock{position:fixed;right:19px;bottom:22px;z-index:39;font-family:inherit}
+.ff-contact-menu{position:relative}
+.ff-contact-menu>summary{list-style:none;cursor:pointer;padding:13px 17px;border-radius:999px;background:#f7a14e;color:#0b1b3f;box-shadow:0 4px 17px #08142f66;border:2px solid #0d1d3d;font-weight:850;font-size:14px}
+.ff-contact-menu>summary::-webkit-details-marker{display:none}
+.ff-contact-menu>summary span{margin-left:9px}
+.ff-contact-options{position:absolute;right:0;bottom:calc(100% + 12px);width:min(295px,calc(100vw - 35px));display:grid;gap:9px;padding:18px;border-radius:15px;border:1px solid #496385;background:#13294b;color:#fff;box-shadow:0 12px 32px #06112888}
+.ff-contact-options strong{font-size:15px}
+.ff-contact-options a{background:#284365;color:#fff!important;padding:12px 13px;border-radius:10px;text-decoration:none;font-size:14px;font-weight:700}
+.ff-contact-options a:hover{background:#39597d}
+.ff-form-progress{margin:0 0 17px;padding:14px 16px;border-radius:12px;background:#1a3152;border:1px solid #46617f;color:#fff}
+.ff-form-progress-head{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:space-between;font-size:13px;margin:0 0 12px}
+.ff-form-progress-head strong{color:#fff}
+#ffFormProgressLabel{color:#d6e7fa}
+.ff-form-progress-track{height:7px;border-radius:100px;overflow:hidden;background:#405777}
+#ffFormProgressBar{display:block;height:100%;width:0;background:#ffb56d;border-radius:100px;transition:width .2s}
+.ff-contact-menu summary:focus-visible,.ff-areas-grid button:focus-visible,.ff-contact-options a:focus-visible,.ff-up-primary:focus-visible{outline:3px solid #ffc98d;outline-offset:3px}
+@media(max-width:850px){.ff-areas-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-rut-grid{grid-template-columns:1fr;gap:22px}}
+@media(max-width:700px){.ff-up-section{padding:53px 0}.ff-contact-dock{bottom:calc(12px + env(safe-area-inset-bottom, 0px));right:12px}.ff-contact-menu>summary{padding:11px 13px;font-size:13px}.ff-areas-grid button{padding:14px;min-height:65px;font-size:14px}}
+@media(max-width:420px){.ff-areas-grid{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){.ff-areas-grid button,#ffFormProgressBar{transition:none}}
+
+/* ===== konvertering-gratis.css ===== */
+/* Flytt & Fräscht – konverteringsförbättringar utan betalda tjänster */
+#offert .ff-optional {margin:16px 0;background:#15294a;border:1px solid #426080;border-radius:14px;color:#f5f8ff;overflow:hidden}
+#offert .ff-optional summary {cursor:pointer;display:flex;justify-content:space-between;gap:12px;align-items:center;padding:17px 18px;font-weight:700;color:#fff;list-style:none}
+#offert .ff-optional summary::-webkit-details-marker {display:none}
+#offert .ff-optional summary::after {content:'+';font-size:22px;color:#ffb67b}
+#offert .ff-optional[open] summary::after {content:'−'}
+#offert .ff-optional summary small {font-size:.8rem;font-weight:400;color:#d3e2f3}
+#offert .ff-optional-fields {border-top:1px solid #426080;padding:18px;display:grid;gap:14px}
+#offert .ff-hint,#offert .ff-draft-note {font-size:.82rem;color:#cbd9ed;line-height:1.5;margin:.4rem 0}
+#offert .ff-conversion-trust {display:flex;gap:8px 16px;flex-wrap:wrap;margin:16px 0 10px;color:#dce8f7;font-size:.88rem}
+#offert .ff-conversion-trust span {white-space:normal}
+#offert .ff-draft-row {display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:10px 0 2px}
+#offert .ff-draft-row label {font-size:.86rem;display:inline-flex;align-items:center;gap:9px;line-height:1.4;color:#f2f7ff}
+#offert .ff-draft-row input {width:20px;height:20px;accent-color:#ed9b57;flex-shrink:0}
+#offert .ff-clear-draft {background:none;color:#ffb67b;border:0;text-decoration:underline;cursor:pointer;font:inherit;font-size:.85rem}
+#offert .ff-social-inline {display:flex;gap:9px 18px;flex-wrap:wrap;margin:10px 0 18px;font-size:.85rem}
+#offert .ff-social-inline a {color:#ffc594;text-decoration:underline;text-underline-offset:3px}
+#offert .ff-optional summary:focus-visible,#offert .ff-clear-draft:focus-visible,#offert .ff-social-inline a:focus-visible {outline:3px solid #ffc594;outline-offset:3px}
+@media(max-width:600px){#offert .ff-optional summary{flex-direction:column;align-items:flex-start;padding:14px}#offert .ff-optional summary::after{position:absolute;right:24px}#offert .ff-optional summary{padding-right:45px;position:relative}#offert .ff-optional-fields{padding:13px}#offert .ff-conversion-trust{gap:8px 12px;font-size:.81rem}}
+@media(prefers-reduced-motion:reduce){#offert .ff-optional *{scroll-behavior:auto}}
+
+/* ===== hemsida-tillvaxt.css ===== */
+/* Flytt & Fräscht — tillväxtverktyg etapp 1 */
+.ff-growth-section{padding:clamp(52px,7vw,100px) 0;background:#101f39;color:#eff5fc}
+.ff-growth-section .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+.ff-grow-heading{max-width:720px;margin-bottom:28px}.ff-grow-eyebrow{font-size:.75rem;letter-spacing:.15em;font-weight:800;color:#ffbd84}.ff-grow-heading h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.16;letter-spacing:-.035em;color:#fff;margin:.4em 0}.ff-grow-heading p{color:#c9d7e9;line-height:1.65}
+.ff-grow-layout{display:grid;grid-template-columns:1.12fr .88fr;gap:20px;align-items:start}.ff-grow-card{background:#1d3354;border:1px solid #38516f;border-radius:20px;padding:clamp(18px,3vw,32px);box-shadow:0 12px 32px #07152b30}.ff-grow-card h3{color:#fff;font-size:1.35rem;margin:0 0 8px}.ff-grow-card>p{color:#cbd8e9;line-height:1.55;margin:0 0 22px}
+.ff-grow-services{border:0;padding:0;display:grid;gap:9px}.ff-grow-services legend{font-weight:750;margin-bottom:10px;color:#eef5ff}.ff-grow-services label,.ff-grow-checklist label{display:flex;align-items:center;gap:12px;line-height:1.45;background:#263f62;padding:13px 14px;border:1px solid #415b7a;border-radius:12px;color:#eff5fc;cursor:pointer}.ff-grow-services input,.ff-grow-checklist input{accent-color:#efa663;width:18px;height:18px;flex-shrink:0}
+.ff-grow-inputrow{display:grid;gap:7px;margin-top:17px}.ff-grow-inputrow>label{font-weight:750;color:#eef4fc;font-size:.95rem}.ff-grow-inputrow input{width:100%;background:#f1f5fa;border:2px solid #d2dcea;border-radius:10px;padding:12px;color:#162c4b;font:inherit;color-scheme:light}.ff-grow-inputrow small{color:#c9d9ec;font-size:.82rem}.ff-grow-status{color:#ffcb9e!important;font-size:.92rem;margin:18px 0 10px!important}.ff-grow-primary,.ff-grow-secondary{cursor:pointer;border-radius:11px;min-height:48px;padding:12px 18px;font:inherit;font-weight:800}.ff-grow-primary{width:100%;background:#f2a25d;color:#13233c;border:0}.ff-grow-primary:hover{background:#ffc08b}.ff-grow-secondary{background:transparent;color:#fff;border:1px solid #7795b7}.ff-grow-secondary:hover{background:#2b4668}.ff-grow-primary:focus-visible,.ff-grow-secondary:focus-visible,.ff-grow-inputrow input:focus-visible,.ff-grow-faq summary:focus-visible,.ff-grow-help button:focus-visible{outline:3px solid #ffcb97;outline-offset:3px}
+.ff-grow-checklist{display:grid;gap:9px}.ff-grow-checklist input:checked+span{text-decoration:line-through}.ff-grow-meter{display:flex;align-items:center;gap:14px;margin:23px 0;color:#d9e6f4;font-size:.92rem}.ff-grow-meter>div{height:10px;flex:1;border-radius:99px;background:#3a5270;overflow:hidden}.ff-grow-meter>div span{display:block;height:100%;width:0;background:#f2a25d;transition:width .2s}
+.ff-grow-trust{background:#182b46;padding-top:60px}.ff-grow-faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}.ff-grow-faq details{align-self:start;background:#233b59;border:1px solid #48617f;border-radius:12px;padding:18px;color:#dfebfa}.ff-grow-faq summary{font-weight:750;cursor:pointer;color:#fff;line-height:1.5}.ff-grow-faq p{line-height:1.65;margin:13px 0 0;color:#cad8e9}
+.ff-grow-help{position:fixed;z-index:60;right:20px;bottom:20px;max-width:320px;background:#233b59;color:#fff;border:1px solid #627c9c;box-shadow:0 12px 32px #06112470;border-radius:14px;padding:16px 45px 16px 17px}.ff-grow-help[hidden]{display:none}.ff-grow-help p{margin:0 0 8px;color:#fff}.ff-grow-help a{color:#ffbd84;text-decoration:underline;font-weight:750}.ff-grow-help button{position:absolute;top:7px;right:8px;width:35px;height:35px;background:transparent;border:0;color:#fff;font-size:23px;cursor:pointer}
+@media(max-width:740px){.ff-grow-layout,.ff-grow-faq{grid-template-columns:1fr}.ff-growth-section{padding:45px 0}.ff-grow-card{padding:20px}.ff-grow-help{bottom:16px;left:16px;right:16px;max-width:none}}
+@media print{.ff-grow-card:first-child,.ff-grow-trust,.ff-grow-help,.ff-grow-primary,.ff-grow-secondary{display:none!important}.ff-grow-layout{display:block}.ff-grow-side{background:white;color:#111;border:0;box-shadow:none}.ff-grow-side h3,.ff-grow-side p,.ff-grow-checklist label{color:#111!important}.ff-grow-checklist label{border-color:#aaa;background:white}}
+@media(prefers-reduced-motion:reduce){.ff-grow-meter>div span{transition:none}}
+
+/* ===== Rättad bredd och enhetlig kalender i valfria offertfält ===== */
+#offert .ff-optional-fields,
+#offert .ff-optional-fields > div,
+#offert .ff-optional-fields .kr {
+  min-width:0;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+#offert .ff-optional-fields input,
+#offert .ff-optional-fields textarea,
+#offert .ff-optional-fields button.date-open {
+  display:block;
+  min-width:0;
+  width:100%;
+  max-width:100%;
+  box-sizing:border-box;
+}
+#offert .ff-optional-fields button.date-open {display:flex}
+#offert .ff-optional-fields textarea {resize:vertical}
+/* Göm bara det alternativa native-fältet när den egna kalendern är aktiv. */
+#offert .ff-alt-date-field.ff-custom-calendar-ready #ff-alt-date {
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  min-height:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  clip-path:inset(50%)!important;
+}
+
+
+/* ============================================================
+   Flytt & Fräscht — finslipning: mobil, offert, galleri, tillgänglighet
+   Bevarar befintliga HTML-ID:n, JS-kopplingar och formulärflöde.
+   ============================================================ */
+/* Formfält: inga element får bli bredare än sin kolumn */
+#offert form,
+#offert form .r2,
+#offert form .r2 > div,
+#offert form .ff-optional-fields,
+#offert form .ff-optional-fields > div {min-width:0;max-width:100%;box-sizing:border-box}
+#offert form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+#offert form select,
+#offert form textarea,
+#offert form .kr,
+#offert form .date-open {max-width:100%;box-sizing:border-box}
+#offert form textarea {resize:vertical;min-height:105px}
+#offert .ff-optional-fields .kr {overflow:hidden}
+#offert form :is(input, select, textarea, button):focus-visible,
+.ff-quick-choice:focus-visible,
+.ff-pg-section a:focus-visible,
+.hero .cta a:focus-visible,
+.ff-mobile-panel a:focus-visible {
+  outline:3px solid #ffbf86;outline-offset:3px;
+}
+/* Kunder kan läsa fälten tydligt, utan stora tomma utrymmen. */
+#offert .ff-optional-fields {gap:16px}
+#offert .ff-optional-fields label {line-height:1.35}
+#offert .ff-optional-fields .hint,
+#offert .ff-optional-fields .ff-hint {line-height:1.5}
+/* Befintligt jobb-galleri: endast presentation; public-jobbfoton.js lämnas orörd. */
+#ffPublicGallery .ff-pg-grid {align-items:start}
+#ffPublicGallery .ff-pg-card {
+  overflow:hidden;border-radius:18px;background:#1b3252;
+  border:1px solid #476080;
+  box-shadow:0 8px 20px rgba(0,0,0,.13);
+  transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease;
+}
+#ffPublicGallery .ff-pg-card img {width:100%;aspect-ratio:4/3;object-fit:cover;display:block;height:auto}
+#ffPublicGallery .ff-pg-card figcaption {padding:13px 16px 16px;line-height:1.5;overflow-wrap:anywhere}
+@media (hover:hover) and (pointer:fine) {
+  #ffPublicGallery .ff-pg-card:hover {transform:translateY(-3px);border-color:#8da1bc;box-shadow:0 14px 26px rgba(0,0,0,.2)}
+}
+/* Kompakt, läsbar mobilvy utan extra fasta knappar. */
+@media(max-width:600px) {
+  #hem.hero .sub {font-size:clamp(16px,4.15vw,18px);line-height:1.57;margin-bottom:18px}
+  #hem.hero .cta {gap:10px}
+  #hem.hero .hero-tags {gap:6px;margin-bottom:17px}
+  #hem.hero .hero-note {font-size:12px!important;line-height:1.5}
+  #offert form {max-width:100%;min-width:0;overflow-wrap:break-word}
+  #offert form .r2 {min-width:0}
+  #offert form .r2 > div {width:100%}
+  #offert form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  #offert form select, #offert form textarea {font-size:16px}
+  #offert .ff-optional summary small {line-height:1.4}
+  #offert .ff-optional-fields textarea {min-height:90px}
+  #offert #sendBtn {min-height:48px}
+  #ffPublicGallery .ff-pg-grid {grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  #ffPublicGallery .ff-pg-card figcaption {padding:11px 12px;font-size:13px}
+}
+@media(max-width:380px) {
+  #ffPublicGallery .ff-pg-grid {grid-template-columns:1fr}
+  #ffPublicGallery .ff-pg-card img {aspect-ratio:16/10}
+}
+@media(prefers-reduced-motion:reduce) {
+  #ffPublicGallery .ff-pg-card {transition:none}
+}
+
+
+/* =============================================================
+   Första kunden – kompakt, trygg och tillgänglig startsida.
+   Inga ändringar av jobbfotogalleri eller dess automatisk visning.
+   ============================================================= */
+#hem.hero h1{font-size:clamp(48px,5.5vw,74px);line-height:1.03;letter-spacing:-.035em;max-width:100%}
+#hem.hero h1 .ln{white-space:nowrap}
+#hem.hero .sub{max-width:550px;line-height:1.6}
+#hem.hero .hero-tags{margin-bottom:18px}
+#varfor-oss .ff-first-trust-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+#varfor-oss .ff-first-trust-grid .why-card{min-width:0}
+#varfor-oss .ff-first-trust-grid .why-icon{font-weight:800;font-size:19px;color:#f3a76b}
+#tjanster .cards .card{height:100%;display:flex;flex-direction:column}
+#tjanster .service-card-link{margin-top:auto}
+.ff-simple-steps{padding-top:50px;padding-bottom:50px}
+.ff-simple-steps .steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.ff-rut-simple{padding-top:45px;padding-bottom:45px}
+.ff-rut-simple .wrap{max-width:1000px}
+.ff-rut-simple h2{font-size:clamp(26px,3vw,38px);margin:10px 0}
+.ff-rut-simple p{max-width:850px;line-height:1.7;margin:0 0 12px}
+.ff-first-local-links{margin:18px 0 0;color:#dbe5f2;font-size:14px;line-height:1.7}
+.ff-first-local-links a{color:#ffc48f;text-underline-offset:3px;font-weight:750}
+.ff-first-side-card{padding:20px;border:1px solid var(--line);border-radius:17px;background:var(--card)}
+.ff-first-side-card strong{font-weight:800;color:var(--text)}
+.ff-first-side-card p{color:var(--muted);margin:8px 0 0;line-height:1.6}
+.ff-first-side-note{font-size:14px;color:var(--muted);line-height:1.5;margin-top:16px}
+#offert .ff-job-extras{margin:8px 0 2px;min-width:0;border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:hidden}
+#offert .ff-job-extras summary{cursor:pointer;list-style:none;position:relative;padding:15px 42px 15px 16px;font-weight:750;color:var(--text)}
+#offert .ff-job-extras summary::-webkit-details-marker{display:none}
+#offert .ff-job-extras summary::after{content:'+';position:absolute;right:16px;top:12px;font-size:23px;color:var(--ortext)}
+#offert .ff-job-extras[open] summary::after{content:'−'}
+#offert .ff-job-extras-inner{padding:0 16px 15px;display:grid;gap:13px;min-width:0}
+#offert .ff-job-extras-inner>fieldset{min-width:0;max-width:100%}
+#offert #ff-service-extras[hidden],#offert #ff-service-extras .adaptive-panel[hidden]{display:none!important}
+#offert .ff-job-extras:focus-within{border-color:#c98545}
+#offert .ff-job-extras summary:focus-visible{outline:3px solid #f2a062;outline-offset:-3px}
+#offert .ff-conversion-trust{flex-wrap:wrap}
+#omdomen .ff-trustpilot{max-width:100%}
+/* Tillgänglig modal som använder samma formulär och befintliga input-ID:n. */
+.ff-fast-quote-dialog{position:fixed;inset:0;margin:auto;width:min(960px,calc(100vw - 28px));max-width:960px;max-height:min(94dvh,1000px);padding:0;border:1px solid #446080;border-radius:22px;background:#0d1e3e;color:#fff;box-shadow:0 24px 95px rgba(0,0,0,.52);overflow:auto;overscroll-behavior:contain}
+.ff-fast-quote-dialog::backdrop{background:rgba(4,10,26,.82);backdrop-filter:blur(5px)}
+.ff-fast-quote-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#0b1b3f;color:#dfeafa;padding:12px 18px;position:sticky;top:0;z-index:20;border-bottom:1px solid #354768;font-weight:800;font-size:12px;letter-spacing:.09em}
+.ff-fast-quote-toolbar button{border:1px solid #59718f;border-radius:11px;background:#203858;color:#fff;font-size:26px;line-height:1;min-height:42px;min-width:42px;cursor:pointer}
+.ff-fast-quote-toolbar button:focus-visible{outline:3px solid #f2a062;outline-offset:2px}
+.ff-fast-quote-dialog #offert{padding:24px 0 32px;min-height:0;scroll-margin-top:0}
+.ff-fast-quote-dialog #offert .wrap{width:calc(100% - 40px);max-width:900px}
+.ff-fast-quote-dialog #offert{--bg:#10223f;--bg2:#142c4c;--card:#182f52;--text:#f4f8ff;--muted:#ccdaed;--line:#496587;--ortext:#ffb576;color:#f4f8ff}
+.ff-fast-quote-dialog #offert .fgrid{grid-template-columns:minmax(0,1fr);gap:15px}
+.ff-fast-quote-dialog #offert form{background:#182f52;color:#f4f8ff;border-color:#405c7f}
+.ff-fast-quote-dialog #offert form :is(input,select,textarea){background:#10223f;color:#f4f8ff;border-color:#547092;color-scheme:dark}
+.ff-fast-quote-dialog #offert form :is(input,textarea)::placeholder{color:#b5c6dc;opacity:1}
+.ff-fast-quote-dialog #offert form .service-help{background:#223e63;color:#e1eaf7}
+.ff-fast-quote-dialog #offert .side{display:none}
+.ff-fast-quote-dialog #offert .rv{opacity:1!important;transform:none!important;animation:none!important}
+.ff-fast-quote-dialog #offert form{margin-top:0;min-width:0}
+@media(max-width:850px){
+ #varfor-oss .ff-first-trust-grid{grid-template-columns:1fr}
+ .ff-simple-steps .steps{grid-template-columns:1fr}
+ .ff-fast-quote-dialog{width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:0}
+ .ff-fast-quote-dialog #offert{padding:10px 0 40px}
+ .ff-fast-quote-dialog #offert .wrap{width:calc(100% - 28px);margin:auto}
+ .ff-fast-quote-dialog #offert form{padding:16px}
+ #hem.hero{padding:30px 0 40px!important}
+ #hem.hero h1{font-size:clamp(35px,10.5vw,49px);line-height:1.04;margin-bottom:20px}
+ #hem.hero .pill{font-size:12px;margin-bottom:14px}
+ #hem.hero .sub{font-size:17px;line-height:1.55;margin-bottom:20px}
+ #hem.hero .hero-tags{gap:6px;margin-bottom:20px}
+ #hem.hero .hero-tags span{font-size:11px;padding:6px 10px}
+ #hem.hero .grid>div:nth-child(2){display:none}
+ #hem.hero .cta{gap:9px}
+ #hem.hero .cta .btn{min-height:48px;padding:12px 18px;font-size:15px}
+ #hem.hero .hero-note{margin-top:13px!important;font-size:12px!important}
+ #varfor-oss,#om-oss,#sa-funkar-det{padding-top:45px;padding-bottom:45px}
+}
+@media(prefers-reduced-motion:reduce){.ff-fast-quote-dialog::backdrop{backdrop-filter:none}}
+
+
+/* =============================================================
+   Offertformulär: finjustering 2026-11-11
+   1) Samma storleksreglage i popup och på hemsidan.
+   2) Samlade informationsrader längst ned i formuläret, både
+      på startsidan och när samma formulär visas i popupen.
+   Inga ändringar i fält, datum, värden eller sändningslogik.
+   ============================================================= */
+
+/* Begränsa inte reglaget på vanliga startsidan. */
+/* Samma reglagelängd som i det vanliga offertformuläret. */
+.ff-fast-quote-dialog #offert #size-block {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+/* Popupens generella input-stil ska inte ge range-reglaget en permanent
+   kantlinje eller fylld bakgrund. Fokus visas först när reglaget används. */
+.ff-fast-quote-dialog #offert form input[type="range"] {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color-scheme: normal;
+  box-shadow: none;
+}
+.ff-fast-quote-dialog #offert form input[type="range"]:focus {
+  border: 0;
+  box-shadow: 0 0 0 4px rgba(255,122,0,.2);
+}
+
+/* En kompakt grupp som ersätter formulärets stora grid-avstånd
+   just mellan integritet, fördelar, utkast och Trustpilot. */
+#offert .ff-form-final-details {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin: 0;
+}
+#offert .ff-form-final-details .privacy-note,
+#offert .ff-form-final-details .ff-conversion-trust,
+#offert .ff-form-final-details .ff-draft-row,
+#offert .ff-form-final-details .ff-draft-note,
+#offert .ff-form-final-details .ff-social-inline {
+  margin: 0;
+}
+#offert .ff-form-final-details .ff-conversion-trust {
+  gap: 6px 15px;
+  align-items: center;
+}
+#offert .ff-form-final-details .ff-draft-row {
+  gap: 8px 14px;
+}
+#offert .ff-form-final-details .ff-draft-note {
+  margin-top: -5px;
+}
+#offert .ff-form-final-details .ff-social-inline {
+  margin-top: 2px;
+}
+@media (max-width: 600px) {
+  #offert .ff-form-final-details { gap: 9px; }
+  #offert .ff-form-final-details .ff-conversion-trust { gap: 6px 12px; }
+  #offert .ff-form-final-details .ff-draft-note { margin-top: -3px; }
+}
+
+
+/* Kampanj t.o.m. 31 december 2026: diskret i startvyn och vid offert. */
+[data-ff-discount-2026][hidden] { display:none !important; }
+.ff-discount-hero {
+  display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;
+  max-width:750px;margin:13px 0 7px;padding:11px 15px;
+  border:1px solid rgba(255,171,101,.52);border-radius:13px;
+  background:rgba(255,122,0,.10);color:#eef4ff;line-height:1.42;
+}
+.ff-discount-percent {
+  display:inline-flex;align-items:center;flex-shrink:0;
+  font-size:13px;letter-spacing:.045em;font-weight:900;
+  color:#ffbe86;
+}
+.ff-discount-hero-text {font-size:14px;color:#e4ebf8;}
+#offert .ff-discount-form {
+  box-sizing:border-box;width:100%;max-width:100%;margin:0;
+  padding:12px 15px;border-left:3px solid #ff963e;
+  border-radius:10px;background:#223e61;color:#f1f5fc;
+  font-size:14px;line-height:1.5;
+}
+#offert .ff-discount-form strong {color:#ffc28d;}
+@media(max-width:600px){
+  .ff-discount-hero{gap:5px 8px;padding:10px 12px}
+  .ff-discount-hero-text{font-size:13px}
+  #offert .ff-discount-form{font-size:13px;padding:11px 12px}
+}
+
+
+/* 2026-11-12: Mjukare desktopscroll i snabboffertens popup.
+   Gäller endast medan dialogen är öppen, inga formulärändringar. */
+@media (min-width: 851px) {
+  /* Blur bakom en stor, scrollande dialog kan ge dyra omritningar. */
+  #ff-fast-quote-dialog::backdrop {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  /* Stanna bakgrundens dekorativa rörelser medan kunden fyller i offerten. */
+  body:has(#ff-fast-quote-dialog[open]) .blob,
+  body:has(#ff-fast-quote-dialog[open]) .badge,
+  body:has(#ff-fast-quote-dialog[open]) .orbit,
+  body:has(#ff-fast-quote-dialog[open]) .sp,
+  body:has(#ff-fast-quote-dialog[open]) .mq div {
+    animation-play-state: paused;
+  }
+
+  /* Vanlig direkt scroll inuti dialogen, inte animerad scroll. */
+  #ff-fast-quote-dialog { scroll-behavior: auto; }
+}
