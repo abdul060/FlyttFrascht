@@ -1181,23 +1181,36 @@ button.quote-review-confirm:hover {background:#ffad6a;}
 
 /* =============================================================
    Offertformulär: finjustering 2026-11-11
-   1) Kortare bostadsreglage ENDAST inne i snabboffertens popup.
+   1) Samma storleksreglage i popup och på hemsidan.
    2) Samlade informationsrader längst ned i formuläret, både
       på startsidan och när samma formulär visas i popupen.
    Inga ändringar i fält, datum, värden eller sändningslogik.
    ============================================================= */
 
 /* Begränsa inte reglaget på vanliga startsidan. */
+/* Samma reglagelängd som i det vanliga offertformuläret. */
 .ff-fast-quote-dialog #offert #size-block {
-  width: min(100%, 540px);
+  width: 100%;
   max-width: 100%;
   min-width: 0;
 }
-.ff-fast-quote-dialog #offert #size-block input[type="range"] {
+/* Popupens generella input-stil ska inte ge range-reglaget en permanent
+   kantlinje eller fylld bakgrund. Fokus visas först när reglaget används. */
+.ff-fast-quote-dialog #offert form input[type="range"] {
   display: block;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
   box-sizing: border-box;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color-scheme: normal;
+  box-shadow: none;
+}
+.ff-fast-quote-dialog #offert form input[type="range"]:focus {
+  border: 0;
+  box-shadow: 0 0 0 4px rgba(255,122,0,.2);
 }
 
 /* En kompakt grupp som ersätter formulärets stora grid-avstånd
