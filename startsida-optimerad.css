@@ -911,6 +911,72 @@ button.quote-review-confirm:hover {background:#ffad6a;}
   outline: 3px solid #ffb46c;
   outline-offset: 3px;
 }
+/* ===== Kortare och snyggare bar för bostadens storlek ===== */
+#offert #size-block{
+  width:min(100%, 980px);
+  display:grid;
+  gap:12px;
+  margin:0 0 16px;
+}
+
+#offert #size-block .lb{
+  margin:0;
+}
+
+#offert #size-block .out{
+  margin:0;
+  align-items:baseline;
+  gap:10px;
+}
+
+#offert #size-block .out b{
+  font-size:clamp(56px, 7vw, 84px);
+  line-height:1;
+}
+
+#offert #size-block input[type="range"]{
+  width:100%;
+  max-width:980px;
+  margin:0;
+}
+
+#offert #m::-webkit-slider-runnable-track{
+  height:12px;
+  border-radius:999px;
+}
+
+#offert #m::-moz-range-track{
+  height:12px;
+  border-radius:999px;
+}
+
+#offert #m::-moz-range-progress{
+  height:12px;
+  border-radius:999px;
+}
+
+#offert #m::-webkit-slider-thumb{
+  width:30px;
+  height:30px;
+  margin-top:-9px;
+}
+
+#offert #m::-moz-range-thumb{
+  width:22px;
+  height:22px;
+}
+
+@media (min-width:1100px){
+  #offert #size-block{
+    width:min(84%, 980px);
+  }
+}
+
+@media (max-width:700px){
+  #offert #size-block{
+    width:100%;
+  }
+}
 
 
 /* 2026-11-10: Gamla fasta Ring / Begär offert-knappar är borttagna. */
