@@ -6,14 +6,15 @@
     button.addEventListener('click',()=>{
       const area=button.getAttribute('data-ff-area');
       const address=$('a');
-      if(address && !address.value.trim()){
+      // Ett uttryckligt klick på en områdesknapp ska ersätta tidigare
+      // områdesförslag, även om sidan öppnades från t.ex. en Solna-länk.
+      if(address){
         address.value=area;
         address.dispatchEvent(new Event('input',{bubbles:true}));
       }
-      // For moving requests, departure addresses are only suggestions;
-      // never overwrite a value the customer has already entered.
+      // Samma val används för flyttens från-område.
       const origin=$('move-from');
-      if(origin && !origin.value.trim()){
+      if(origin){
         origin.value=area;
         origin.dispatchEvent(new Event('input',{bubbles:true}));
       }
