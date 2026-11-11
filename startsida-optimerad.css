@@ -1101,3 +1101,79 @@ button.quote-review-confirm:hover {background:#ffad6a;}
 @media(prefers-reduced-motion:reduce) {
   #ffPublicGallery .ff-pg-card {transition:none}
 }
+
+
+/* =============================================================
+   Första kunden – kompakt, trygg och tillgänglig startsida.
+   Inga ändringar av jobbfotogalleri eller dess automatisk visning.
+   ============================================================= */
+#hem.hero h1{font-size:clamp(48px,5.5vw,74px);line-height:1.03;letter-spacing:-.035em;max-width:100%}
+#hem.hero h1 .ln{white-space:nowrap}
+#hem.hero .sub{max-width:550px;line-height:1.6}
+#hem.hero .hero-tags{margin-bottom:18px}
+#varfor-oss .ff-first-trust-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+#varfor-oss .ff-first-trust-grid .why-card{min-width:0}
+#varfor-oss .ff-first-trust-grid .why-icon{font-weight:800;font-size:19px;color:#f3a76b}
+#tjanster .cards .card{height:100%;display:flex;flex-direction:column}
+#tjanster .service-card-link{margin-top:auto}
+.ff-simple-steps{padding-top:50px;padding-bottom:50px}
+.ff-simple-steps .steps{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.ff-rut-simple{padding-top:45px;padding-bottom:45px}
+.ff-rut-simple .wrap{max-width:1000px}
+.ff-rut-simple h2{font-size:clamp(26px,3vw,38px);margin:10px 0}
+.ff-rut-simple p{max-width:850px;line-height:1.7;margin:0 0 12px}
+.ff-first-local-links{margin:18px 0 0;color:#dbe5f2;font-size:14px;line-height:1.7}
+.ff-first-local-links a{color:#ffc48f;text-underline-offset:3px;font-weight:750}
+.ff-first-side-card{padding:20px;border:1px solid var(--line);border-radius:17px;background:var(--card)}
+.ff-first-side-card strong{font-weight:800;color:var(--text)}
+.ff-first-side-card p{color:var(--muted);margin:8px 0 0;line-height:1.6}
+.ff-first-side-note{font-size:14px;color:var(--muted);line-height:1.5;margin-top:16px}
+#offert .ff-job-extras{margin:8px 0 2px;min-width:0;border:1px solid var(--line);border-radius:14px;background:var(--bg2);overflow:hidden}
+#offert .ff-job-extras summary{cursor:pointer;list-style:none;position:relative;padding:15px 42px 15px 16px;font-weight:750;color:var(--text)}
+#offert .ff-job-extras summary::-webkit-details-marker{display:none}
+#offert .ff-job-extras summary::after{content:'+';position:absolute;right:16px;top:12px;font-size:23px;color:var(--ortext)}
+#offert .ff-job-extras[open] summary::after{content:'−'}
+#offert .ff-job-extras-inner{padding:0 16px 15px;display:grid;gap:13px;min-width:0}
+#offert .ff-job-extras-inner>fieldset{min-width:0;max-width:100%}
+#offert #ff-service-extras[hidden],#offert #ff-service-extras .adaptive-panel[hidden]{display:none!important}
+#offert .ff-job-extras:focus-within{border-color:#c98545}
+#offert .ff-job-extras summary:focus-visible{outline:3px solid #f2a062;outline-offset:-3px}
+#offert .ff-conversion-trust{flex-wrap:wrap}
+#omdomen .ff-trustpilot{max-width:100%}
+/* Tillgänglig modal som använder samma formulär och befintliga input-ID:n. */
+.ff-fast-quote-dialog{position:fixed;inset:0;margin:auto;width:min(960px,calc(100vw - 28px));max-width:960px;max-height:min(94dvh,1000px);padding:0;border:1px solid #446080;border-radius:22px;background:#0d1e3e;color:#fff;box-shadow:0 24px 95px rgba(0,0,0,.52);overflow:auto;overscroll-behavior:contain}
+.ff-fast-quote-dialog::backdrop{background:rgba(4,10,26,.82);backdrop-filter:blur(5px)}
+.ff-fast-quote-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;background:#0b1b3f;color:#dfeafa;padding:12px 18px;position:sticky;top:0;z-index:20;border-bottom:1px solid #354768;font-weight:800;font-size:12px;letter-spacing:.09em}
+.ff-fast-quote-toolbar button{border:1px solid #59718f;border-radius:11px;background:#203858;color:#fff;font-size:26px;line-height:1;min-height:42px;min-width:42px;cursor:pointer}
+.ff-fast-quote-toolbar button:focus-visible{outline:3px solid #f2a062;outline-offset:2px}
+.ff-fast-quote-dialog #offert{padding:24px 0 32px;min-height:0;scroll-margin-top:0}
+.ff-fast-quote-dialog #offert .wrap{width:calc(100% - 40px);max-width:900px}
+.ff-fast-quote-dialog #offert{--bg:#10223f;--bg2:#142c4c;--card:#182f52;--text:#f4f8ff;--muted:#ccdaed;--line:#496587;--ortext:#ffb576;color:#f4f8ff}
+.ff-fast-quote-dialog #offert .fgrid{grid-template-columns:minmax(0,1fr);gap:15px}
+.ff-fast-quote-dialog #offert form{background:#182f52;color:#f4f8ff;border-color:#405c7f}
+.ff-fast-quote-dialog #offert form :is(input,select,textarea){background:#10223f;color:#f4f8ff;border-color:#547092;color-scheme:dark}
+.ff-fast-quote-dialog #offert form :is(input,textarea)::placeholder{color:#b5c6dc;opacity:1}
+.ff-fast-quote-dialog #offert form .service-help{background:#223e63;color:#e1eaf7}
+.ff-fast-quote-dialog #offert .side{display:none}
+.ff-fast-quote-dialog #offert .rv{opacity:1!important;transform:none!important;animation:none!important}
+.ff-fast-quote-dialog #offert form{margin-top:0;min-width:0}
+@media(max-width:850px){
+ #varfor-oss .ff-first-trust-grid{grid-template-columns:1fr}
+ .ff-simple-steps .steps{grid-template-columns:1fr}
+ .ff-fast-quote-dialog{width:100%;height:100dvh;max-height:100dvh;border-radius:0;border:0}
+ .ff-fast-quote-dialog #offert{padding:10px 0 40px}
+ .ff-fast-quote-dialog #offert .wrap{width:calc(100% - 28px);margin:auto}
+ .ff-fast-quote-dialog #offert form{padding:16px}
+ #hem.hero{padding:30px 0 40px!important}
+ #hem.hero h1{font-size:clamp(35px,10.5vw,49px);line-height:1.04;margin-bottom:20px}
+ #hem.hero .pill{font-size:12px;margin-bottom:14px}
+ #hem.hero .sub{font-size:17px;line-height:1.55;margin-bottom:20px}
+ #hem.hero .hero-tags{gap:6px;margin-bottom:20px}
+ #hem.hero .hero-tags span{font-size:11px;padding:6px 10px}
+ #hem.hero .grid>div:nth-child(2){display:none}
+ #hem.hero .cta{gap:9px}
+ #hem.hero .cta .btn{min-height:48px;padding:12px 18px;font-size:15px}
+ #hem.hero .hero-note{margin-top:13px!important;font-size:12px!important}
+ #varfor-oss,#om-oss,#sa-funkar-det{padding-top:45px;padding-bottom:45px}
+}
+@media(prefers-reduced-motion:reduce){.ff-fast-quote-dialog::backdrop{backdrop-filter:none}}

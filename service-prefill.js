@@ -21,6 +21,17 @@
     if (!option) return;
     select.value = option.value;
     select.dispatchEvent(new Event('change', { bubbles: true }));
+  // Plocka med ett områdesförslag från våra lokala informationssidor.
+  // Kunden kan ändra fältet; ingen exakt adress antas.
+  const areaMap = { solna:'Solna', nacka:'Nacka', taby:'Täby' };
+  const area = areaMap[new URLSearchParams(location.search).get('omrade') || ''];
+  if (area) {
+    const origin = document.getElementById('move-from');
+    const address = document.getElementById('a');
+    if (origin && !origin.value.trim()) { origin.value = area; origin.dispatchEvent(new Event('input', { bubbles:true })); }
+    if (address && !address.value.trim()) { address.value = area; address.dispatchEvent(new Event('input', { bubbles:true })); }
+  }
+
   }
 
   if (document.readyState === 'loading') {

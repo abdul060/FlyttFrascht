@@ -188,7 +188,13 @@ form.addEventListener('submit',async function(ev){
  var housing=housingRelevant();
  var address=isMovingService() ?
   ('Från: '+$('move-from').value.trim()+' | Till: '+$('move-to').value.trim()) : $('a').value.trim();
- var msg=($('g').value.trim()+(extraInfo?'\n\n'+extraInfo:'')).trim().slice(0,3000);
+ // Enkel kampanjhänvisning utan cookies, tredjepartsspårning eller kund-ID.
+ var allowedSources={facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',qr:'QR-affisch',flyer:'Tryckt affisch',partner:'Samarbetspartner'};
+ var sourceKey=new URLSearchParams(location.search).get('utm_source')||'';
+ var sourceLabel=allowedSources[sourceKey.toLowerCase()]||'';
+ var msg=($('g').value.trim()+(extraInfo?'\n\n'+extraInfo:'')).trim();
+ if(sourceLabel)msg+=(msg?'\n\n':'')+'Inkom via: '+sourceLabel;
+ msg=msg.slice(0,3000);
  var fields=new FormData();
  fields.append('Namn',n);
  fields.append('Telefon',p);
@@ -201,7 +207,6 @@ form.addEventListener('submit',async function(ev){
  fields.append('Önskat datum',$('d').value||'Ej angivet');
  fields.append('Rimligt pris',$('k').value.trim()?$('k').value.trim()+' kr':'Ej angivet');
  fields.append('Meddelande',msg||'Inget meddelande');
- fields.append('Erbjudande','20 % rabatt');
  fields.append('_subject','Ny offertförfrågan – '+$('s').value);
  fields.append('_gotcha',$('website').value);
  sendBtn.disabled=true;sendBtn.textContent='Skickar…';
