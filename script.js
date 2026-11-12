@@ -216,10 +216,12 @@ form.addEventListener('submit',async function(ev){
   // Formspree har bekräftat att mejlförfrågan togs emot.
   // Spara separat i Supabase för adminpanelen. Historiska Formspree-svar importeras inte.
   var stored=false;
+  var claimId=null;
   var cfg=window.FLYTT_CONFIG||{};
   if(cfg.supabaseUrl && cfg.supabaseAnonKey && !cfg.supabaseUrl.includes('DITT-PROJEKT')){
    try {
-    var record={namn:n,telefon:p,epost:e||null,tjanst:$('s').value,
+    claimId=(e && window.crypto && crypto.randomUUID)?crypto.randomUUID():null;
+    var record={...(claimId?{id:claimId}:{}),namn:n,telefon:p,epost:e||null,tjanst:$('s').value,
      storlek_kvm:housing?Number(m.value):0,rum:housing?(rm?rm.value:''):'Ej relevant',adress:address,
      onskat_datum:$('d').value||null,rimligt_pris:$('k').value?Number($('k').value):null,
      meddelande:msg,status:'ny'};
@@ -231,7 +233,7 @@ form.addEventListener('submit',async function(ev){
   form.reset();sl();updateMoveFields();
   $('d').dispatchEvent(new Event('change',{bubbles:true}));
   var note=$('saveNote');
-  if(note) note.textContent=stored?'':'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.';
+  if(note) note.textContent=stored?(claimId?'Ärendenummer: '+claimId+' — spara detta nummer. Det behövs för att koppla ärendet i Mina sidor.':'Förfrågan sparad, men ärendenummer saknas. Kontakta oss vid behov.'):'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.';
   $('res').classList.add('on');
   $('res').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
  }catch(error){
