@@ -30,7 +30,7 @@
     var feedback=document.createElement('span');
     feedback.style.cssText='font-size:13px;color:#d9ecff;';
     var portalLink=document.createElement('a');
-    portalLink.href='minasidor-losenord-pilot.html';
+    portalLink.href='minasidor.html';
     portalLink.textContent='Öppna Mina sidor →';
     portalLink.style.cssText='display:inline-block;margin-top:12px;color:#fff;font-weight:700;text-decoration:underline;text-underline-offset:3px;';
     idRow.appendChild(idText);idRow.appendChild(copy);
