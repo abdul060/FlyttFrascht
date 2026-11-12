@@ -1,7 +1,7 @@
 (()=>{'use strict';
 const cfg=window.FLYTT_CONFIG||{},base=(cfg.supabaseUrl||'').replace(/\/$/,''),key=cfg.supabaseAnonKey||'';
 const $=s=>document.getElementById(s), txt=(id,value)=>{$(id).textContent=value==null||value===''?'–':String(value);};
-const state={token:'',refresh:'',expires:0,portals:[],active:null,photoUrls:[],resetting:false,verifyEmail:''};
+const state={token:'',refresh:'',expires:0,portals:[],active:null,photoUrls:[],resetting:false,verifyEmail:'',resetEmail:''};
 const urlParams=new URLSearchParams(location.hash.replace(/^#/,''));
 const date=s=>s?new Date(s+'T12:00:00').toLocaleDateString('sv-SE'):'–';
 const dateTime=s=>s?new Date(s).toLocaleString('sv-SE',{dateStyle:'medium',timeStyle:'short'}):'–';
@@ -35,7 +35,7 @@ async function signUp(){
 }
 async function verifySignUp(e){
  e.preventDefault();const btn=$('verifyForm').querySelector('button');const email=state.verifyEmail||$('signupEmail').value.trim().toLowerCase();const token=$('verifyCode').value.trim();
- if(!email||!/^[0-9]{6,8}$/.test(token)){txt('verifyStatus','Ange mejladress och den 6–8-siffriga koden.');return;}
+ if(!email||!/^[0-9]{6}$/.test(token)){txt('verifyStatus','Ange mejladress och den sexsiffriga koden.');return;}
  btn.disabled=true;txt('verifyStatus','Bekräftar…');
  try{
   const j=await authPost('verify',{email,token,type:'email'});
@@ -53,12 +53,58 @@ async function resendVerification(){
  catch(err){txt('verifyStatus',err.message);}
  finally{btn.disabled=false;}
 }
-async function recover(){const email=$('forgotEmail').value.trim().toLowerCase(),btn=$('forgotForm').querySelector('button');btn.disabled=true;try{await authPost('recover',{email,redirect_to:location.origin+location.pathname});txt('forgotStatus','Om kontot finns kommer ett återställningsmejl. Kontrollera skräpposten.');}catch(e){txt('forgotStatus',e.message);}finally{btn.disabled=false;}}
+async function recover(){
+ const email=$('forgotEmail').value.trim().toLowerCase(),btn=$('forgotForm').querySelector('button');
+ if(!email)return;
+ btn.disabled=true;txt('forgotStatus','Skickar återställningskod…');
+ try{
+  await authPost('recover',{email});
+  state.resetEmail=email;
+  $('resetEmail').value=email;
+  $('resetCode').value='';
+  $('resetPanel').hidden=false;
+  $('login').hidden=true;
+  $('portalApp').hidden=true;
+  txt('resetStatus','Om ett konto finns på adressen har vi skickat en sexsiffrig kod. Kontrollera även skräpposten.');
+ }catch(e){txt('forgotStatus',e.message);}
+ finally{btn.disabled=false;}
+}
 async function consumeCallback(){if(urlParams.has('error')){txt('loginStatus',urlParams.get('error_description')||'Bekräftelsen misslyckades.');history.replaceState(null,'',location.pathname);return false;}
-if(urlParams.has('access_token')&&urlParams.has('refresh_token')){setSession({access_token:urlParams.get('access_token'),refresh_token:urlParams.get('refresh_token'),expires_in:urlParams.get('expires_in')});state.resetting=urlParams.get('type')==='recovery';history.replaceState(null,'',location.pathname);if(state.resetting){$('login').hidden=true;$('resetPanel').hidden=false;$('portalApp').hidden=true;}return true;}
+if(urlParams.get('type')==='recovery'){history.replaceState(null,'',location.pathname);txt('loginStatus','Använd Glömt lösenord? och ange återställningskoden från mejlet.');return false;}
+if(urlParams.has('access_token')&&urlParams.has('refresh_token')){setSession({access_token:urlParams.get('access_token'),refresh_token:urlParams.get('refresh_token'),expires_in:urlParams.get('expires_in')});state.resetting=urlParams.get('type')==='recovery';history.replaceState(null,'',location.pathname);if(state.resetting){$('login').hidden=false;$('resetPanel').hidden=true;$('portalApp').hidden=true;txt('loginStatus','Begär en ny sexsiffrig kod via Glömt lösenord? för att återställa kontot.');state.resetting=false;}return true;}
 const params=new URLSearchParams(location.search);if(params.get('code')){const code=params.get('code');const verifier=localStorage.getItem('ff_portal_pkce_verifier');if(!verifier){txt('loginStatus','Bekräftelselänken måste öppnas i samma webbläsare som registreringen eller begäras på nytt.');return false;}const j=await authPost('token?grant_type=pkce',{auth_code:code,code_verifier:verifier});setSession(j);history.replaceState(null,'',location.pathname);return true;}
 return false;}
-async function saveNewPassword(e){e.preventDefault();const password=$('newPassword').value;if(password!==$('newPasswordRepeat').value){txt('resetStatus','Lösenorden matchar inte.');return;}const btn=$('resetForm').querySelector('button');btn.disabled=true;try{if(state.expires-Date.now()<50000)await renew();const r=await fetch(base+'/auth/v1/user',{method:'PUT',headers:{...headers(true),'Content-Type':'application/json'},body:JSON.stringify({password})});if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.msg||j.message||'Det gick inte att uppdatera lösenordet.');}state.resetting=false;$('resetPanel').hidden=true;$('resetForm').reset();await load();}catch(err){txt('resetStatus',err.message);}finally{btn.disabled=false;}}
+async function saveNewPassword(e){
+ e.preventDefault();
+ const email=$('resetEmail').value.trim().toLowerCase();
+ const code=$('resetCode').value.trim();
+ const password=$('newPassword').value;
+ if(!email||!/^[0-9]{6}$/.test(code)){txt('resetStatus','Ange din mejladress och den sexsiffriga koden.');return;}
+ if(password.length<12){txt('resetStatus','Välj ett lösenord med minst 12 tecken.');return;}
+ if(password!==$('newPasswordRepeat').value){txt('resetStatus','Lösenorden matchar inte.');return;}
+ const btn=$('resetForm').querySelector('button');btn.disabled=true;
+ txt('resetStatus','Verifierar koden och uppdaterar lösenordet…');
+ try{
+  // Använd bara sessionen som skapats genom verifierad återställningskod.
+  const verified=await authPost('verify',{email,token:code,type:'recovery'});
+  if(!verified.access_token)throw Error('Koden kunde inte verifieras. Begär en ny kod och försök igen.');
+  const r=await fetch(base+'/auth/v1/user',{
+   method:'PUT',
+   headers:{apikey:key,'Authorization':'Bearer '+verified.access_token,'Content-Type':'application/json'},
+   body:JSON.stringify({password})
+  });
+  if(!r.ok){const j=await r.json().catch(()=>({}));throw Error(j.msg||j.message||j.error_description||'Det gick inte att uppdatera lösenordet.');}
+  // Lämna ingen återställningssession inloggad på en delad enhet.
+  await fetch(base+'/auth/v1/logout',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+verified.access_token}}).catch(()=>{});
+  $('resetForm').reset();
+  state.resetEmail='';
+  showLogin();
+  $('email').value=email;
+  txt('loginStatus','Lösenordet är ändrat! Logga in med ditt nya lösenord.');
+ }catch(err){
+  txt('resetStatus',err.message||'Återställningen misslyckades. Begär en ny kod om den har gått ut.');
+ }finally{btn.disabled=false;}
+}
 function clearPictures(){for(const u of state.photoUrls)URL.revokeObjectURL(u);state.photoUrls=[];}
 function showLogin(){state.token='';state.refresh='';state.resetting=false;$('resetPanel').hidden=true;sessionStorage.removeItem('ff_customer_password_pilot_session');clearPictures();$('login').hidden=false;$('portalApp').hidden=true;}
 async function load(){await request('/rest/v1/rpc/ff_portal_auto_synka',{method:'POST',body:JSON.stringify({})});const [items]=await Promise.all([request('/rest/v1/ff_kundportaler?select=*&order=skapad.desc')]);state.portals=items||[];$('login').hidden=true;$('portalApp').hidden=false;const select=$('portalSelect');select.replaceChildren();if(!state.portals.length){$('details').hidden=true;txt('appStatus','Inga tidigare förfrågningar, offerter eller bokningar hittades för din verifierade mejladress.');return;}txt('who',state.portals[0].kundnamn||'välkommen');txt('appStatus','');for(const p of state.portals){const op=add(select,'option',(p.tjanst||'Uppdrag')+' · '+date(p.skapad.slice(0,10)));op.value=p.id;}select.value=state.active&&state.portals.some(p=>p.id===state.active)?state.active:state.portals[0].id;await openPortal(select.value);}
@@ -75,5 +121,5 @@ async function submitPhotos(e){e.preventDefault();const files=[...$('photos').fi
 const steps=['Kontrollera datum och adress','Packa eller planera städningen','Ordna nycklar och tillgång till bostaden','Meddela oss om tunga eller ömtåliga föremål','Kontrollera bokningsuppgifterna innan uppdraget'];
 function renderChecklist(){const root=$('checklist');root.replaceChildren();const k='ff_check_'+state.active;let checked=[];try{checked=JSON.parse(localStorage.getItem(k)||'[]');}catch{}steps.forEach((text,i)=>{const l=document.createElement('label'),c=document.createElement('input');c.type='checkbox';c.checked=checked.includes(i);c.addEventListener('change',()=>{let stored=[];try{stored=JSON.parse(localStorage.getItem(k)||'[]');}catch{}stored=stored.filter(x=>x!==i);if(c.checked)stored.push(i);localStorage.setItem(k,JSON.stringify(stored));});l.append(c,document.createTextNode(text));root.append(l);});}
 async function start(){if(!base.startsWith('https://')||!key){txt('loginStatus','Supabase-konfiguration saknas.');return;}try{const fromLink=await consumeCallback();if(!fromLink){const saved=JSON.parse(sessionStorage.getItem('ff_customer_password_pilot_session')||'null');if(saved){state.token=saved.token;state.refresh=saved.refresh;state.expires=saved.expires;}}if(state.token&&!state.resetting){await load();}}catch(err){showLogin();txt('loginStatus',err.message);}}
-$('loginForm').addEventListener('submit',e=>{e.preventDefault();signIn();});$('signupForm').addEventListener('submit',e=>{e.preventDefault();signUp();});$('verifyForm').addEventListener('submit',verifySignUp);$('resendVerify').addEventListener('click',resendVerification);$('forgotForm').addEventListener('submit',e=>{e.preventDefault();recover();});$('resetForm').addEventListener('submit',saveNewPassword);$('logout').addEventListener('click',async()=>{const token=state.token;showLogin();if(token)fetch(base+'/auth/v1/logout',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+token}}).catch(()=>{});});$('portalSelect').addEventListener('change',e=>openPortal(e.target.value).catch(err=>txt('appStatus',err.message)));$('changeForm').addEventListener('submit',submitChange);$('photoForm').addEventListener('submit',submitPhotos);start();
+$('loginForm').addEventListener('submit',e=>{e.preventDefault();signIn();});$('signupForm').addEventListener('submit',e=>{e.preventDefault();signUp();});$('verifyForm').addEventListener('submit',verifySignUp);$('resendVerify').addEventListener('click',resendVerification);$('forgotForm').addEventListener('submit',e=>{e.preventDefault();recover();});$('resetForm').addEventListener('submit',saveNewPassword);$('resetBackButton').addEventListener('click',()=>{$('resetPanel').hidden=true;$('login').hidden=false;});$('logout').addEventListener('click',async()=>{const token=state.token;showLogin();if(token)fetch(base+'/auth/v1/logout',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+token}}).catch(()=>{});});$('portalSelect').addEventListener('change',e=>openPortal(e.target.value).catch(err=>txt('appStatus',err.message)));$('changeForm').addEventListener('submit',submitChange);$('photoForm').addEventListener('submit',submitPhotos);start();
 })();

@@ -22,7 +22,7 @@
   <p>Vi skickade en engångskod till <strong id="verifyEmailLabel"></strong>. Skriv in koden från mejlet här – du behöver inte klicka på någon länk.</p>
   <form id="verifyForm">
     <label for="verifyCode">Bekräftelsekod</label>
-    <input id="verifyCode" type="text" inputmode="numeric" pattern="[0-9]{6,8}" minlength="6" maxlength="8" autocomplete="one-time-code" placeholder="6–8 siffror" required>
+    <input id="verifyCode" type="text" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" placeholder="6 siffror" required>
     <button type="submit">Bekräfta konto</button>
   </form>
   <button type="button" class="secondary" id="resendVerify">Skicka ny kod</button>
@@ -30,10 +30,21 @@
 </div>
 </details>
 <details class="auth-extra"><summary>Glömt lösenord?</summary>
-<p>Du kan få ett återställningsmejl. Det är bara för att skapa ett nytt lösenord, inte för vanlig inloggning.</p>
-<form id="forgotForm"><label for="forgotEmail">Mejladress</label><input id="forgotEmail" type="email" required maxlength="254"><button type="submit">Återställ lösenord</button></form><p id="forgotStatus" class="status" role="status"></p></details>
+<p>Få en sexsiffrig återställningskod via mejl. Ange koden och välj ett nytt lösenord här på hemsidan – ingen inloggningslänk behövs.</p>
+<form id="forgotForm"><label for="forgotEmail">Mejladress</label><input id="forgotEmail" type="email" required maxlength="254"><button type="submit">Skicka återställningskod</button></form><p id="forgotStatus" class="status" role="status"></p></details>
 <p class="hint">Har du inte fått ett uppdrag kopplat till ditt konto? Kontakta <a href="mailto:flyttfrascht@gmail.com">flyttfrascht@gmail.com</a>. Läs vår <a href="integritet.html">integritetsinformation</a>.</p></section>
-<section class="card" id="resetPanel" hidden><h2>Välj nytt lösenord</h2><form id="resetForm"><label for="newPassword">Nytt lösenord (minst 12 tecken)</label><input id="newPassword" type="password" required minlength="12" maxlength="128" autocomplete="new-password"><label for="newPasswordRepeat">Upprepa nytt lösenord</label><input id="newPasswordRepeat" type="password" required minlength="12" maxlength="128" autocomplete="new-password"><button type="submit">Spara nytt lösenord</button></form><p id="resetStatus" class="status" role="status"></p></section>
+<section class="card" id="resetPanel" hidden>
+<h2>Återställ lösenord</h2>
+<p>Skriv in koden från ditt mejl och välj ett nytt lösenord. Dela inte koden med någon.</p>
+<form id="resetForm">
+<label for="resetEmail">Mejladress</label><input id="resetEmail" type="email" required maxlength="254" autocomplete="email">
+<label for="resetCode">Sexsiffrig återställningskod</label><input id="resetCode" type="text" inputmode="numeric" pattern="[0-9]{6}" minlength="6" maxlength="6" autocomplete="one-time-code" placeholder="6 siffror" required>
+<label for="newPassword">Nytt lösenord (minst 12 tecken)</label><input id="newPassword" type="password" required minlength="12" maxlength="128" autocomplete="new-password">
+<label for="newPasswordRepeat">Upprepa nytt lösenord</label><input id="newPasswordRepeat" type="password" required minlength="12" maxlength="128" autocomplete="new-password">
+<button type="submit">Verifiera kod och spara nytt lösenord</button>
+</form><p id="resetStatus" class="status" role="status" aria-live="polite"></p>
+<p><button class="secondary" type="button" id="resetBackButton">Tillbaka till inloggningen</button></p>
+</section>
 <section id="portalApp" hidden><div class="toprow"><h2>Hej <span id="who"></span>!</h2><button class="secondary" id="logout">Logga ut</button></div><p class="status" id="appStatus" role="status"></p><div class="card"><h2>Dina uppdrag</h2><div class="flex"><label for="portalSelect">Välj uppdrag</label><select id="portalSelect" style="width:auto;margin:0"></select></div></div>
 <div id="details" hidden><div class="cols"><section class="card"><h2>Din offert</h2><span class="pill" id="state"></span><div id="offerDetails"></div></section><section class="card"><h2>Din bokning</h2><div id="bookingDetails"></div><p class="hint">En ändringsförfrågan ändrar inte din bekräftade bokning förrän vi godkänt den.</p></section></div>
 <div class="cols" style="margin-top:18px"><section class="card"><h2>Senaste uppdateringar</h2><div id="timeline"></div></section><section class="card"><h2>Begär en ändring</h2><form id="changeForm"><label for="changeType">Vad vill du ändra?</label><select id="changeType" required><option>Ändra datum</option><option>Ändra adress</option><option>Komplettera uppgifter</option><option>Annat</option></select><label for="wantedDate">Önskat datum (valfritt)</label><input id="wantedDate" type="date"><label for="changeMessage">Beskriv ändringen</label><textarea id="changeMessage" required minlength="5" maxlength="1500" placeholder="Beskriv vad du vill ändra, så återkommer vi."></textarea><button>Skicka ändringsförfrågan</button></form><p class="status" id="changeStatus" role="status"></p><h3>Dina tidigare önskemål</h3><div id="changes"></div></section></div>
