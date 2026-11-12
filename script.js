@@ -79,6 +79,32 @@ function serviceDetails(){
  );
  return parts.join('\n');
 }
+// Inloggad kund: använd befintlig portalsession, men lita aldrig på browserns mejladress
+// som identitetsbevis. SQL-funktionen verifierar auth.uid och auth.users på serversidan.
+async function ffPortalSession(){
+ var cfg=window.FLYTT_CONFIG||{};
+ var raw=sessionStorage.getItem('ff_customer_password_pilot_session');
+ if(!raw||!cfg.supabaseUrl||!cfg.supabaseAnonKey)return null;
+ var session;
+ try{session=JSON.parse(raw);}catch(e){return null;}
+ if(!session||!session.token)return null;
+ var b=cfg.supabaseUrl.replace(/\/$/,'');
+ if((Number(session.expires)||0)-Date.now()<60000){
+  if(!session.refresh)throw new Error('Din inloggning har gått ut. Logga in på Mina sidor på nytt.');
+  var refreshed=await fetch(b+'/auth/v1/token?grant_type=refresh_token',{
+    method:'POST',headers:{apikey:cfg.supabaseAnonKey,'Content-Type':'application/json'},
+    body:JSON.stringify({refresh_token:session.refresh})});
+  if(!refreshed.ok)throw new Error('Din inloggning har gått ut. Logga in på Mina sidor på nytt.');
+  var tokens=await refreshed.json();
+  session={token:tokens.access_token,refresh:tokens.refresh_token,expires:Date.now()+(Number(tokens.expires_in)||3600)*1000};
+  sessionStorage.setItem('ff_customer_password_pilot_session',JSON.stringify(session));
+ }
+ var response=await fetch(b+'/auth/v1/user',{headers:{apikey:cfg.supabaseAnonKey,Authorization:'Bearer '+session.token}});
+ if(!response.ok)throw new Error('Din inloggning behöver förnyas. Gå till Mina sidor och logga in igen.');
+ var user=await response.json();
+ if(!user||!user.email||!user.email_confirmed_at)throw new Error('Verifiera din mejladress i Mina sidor först.');
+ return {token:session.token,email:user.email.trim().toLowerCase()};
+}
 var form=$('f');
 var sendBtn=$('sendBtn');
 var reviewDialog=$('quote-review-dialog');
@@ -183,6 +209,18 @@ form.addEventListener('submit',async function(ev){
   fillReview();reviewDialog.showModal();reviewDialog.scrollTop=0;$('quote-review-title').focus({preventScroll:true});return;
  }
  reviewApproved=false;
+ // Vid befintlig inloggning måste offertmejlen motsvara kontots verifierade mejl.
+ var ffLoggedIn=null;
+ try{
+  ffLoggedIn=await ffPortalSession();
+  if(ffLoggedIn){
+   if(e && e.toLowerCase()!==ffLoggedIn.email){
+    er.textContent='Du är inloggad med '+ffLoggedIn.email+'. Använd den mejladressen eller logga ut på Mina sidor innan du skickar förfrågan.';
+    $('e').focus();return;
+   }
+   if(!e){e=ffLoggedIn.email;$('e').value=e;}
+  }
+ }catch(authError){er.textContent=authError.message;return;}
  var rm=document.querySelector('input[name=r]:checked');
  var extraInfo=serviceDetails();
  var housing=housingRelevant();
@@ -215,7 +253,7 @@ form.addEventListener('submit',async function(ev){
   if(!response.ok){throw new Error('Formulärtjänsten svarade med status '+response.status);}
   // Formspree har bekräftat att mejlförfrågan togs emot.
   // Spara separat i Supabase för adminpanelen. Historiska Formspree-svar importeras inte.
-  var stored=false;
+  var stored=false,linked=false;
   var claimId=null;
   var cfg=window.FLYTT_CONFIG||{};
   if(cfg.supabaseUrl && cfg.supabaseAnonKey && !cfg.supabaseUrl.includes('DITT-PROJEKT')){
@@ -225,15 +263,25 @@ form.addEventListener('submit',async function(ev){
      storlek_kvm:housing?Number(m.value):0,rum:housing?(rm?rm.value:''):'Ej relevant',adress:address,
      onskat_datum:$('d').value||null,rimligt_pris:$('k').value?Number($('k').value):null,
      meddelande:msg,status:'ny'};
-    var saved=await fetch(cfg.supabaseUrl.replace(/\/$/,'')+'/rest/v1/offertforfragningar',{
-     method:'POST',headers:{'apikey':cfg.supabaseAnonKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(record)});
-    stored=saved.ok;
+    var supabaseBase=cfg.supabaseUrl.replace(/\/$/,'');
+    if(ffLoggedIn && claimId){
+     // Auth-JWT verifieras på serversidan; förfrågan + konto-id skapas atomiskt.
+     var linkedResponse=await fetch(supabaseBase+'/rest/v1/rpc/ff_skapa_inloggad_forfragan',{
+       method:'POST',headers:{apikey:cfg.supabaseAnonKey,'Authorization':'Bearer '+ffLoggedIn.token,
+        'Content-Type':'application/json'},
+       body:JSON.stringify({p_request_id:claimId,p_data:record})});
+     if(linkedResponse.ok){stored=true;linked=true;}
+    }else{
+     var saved=await fetch(supabaseBase+'/rest/v1/offertforfragningar',{
+      method:'POST',headers:{'apikey':cfg.supabaseAnonKey,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(record)});
+     stored=saved.ok;
+    }
    }catch(ignore){}
   }
   form.reset();sl();updateMoveFields();
   $('d').dispatchEvent(new Event('change',{bubbles:true}));
   var note=$('saveNote');
-  if(note) note.textContent=stored?(claimId?'Ärendenummer: '+claimId+' — spara detta nummer. Det behövs för att koppla ärendet i Mina sidor.':'Förfrågan sparad, men ärendenummer saknas. Kontakta oss vid behov.'):'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.';
+  if(note) note.textContent=linked?'Klart! Ärendet har kopplats automatiskt till Mina sidor. Ärendenummer: '+claimId:stored?(claimId?'Ärendenummer: '+claimId+' — koppla ärendet via Mina sidor om du inte var inloggad.':'Förfrågan sparad, men ärendenummer saknas. Kontakta oss vid behov.'):(ffLoggedIn?'Förfrågan skickad via mejl, men automatisk koppling kunde inte bekräftas. Kontrollera Mina sidor innan du försöker igen.':'Din förfrågan har skickats till vår mejl, men kunde inte sparas i vårt interna offertsystem. Vi har ändå fått din förfrågan.');
   $('res').classList.add('on');
   $('res').scrollIntoView({behavior:reduce?'auto':'smooth',block:'center'});
  }catch(error){
