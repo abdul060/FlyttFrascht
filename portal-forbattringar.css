@@ -1,0 +1,81 @@
+/* Flytt & Fräscht – v5: fokuserade förbättringar av kundportal och admin. */
+:root{--ff5-navy:#112b49;--ff5-orange:#ff741c;--ff5-border:#dae5ed;--ff5-text:#18324c}
+/* Inloggningssymbol och återställning / registrering */
+.ff-customer .auth-heading .auth-home-icon{width:68px!important;height:68px!important;border-radius:21px!important;background:linear-gradient(145deg,#fff3e8,#ffeadc)!important;color:#183752!important;border:1px solid #ffe6d2!important;box-shadow:0 10px 23px #f47c3020!important}
+.ff-customer .auth-extra{overflow:hidden;background:#fff!important;border:1px solid #dde7ee!important;border-radius:17px!important;box-shadow:0 3px 12px #12344b08!important;margin:11px 0!important}
+.ff-customer .auth-extra summary{display:flex!important;gap:15px;align-items:center;list-style:none;cursor:pointer;padding:18px!important;background:#f4f8fd;font-size:14px!important}
+.ff-customer .auth-extra summary::-webkit-details-marker{display:none}
+.ff-customer .auth-extra summary::marker{content:''}
+.ff-customer .auth-extra[open] summary{background:#fff3ea!important;border-bottom:1px solid #ffead9}
+.ff-customer .auth-option-icon{font-size:25px;display:grid;place-items:center;width:48px;height:48px;flex:none;border-radius:13px;color:#102d49;background:#e4effc}
+.ff-customer .auth-signup .auth-option-icon{background:#fff0e5;color:#d8611c}
+.ff-customer .auth-option-label{display:flex;flex-direction:column;flex:1;min-width:0;gap:3px}
+.ff-customer .auth-option-label strong{font-size:14px;color:#18344f}
+.ff-customer .auth-option-label small{font-size:11px;color:#617a8f;font-weight:500;line-height:1.45}
+.ff-customer .auth-chevron{font-size:26px;color:#496b85;line-height:1;transition:transform .2s}
+.ff-customer .auth-extra[open] .auth-chevron{transform:rotate(180deg)}
+.ff-customer .auth-extra[open]>form,.ff-customer .auth-extra[open]>p,.ff-customer .auth-extra[open]>.verify-panel{margin:16px 22px!important}
+.ff-customer .auth-onboard{margin:17px 22px 14px;background:#f5f8fc;border:1px solid #e3eaf3;padding:16px;border-radius:14px}
+.ff-customer .auth-onboard>strong{display:block;color:#193653;font-size:13px;margin-bottom:13px}
+.ff-customer .auth-onboard-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.ff-customer .auth-onboard-steps span{font-size:11px;display:flex;flex-direction:column;gap:6px;color:#4f6a80}
+.ff-customer .auth-onboard-steps b{display:grid;place-items:center;width:27px;height:27px;border-radius:50%;background:#ff731c;color:#fff}
+.ff-customer .password-advice{margin:10px 0 14px;font-size:11px;color:#52715c;background:#eff8f1;padding:11px 12px;border-radius:11px;border:1px solid #d9ebdb}
+.ff-customer #signupForm button,.ff-customer #forgotForm button{min-height:48px!important;width:100%;margin-top:15px}
+/* Kund – bilder, checklista och avslutat uppdrag */
+.ff-customer #photoSection,.ff-customer #checklistSection{min-width:0;overflow:hidden}
+.ff-customer #photoSection h2,.ff-customer #checklistSection h2{margin-bottom:9px!important}
+.ff-customer .photo-dropzone{border:2px dashed #b8d0e5;background:linear-gradient(145deg,#f6faff,#edf5ff);border-radius:19px;padding:26px 18px 21px;display:flex;align-items:center;flex-direction:column;text-align:center;gap:8px;transition:background .2s,border-color .2s}
+.ff-customer .photo-dropzone.dragging{background:#fff5e8;border-color:#fc7525}
+.ff-customer .upload-symbol{height:62px;width:62px;background:#fff0e5;border-radius:17px;color:#f56c20;font-size:40px;line-height:1;display:grid;place-items:center;margin-bottom:5px}
+.ff-customer .photo-dropzone strong{color:#142e4a;font-size:17px}
+.ff-customer .photo-dropzone>span{color:#678098;font-size:12px}
+.ff-customer .photo-picker{background:#ff741c;color:white;border-radius:12px;padding:12px 22px;font-size:13px;font-weight:800;cursor:pointer;display:inline-block;margin:8px 0 2px}
+.ff-customer .photo-picker:hover{background:#e85e0a}
+.ff-customer .photo-dropzone input[type=file]{max-width:100%;width:100%;height:auto!important;min-height:0!important;background:transparent!important;border:0!important;padding:4px!important;font-size:11px!important;color:#678098!important}
+.ff-customer .photo-dropzone input[type=file]::file-selector-button{display:none}
+.ff-customer .photo-selection{color:#526d83;font-size:11px;overflow-wrap:anywhere}
+.ff-customer #photoForm .photo-submit{width:100%;margin-top:13px;min-height:48px}
+.ff-customer .photo-limits{display:flex;justify-content:space-around;gap:7px;flex-wrap:wrap;padding:14px 0 0;font-size:11px;color:#57728a}
+.ff-customer .check-progress{background:#f3f7fb;border-radius:14px;padding:14px 16px;margin:16px 0 9px}
+.ff-customer .check-progress-top{display:flex;justify-content:space-between;gap:8px;color:#163450;font-size:12px}
+.ff-customer .check-progress-top span{color:#6d8297}
+.ff-customer .check-progress-track{margin-top:11px;height:9px;border-radius:99px;background:#dbe7f4;overflow:hidden}
+.ff-customer .check-progress-bar{background:linear-gradient(90deg,#ff832d,#fa6713);height:100%;border-radius:99px;transition:width .25s}
+.ff-customer #checklistSection .checklist label{border:1px solid #e8edf3!important;border-radius:13px!important;margin:9px 0!important;padding:13px!important;display:flex!important;align-items:center!important;gap:11px!important;font-size:12px!important;line-height:1.45!important;background:#fff!important}
+.ff-customer #checklistSection .checklist label:has(input:checked){background:#fff6ef!important;border-color:#ffe3cd!important}
+.ff-customer #checklistSection .checklist input{accent-color:#ff741c;flex:none;width:18px;height:18px;min-height:0!important}
+.ff-customer .completion-frame{display:flex;gap:18px;align-items:flex-start;border:1px solid #dfe8f1;background:linear-gradient(110deg,#f8fbff,#edf4fc);border-radius:16px;padding:22px;margin-top:15px}
+.ff-customer .completion-mark{width:55px;height:55px;border-radius:14px;background:#fff0e5;color:#ff741c;display:grid;place-items:center;font-size:30px;font-weight:900;flex:none}
+.ff-customer .completion-frame strong{font-size:16px;color:#17354f}
+.ff-customer .completion-frame p{font-size:12px;color:#607a91;margin:5px 0 12px}
+.ff-customer #completion{color:#23425b;font-size:13px}
+/* Admin – kundlista med faktiska data, kort och filter */
+.ff-admin-portal .admin-picker{padding:29px!important}
+.ff-admin-portal .picker-header,.ff-admin-portal .picker-heading{display:flex;align-items:center;gap:17px}
+.ff-admin-portal .picker-header{justify-content:space-between;margin-bottom:23px;flex-wrap:wrap}
+.ff-admin-portal .picker-heading .picker-icon{width:60px;height:60px;flex:none;border-radius:17px;background:#fff0e5;display:grid;place-items:center;color:#12314d;font-size:32px}
+.ff-admin-portal .picker-heading h2{margin:3px 0!important;font-size:27px!important}
+.ff-admin-portal .picker-heading p{margin:0;color:#71879c;font-size:13px}
+.ff-admin-portal .picker-tools{display:grid;grid-template-columns:minmax(200px,2fr) minmax(130px,1fr) minmax(130px,1fr) auto;gap:11px;align-items:end}
+.ff-admin-portal .picker-tools label{display:block;font-weight:750;font-size:11px;color:#5b7287;margin:0 0 6px}
+.ff-admin-portal .picker-tools input,.ff-admin-portal .picker-tools select{width:100%;margin:0!important;height:49px!important;background:#fff!important}
+.ff-admin-portal .picker-view{display:flex;gap:4px;align-items:center;background:#f2f6fa;border:1px solid #dae5ee;border-radius:12px;padding:4px}
+.ff-admin-portal .picker-view button{height:40px;width:40px;min-width:40px!important;min-height:40px!important;padding:0!important;border:0!important;font-size:21px}
+.ff-admin-portal .picker-view .is-current{background:#ff741c!important;color:#fff!important}
+.ff-admin-portal .picker-results-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:24px;color:#173450}
+.ff-admin-portal .picker-results-heading span{font-size:11px;color:#75899a}
+.ff-admin-portal #portalSearchResults{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:11px!important;max-height:none!important;overflow:visible!important}
+.ff-admin-portal #portalSearchResults.list-view{grid-template-columns:1fr!important}
+.ff-admin-portal #portalSearchResults .portal-result{width:100%!important;min-height:92px!important;margin:0!important;display:flex!important;align-items:center!important;gap:12px!important;justify-content:space-between!important;background:#fff!important;border:1px solid #dfe7f0!important;border-radius:16px!important;padding:15px!important;box-shadow:0 3px 10px #1634510c!important;text-align:left!important;transform:none!important;color:#163550!important}
+.ff-admin-portal #portalSearchResults .portal-result::before{content:'♙';width:45px;height:45px;background:#fff0e5;border-radius:13px;display:grid;place-items:center;color:#14344d;font-size:27px;flex:none}
+.ff-admin-portal #portalSearchResults .portal-result:hover,.ff-admin-portal #portalSearchResults .portal-result.selected{border-color:#ff9c5e!important;background:#fffaf6!important}
+.ff-admin-portal #portalSearchResults .result-info{flex:1;min-width:0!important;display:flex;flex-direction:column;gap:3px;color:#214059!important}
+.ff-admin-portal #portalSearchResults .result-info strong{font-size:14px!important;white-space:normal!important;color:#18354e!important;line-height:1.4}
+.ff-admin-portal #portalSearchResults .result-info small{font-size:11px!important;color:#667f95!important;overflow-wrap:anywhere;line-height:1.45}
+.ff-admin-portal #portalSearchResults .result-state{flex:none;max-width:37%;white-space:normal!important;line-height:1.25;background:#e9f2fd!important;color:#234b78!important;border-radius:35px!important;padding:9px 12px!important;text-align:center;font-size:11px!important;font-weight:800}
+.ff-admin-portal #portalSearchResults .result-state[data-status="utford"],.ff-admin-portal #portalSearchResults .result-state[data-status="avslutad"]{background:#e0f7e8!important;color:#17613a!important}
+.ff-admin-portal #portalSearchResults .result-state[data-status="offert"]{background:#fff0df!important;color:#a85516!important}
+@media(max-width:940px){.ff-admin-portal .picker-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-admin-portal .picker-tools .picker-search{grid-column:1/-1}.ff-admin-portal .picker-view{justify-self:start}}
+@media(max-width:680px){.ff-admin-portal #portalSearchResults{grid-template-columns:1fr!important}.ff-admin-portal .picker-header{align-items:flex-start}.ff-admin-portal .picker-heading p{font-size:12px}.ff-customer .auth-onboard-steps{grid-template-columns:1fr}.ff-customer .auth-onboard-steps span{flex-direction:row;align-items:center}.ff-customer .completion-frame{padding:16px;gap:12px}.ff-customer .completion-mark{width:40px;height:40px;font-size:24px}}
+@media(max-width:440px){.ff-admin-portal .picker-tools{grid-template-columns:1fr}.ff-admin-portal .picker-tools .picker-search{grid-column:auto}.ff-admin-portal .picker-view{justify-self:start}.ff-admin-portal .picker-heading .picker-icon{display:none}.ff-customer .photo-limits{justify-content:flex-start}}
