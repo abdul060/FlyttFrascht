@@ -1,0 +1,183 @@
+/* FLYTT & FRÄSCHT — PORTAL 2026 / v4
+   Visuell uppdatering utan att ändra databasanrop eller element-ID. */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&display=swap');
+:root{--v4-navy:#0d2338;--v4-ink:#172e42;--v4-muted:#63788b;--v4-paper:#f5f6f3;--v4-orange:#fc7223;--v4-line:#e2e7e7;--v4-green:#1c8366;--v4-font:'DM Sans',system-ui,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body.ff-customer,body.ff-admin-portal{background:var(--v4-paper)!important;color:var(--v4-ink);font-family:var(--v4-font)!important;font-size:15px;line-height:1.55;min-height:100vh}
+body.ff-customer *,body.ff-admin-portal *{box-sizing:border-box}
+body.ff-customer header,body.ff-admin-portal header{padding:15px max(24px,calc((100vw - 1260px)/2));background:#10283b;box-shadow:none;border:0;min-height:76px}
+header strong{font-family:Manrope,system-ui,sans-serif;font-size:19px!important;font-weight:800;letter-spacing:-.6px!important}
+header strong small{font-family:var(--v4-font);font-size:10px!important;letter-spacing:1.8px!important;color:#a4c0ca!important;margin-left:15px!important}
+header .brand-mark{background:var(--v4-orange)!important;color:#fff!important;width:40px!important;height:40px!important;border-radius:12px!important;font-size:23px}
+header strong>span:not(.brand-mark){color:#ff934f!important}
+body header a{border:1px solid #476175!important;border-radius:40px!important;padding:10px 17px!important;font-size:12px!important;font-weight:750!important;color:#e9f2f5!important}
+body header a:hover{background:#23465b!important}
+.ff-customer main,.ff-admin-portal main{width:min(1260px,calc(100% - 54px))!important;margin:24px auto 90px!important}
+body .pilot-banner{border:1px solid #f0dfbf!important;background:#fff9ed!important;color:#805d2a!important;font-size:11px!important;font-weight:700;padding:10px 15px!important;border-radius:11px!important;margin:0 0 22px!important}
+body .page-intro{background:#123045!important;position:relative;overflow:hidden;color:#fff!important;box-shadow:none!important;border:0!important;border-radius:24px!important;padding:34px 42px!important;min-height:0!important;margin:0 0 20px!important}
+body .page-intro:before{content:"";pointer-events:none;position:absolute;width:450px;height:450px;right:-155px;top:-210px;border:75px solid #ffffff0a;border-radius:50%}
+body .page-intro .eyebrow{color:#ffae73!important;font-size:10px!important;letter-spacing:2.2px!important}
+body .page-intro h1{color:#fff!important;font:800 clamp(30px,3vw,43px)/1.13 Manrope,system-ui!important;letter-spacing:-1.9px!important;margin:10px 0!important}
+body .page-intro .sub{color:#cbdbe2!important;max-width:710px!important;font-size:14px!important;line-height:1.7!important}
+body .page-intro .intro-icon{background:#ffffff14!important;border:1px solid #ffffff23!important;color:#ff9b58!important;box-shadow:none!important;width:76px!important;height:76px!important;font-size:48px!important;border-radius:23px!important;z-index:1}
+body .card{border:1px solid var(--v4-line)!important;border-radius:21px!important;box-shadow:0 8px 24px #11304309!important;background:#fff}
+body h2{font-family:Manrope,system-ui,sans-serif;font-weight:800;color:var(--v4-ink)!important;letter-spacing:-.8px}
+body .eyebrow,body .section-kicker{font-size:10px!important;color:#bc571c!important;letter-spacing:1.8px!important;font-weight:800!important}
+body .section-helper,body .hint,body .small-note{color:var(--v4-muted)!important}
+body input,body textarea,body select{border:1px solid #d3dfe4!important;border-radius:11px!important;min-height:46px;background:#fff!important;color:#163047!important;font-family:var(--v4-font)!important;font-size:14px!important;padding:11px 13px!important;box-shadow:none!important}
+body textarea{min-height:112px!important}
+body input:focus,body textarea:focus,body select:focus{outline:3px solid #ffdcc7!important;border-color:var(--v4-orange)!important}
+body button,body .btn{font-family:var(--v4-font)!important;font-weight:800!important;border-radius:11px!important;transition:background .2s,transform .2s,box-shadow .2s!important}
+body button:not(.secondary):not(.job-card):not(.inbox-modal-cancel):not(.inbox-modal-confirm),body .btn:not(.secondary){background:var(--v4-orange)!important;color:#fff!important;box-shadow:0 4px 9px #fb72230f}
+body button:not(:disabled):hover{transform:translateY(-1px)}
+body .secondary,body a.btn.secondary{background:#edf2f4!important;color:#18334b!important;border:1px solid #e1e9ed!important}
+body .secondary:hover{background:#dce8ec!important}
+body .pill{background:#e9f4ef!important;color:#197457!important}
+/* Welcome: editorial split-screen rather than a floating form */
+.ff-customer:has(#login:not([hidden])) .page-intro{display:none!important}
+.ff-customer:has(#login:not([hidden])) .benefits-row{display:none!important}
+.ff-customer:has(#login:not([hidden])) main{margin-top:22px!important}
+.welcome-shell{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(390px,.9fr);min-height:690px;max-width:1180px;margin:0 auto 30px;gap:0;border-radius:27px;overflow:hidden;background:#fff;border:1px solid #e2e7e4;box-shadow:0 16px 50px #102b3810}
+.ff-customer .welcome-story{padding:58px clamp(32px,5vw,70px) 39px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(circle at 95% 8%,#24526b 0,#15364b 35%,#0d263b 75%);color:#fff;position:relative;overflow:hidden}
+.welcome-story:before{content:"";position:absolute;width:380px;height:380px;right:-205px;top:-100px;border:80px solid #ffffff0b;border-radius:100%;pointer-events:none}
+.story-label{display:inline-flex;gap:8px;align-items:center;border:1px solid #6b869665;border-radius:50px;color:#ffb382;font-size:10px;font-weight:850;letter-spacing:2px;padding:9px 14px}
+.welcome-story h2{font:800 clamp(38px,4vw,57px)/1.13 Manrope,system-ui!important;letter-spacing:-2.5px!important;color:#fff!important;margin:25px 0 20px!important}
+.welcome-story h2 em{font-style:normal;color:#ff9b59}
+.welcome-story .story-top>p{font-size:16px;max-width:425px;color:#c7d8df;line-height:1.75}
+.story-steps{display:grid;gap:24px;margin:40px 0}
+.story-steps>div{display:flex;gap:17px;align-items:flex-start}
+.story-step{display:grid;place-items:center;width:39px;height:39px;flex:none;background:#ffffff14;border:1px solid #ffffff2b;color:#ffb17a;font-weight:850;border-radius:12px;font-size:12px}
+.story-steps strong{font-size:15px;color:white}
+.story-steps p{font-size:13px;color:#b6cdd6;margin:3px 0 0;line-height:1.5}
+.story-foot{border-top:1px solid #ffffff25;padding-top:26px;display:flex;align-items:center;gap:13px;font-weight:850;font-size:13px}
+.story-foot small{font-size:11px;font-weight:500;color:#abc4cf}
+.story-spark{display:grid;place-items:center;border-radius:14px;width:46px;height:46px;background:#ff8d43;color:#fff;font-size:24px}
+.ff-customer .welcome-shell #login:not([hidden]){width:100%!important;max-width:none!important;border:0!important;box-shadow:none!important;padding:clamp(31px,4vw,61px)!important;margin:0!important;border-radius:0!important;align-self:center;background:white!important}
+.ff-customer .auth-heading{display:block!important;margin:0 0 27px!important}
+.ff-customer .auth-heading .auth-icon{display:grid!important;place-items:center;width:53px!important;height:53px!important;background:#fff0e7!important;border-radius:15px!important;color:#e66c25!important;margin-bottom:22px!important}
+.ff-customer .auth-heading .eyebrow{font-size:10px!important;color:#d66723!important}
+.ff-customer .auth-heading h2{font-size:clamp(27px,2.3vw,34px)!important;letter-spacing:-1.5px!important;color:#173047!important;margin:7px 0!important}
+.ff-customer .auth-heading p{font-size:14px!important;color:#718296!important;line-height:1.65!important}
+.ff-customer #loginForm label{font-size:12px!important;font-weight:800!important;margin:12px 0 6px!important}
+.ff-customer #loginForm input{min-height:52px!important;background:#fafcfc!important}
+.ff-customer #loginForm button{background:var(--v4-orange)!important;min-height:53px!important;margin-top:21px!important;font-size:14px!important}
+.ff-customer .auth-divider{margin:27px 0 17px!important}
+.ff-customer .auth-extra{border:1px solid #e4eaed!important;background:#f9fbfb!important;border-radius:12px!important;margin:9px 0!important;padding:0!important}
+.ff-customer .auth-extra summary{padding:16px 17px!important;font-size:13px!important;font-weight:800!important}
+.ff-customer .auth-extra[open]{background:#fff!important;padding-bottom:15px!important}
+.ff-customer .auth-extra[open]>form,.ff-customer .auth-extra[open]>p,.ff-customer .auth-extra[open]>.verify-panel{margin:12px 17px!important}
+.ff-customer .auth-support{font-size:12px!important;padding-top:12px!important;line-height:1.7!important}
+.ff-customer:has(#portalApp:not([hidden])) #welcomeShell{display:none!important}
+.ff-customer:has(#resetPanel:not([hidden])) #welcomeShell{display:none!important}
+/* Customer logged-in: prominent navigation, selectable jobs, status-first overview */
+.ff-customer #portalApp{animation:v4-fade .25s ease}
+@keyframes v4-fade{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}
+.ff-customer #portalApp .dashboard-head{background:#fff!important;border:1px solid #e1e8e7!important;border-radius:19px!important;padding:29px 33px!important;align-items:center!important;margin:17px 0!important;box-shadow:none!important}
+.ff-customer #portalApp .dashboard-head .eyebrow{color:#b75922!important}
+.ff-customer #portalApp .dashboard-head h2{font:800 clamp(27px,3vw,37px)/1.15 Manrope,system-ui!important;letter-spacing:-1.7px!important;margin:7px 0!important}
+.ff-customer #portalApp .dashboard-head p{font-size:14px!important}
+.portal-shortcuts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:0 0 21px}
+.portal-shortcuts a{position:relative;text-decoration:none;color:#14354a;display:flex;flex-direction:column;gap:4px;background:#fff;border:1px solid #e0e8e8;border-radius:15px;padding:18px 21px;transition:.2s}
+.portal-shortcuts a:hover{border-color:#fd9a5a;background:#fffaf6;transform:translateY(-2px)}
+.portal-shortcuts a>span{color:#ee752d;font-size:10px;font-weight:850;letter-spacing:1px}
+.portal-shortcuts a strong{font:800 15px Manrope,system-ui}
+.portal-shortcuts a small{color:#6a8290;font-size:12px}
+.portal-shortcuts a:after{content:'↗';position:absolute;right:17px;top:15px;font-size:18px;color:#98abb5}
+.ff-customer .portal-guide{background:#e9f5ee!important;border:1px solid #cfebd9!important;color:#275d4a!important;margin:0 0 16px!important;border-radius:13px!important}
+.ff-customer .portal-guide p{color:#3a6656!important}
+.ff-customer .portal-guide-icon{background:#c8f1db!important;color:#19805d!important}
+.ff-customer .stats-strip{gap:12px!important;margin:18px 0!important}
+.ff-customer .stats-strip>div{border:1px solid #e1e8e7!important;border-radius:15px!important;box-shadow:none!important;background:#fff!important;padding:19px 21px!important;min-height:93px!important}
+.ff-customer .stats-strip strong{color:#143145!important;font:800 31px/1 Manrope,system-ui!important}
+.ff-customer .stats-strip span{color:#788b98!important;font-weight:700!important;font-size:12px!important}
+.ff-customer .job-hub{background:#fff!important;border-radius:22px!important;padding:32px!important}
+.ff-customer .job-hub .section-heading h2{font-size:25px!important}
+.ff-customer .job-cards{display:grid!important;grid-template-columns:repeat(auto-fit,minmax(235px,1fr))!important;gap:14px!important}
+.ff-customer .job-card{border:1px solid #dfe7e8!important;background:#f9fbfb!important;padding:21px!important;border-radius:15px!important;min-height:143px!important}
+.ff-customer .job-card.selected{border:2px solid #fa8b48!important;background:#fff8f2!important;box-shadow:0 4px 17px #fa8b480f!important}
+.ff-customer .job-name{font-size:16px!important;color:#173247!important}
+.ff-customer .job-status{background:#eaf0f5!important;color:#3e647b!important}
+.ff-customer .job-status.completed{background:#e4f4eb!important;color:#187351!important}
+.ff-customer .selected-summary{background:#0d3543!important;border-radius:18px!important;padding:24px 30px!important;box-shadow:none!important}
+.ff-customer .selected-summary h2{color:white!important}
+.ff-customer .selected-summary .eyebrow{color:#ffad73!important}
+.ff-customer .stage-badge{background:#ffffff18!important;border-color:#ffffff39!important}
+.ff-customer .action-intro{font-size:11px!important;letter-spacing:1.6px!important;color:#718796!important;font-weight:850!important;margin:23px 0 11px!important}
+.ff-customer .quick-actions{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px!important;margin-bottom:16px!important}
+.ff-customer .quick-actions a{padding:14px 9px!important;min-height:52px!important;text-align:center;background:#fff!important;color:#264456!important;border:1px solid #e0e7e6!important;font-size:12px!important;border-radius:12px!important;box-shadow:none!important}
+.ff-customer .quick-actions a:hover{background:#fff5ed!important;border-color:#ffb587!important;color:#b45014!important}
+.ff-customer #details .cols{align-items:stretch}
+.ff-customer #details .card{padding:28px!important;scroll-margin-top:23px}
+.ff-customer #details .card h2{font-size:22px!important;margin:6px 0 13px!important}
+.ff-customer #details .focus-action{border-top:4px solid #fc792d!important;background:linear-gradient(#fff,#fffaf7)!important}
+.ff-customer #changeForm button,.ff-customer #photoForm button{width:100%!important;padding:15px!important}
+.ff-customer #details .entry{padding:13px 0!important;border-bottom:1px solid #e8edef!important}
+.ff-customer #details .kv{border-bottom:1px solid #ecf0f1!important;padding:12px 0!important;grid-template-columns:minmax(120px,38%) 1fr!important}
+.ff-customer #details .kv span:first-child{color:#768997!important;font-size:13px!important}
+.ff-customer #details .kv span:last-child{color:#19364a!important;font-weight:750!important}
+.ff-customer #checklistSection .checklist label{padding:12px 0!important}
+/* Admin: inbox as clear priority work surface */
+.ff-admin-portal main{width:min(1350px,calc(100% - 54px))!important}
+.ff-admin-portal .page-intro{background:#102b3c!important;padding:37px 42px!important}
+.ff-admin-portal .admin-jump{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:8px 0 17px}
+.admin-jump a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;padding:11px 17px;border-radius:12px;border:1px solid #dae4e4;background:#fff;color:#315267;font-size:12px;font-weight:800}
+.admin-jump a.jump-primary{background:#ffede1;border-color:#ffcba9;color:#b15018}
+.admin-jump a:hover{border-color:#f69861}
+.admin-jump .jump-hint{font-size:12px;color:#8497a1;margin-left:auto}
+.ff-admin-portal .admin-workflow{margin:0 0 14px!important;gap:11px!important}
+.ff-admin-portal .admin-workflow>div{background:#fff!important;border:1px solid #e2e9e9!important;border-radius:13px!important;padding:14px 17px!important;box-shadow:none!important}
+.ff-admin-portal .admin-workflow strong{color:#2c4658!important;font-size:12px!important}
+.ff-admin-portal .admin-workflow div>span{font-size:11px!important;color:#7c8d9b!important}
+.ff-admin-portal .step-number{background:#fff0e5!important;color:#d05d1f!important;border-radius:8px!important}
+.ff-admin-portal .info-note{background:#f0f7f4!important;border:1px solid #dceae1!important;border-radius:12px!important;color:#365e50!important;font-size:12px!important;margin:12px 0!important}
+.ff-admin-portal .stats-strip{margin:13px 0 19px!important;gap:12px!important}
+.ff-admin-portal .stats-strip>div{background:#fff!important;border:1px solid #e1e8e8!important;box-shadow:none!important;min-height:95px!important;border-radius:14px!important;padding:16px 23px!important}
+.ff-admin-portal .stats-strip strong{font:800 30px/1.1 Manrope,system-ui!important;color:#163648!important}
+.ff-admin-portal .stats-strip span{font-size:12px!important;color:#7a8d98!important}
+.ff-admin-portal .inbox-hub{background:#fff!important;border:1px solid #e0e7e7!important;border-radius:23px!important;padding:32px!important;margin:0 0 27px!important;box-shadow:0 13px 32px #112f3c0a!important}
+.ff-admin-portal .inbox-title h2{font-size:clamp(23px,2.4vw,30px)!important;letter-spacing:-1.1px!important;margin:7px 0!important}
+.ff-admin-portal .inbox-title p{font-size:13px!important;color:#718794!important;line-height:1.65!important}
+.ff-admin-portal #inboxReload{white-space:nowrap!important}
+.ff-admin-portal .inbox-counters{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px!important;margin:23px 0 18px!important}
+.ff-admin-portal .inbox-counter{background:#f7f9f9!important;border:1px solid #e3e9ea!important;border-radius:15px!important;padding:19px 21px!important}
+.ff-admin-portal .inbox-counter.attention{background:#fff2e8!important;border:1px solid #ffceac!important}
+.ff-admin-portal .inbox-counter strong{font:800 33px/1 Manrope,system-ui!important;color:#19394b!important}
+.ff-admin-portal .inbox-counter.attention strong{color:#dd6423!important}
+.ff-admin-portal .inbox-counter span{color:#68808d!important;font-size:12px!important}
+.ff-admin-portal .inbox-toolbar{display:flex!important;gap:9px!important;align-items:center!important;flex-wrap:wrap!important;background:#f7f9f9;border:1px solid #e9eeee;border-radius:15px;padding:10px!important;margin:0!important}
+.ff-admin-portal #inboxSearch{flex:1 1 290px!important;min-width:0!important;min-height:46px!important;margin:0!important;background:#fff!important;border-radius:10px!important}
+.ff-admin-portal .inbox-toolbar button{border-radius:9px!important;min-height:42px!important;padding:10px 13px!important;font-size:12px!important}
+.ff-admin-portal .inbox-toolbar button.active{background:#153a4d!important;color:white!important;border-color:#153a4d!important}
+.ff-admin-portal .inbox-summary{font-size:12px!important;color:#7b8d99!important;padding:18px 0 11px!important}
+.ff-admin-portal .inbox-list{display:grid!important;gap:12px!important}
+.ff-admin-portal .inbox-item{border:1px solid #dfe8e8!important;border-radius:17px!important;background:#fff!important;padding:20px 23px!important;box-shadow:0 4px 12px #112a3805!important}
+.ff-admin-portal .inbox-item:hover{border-color:#ffba8d!important}
+.ff-admin-portal .inbox-item h3{font:800 17px Manrope,system-ui!important;color:#1c3b4e!important}
+.ff-admin-portal .inbox-detail-row{background:#f7faf9!important;border:1px solid #e9eeee!important;border-radius:10px!important;padding:10px!important}
+.ff-admin-portal .inbox-modal{border-radius:24px!important;padding:30px!important}
+.ff-admin-portal .inbox-modal .inbox-modal-confirm{background:#197955!important;color:#fff!important}
+.ff-admin-portal .inbox-modal .inbox-modal-deny{background:#b8443a!important;color:#fff!important}
+.ff-admin-portal .inbox-modal .inbox-modal-cancel{background:#edf2f4!important;color:#193648!important}
+.ff-admin-portal .admin-picker{border-radius:22px!important;padding:29px!important;margin:0 0 25px!important}
+.ff-admin-portal #portalSearch{background:#f8faf9!important;min-height:52px!important}
+.ff-admin-portal .search-results{margin-top:16px!important}
+.ff-admin-portal .portal-result{background:#f9fbfa!important;border:1px solid #dfe9e8!important;padding:16px!important;border-radius:13px!important}
+.ff-admin-portal .portal-result:hover,.ff-admin-portal .portal-result.selected{background:#fff6ee!important;border-color:#fba46b!important}
+.ff-admin-portal .admin-section-label{color:#a85f2f!important;margin:25px 0 13px!important}
+.ff-admin-portal .admin-columns{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr)!important;gap:17px!important}
+.ff-admin-portal .admin-columns .card{padding:28px!important;border-radius:21px!important}
+.ff-admin-portal .admin-editor-card>.section-kicker,.ff-admin-portal .admin-inbox-card>.section-kicker{margin-bottom:8px!important}
+.ff-admin-portal .admin-columns h2{font-size:22px!important}
+.ff-admin-portal .admin-form-group{border:1px solid #e1e9e8!important;border-radius:12px!important;overflow:hidden;background:#fff!important}
+.ff-admin-portal .admin-basic{background:#f7f9f8!important;padding:19px!important}
+.ff-admin-portal details.admin-form-group summary{background:#f9fbfa!important;padding:18px!important}
+.ff-admin-portal .admin-form-fields{padding:18px!important}
+.ff-admin-portal .admin-inbox-card .entry{border:1px solid #e1e8e8!important;background:#f9fbfa!important;border-radius:13px!important;padding:18px!important}
+.ff-admin-portal #save{min-height:50px!important;width:100%!important}
+.ff-admin-portal #changeRequests:empty:before,.ff-admin-portal #adminImages:empty:before,.ff-admin-portal #adminEvents:empty:before{background:#f8faf9!important;border:1px dashed #cfdedd!important;color:#7f919a!important}
+/* Accessibility and resizing */
+body a:focus-visible,body button:focus-visible,body summary:focus-visible{outline:3px solid #ffae76!important;outline-offset:3px}
+@media(max-width:1050px){.welcome-shell{grid-template-columns:minmax(0,1fr) minmax(350px,1fr)}.welcome-story{padding:44px 34px 31px!important}.welcome-story h2{font-size:43px!important}.ff-customer .quick-actions{grid-template-columns:repeat(3,minmax(0,1fr))!important}.ff-admin-portal .admin-columns{grid-template-columns:1fr!important}}
+@media(max-width:790px){.ff-customer main,.ff-admin-portal main{width:calc(100% - 28px)!important;margin-top:15px!important}.welcome-shell{grid-template-columns:1fr;min-height:0;border-radius:20px}.welcome-story{padding:31px!important}.welcome-story h2{font-size:37px!important;margin:16px 0!important}.welcome-story .story-top>p{font-size:13px}.story-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:25px 0 10px}.story-steps>div{display:block}.story-step{margin-bottom:10px}.story-steps strong{font-size:12px}.story-steps p{font-size:11px}.story-foot{display:none}.ff-customer .welcome-shell #login:not([hidden]){padding:31px!important}.portal-shortcuts{grid-template-columns:1fr 1fr 1fr}.portal-shortcuts a{padding:15px}.ff-admin-portal .admin-workflow{display:none!important}.ff-admin-portal .inbox-hub{padding:21px!important}.ff-admin-portal .inbox-toolbar{padding:8px!important}.ff-admin-portal .admin-picker{padding:22px!important}}
+@media(max-width:580px){body.ff-customer header,body.ff-admin-portal header{padding:13px 14px;min-height:69px}header strong{font-size:15px!important;gap:3px!important}header strong small{display:none!important}header .brand-mark{width:34px!important;height:34px!important;font-size:19px!important}body header a{padding:8px 10px!important;font-size:11px!important}body .pilot-banner{font-size:10px!important}body .page-intro{padding:25px 22px!important;border-radius:17px!important}body .page-intro .intro-icon{display:none!important}body .page-intro h1{font-size:30px!important}.welcome-story{padding:27px 25px!important}.welcome-story h2{font-size:34px!important}.story-steps{grid-template-columns:1fr;gap:13px}.story-steps>div{display:flex;gap:12px}.story-step{width:32px;height:32px;margin:0}.story-steps p{font-size:12px}.ff-customer .welcome-shell #login:not([hidden]){padding:26px 23px!important}.ff-customer #portalApp .dashboard-head{padding:20px!important}.ff-customer #portalApp .dashboard-head h2{font-size:27px!important}.portal-shortcuts{grid-template-columns:1fr;gap:8px}.portal-shortcuts a{padding:12px 17px}.ff-customer .stats-strip,.ff-admin-portal .stats-strip{gap:7px!important}.ff-customer .stats-strip>div,.ff-admin-portal .stats-strip>div{padding:14px 11px!important;min-height:82px!important}.ff-customer .stats-strip strong,.ff-admin-portal .stats-strip strong{font-size:24px!important}.ff-customer .stats-strip span,.ff-admin-portal .stats-strip span{font-size:10px!important}.ff-customer .job-hub,.ff-customer #details .card{padding:19px!important}.ff-customer .quick-actions{grid-template-columns:repeat(2,minmax(0,1fr))!important}.ff-customer #details .kv{grid-template-columns:1fr!important;gap:2px!important}.ff-customer .selected-summary{padding:20px!important;flex-wrap:wrap}.ff-customer #details .cols{grid-template-columns:1fr!important}.ff-admin-portal .admin-jump{gap:7px}.admin-jump a{padding:9px 11px;font-size:11px}.admin-jump .jump-hint{display:none}.ff-admin-portal .inbox-title{align-items:start!important}.ff-admin-portal .inbox-title h2{font-size:24px!important}.ff-admin-portal .inbox-counters{gap:7px!important}.ff-admin-portal .inbox-counter{padding:14px 11px!important}.ff-admin-portal .inbox-counter strong{font-size:27px!important}.ff-admin-portal .inbox-counter span{font-size:10px!important}.ff-admin-portal .inbox-toolbar button{flex:1 1 auto!important;padding:9px!important;font-size:11px!important}.ff-admin-portal .inbox-item{padding:17px!important}.ff-admin-portal .admin-columns .card{padding:19px!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}body *{animation:none!important;transition:none!important}}
