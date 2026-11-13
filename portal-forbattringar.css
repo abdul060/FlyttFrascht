@@ -79,3 +79,36 @@
 @media(max-width:940px){.ff-admin-portal .picker-tools{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-admin-portal .picker-tools .picker-search{grid-column:1/-1}.ff-admin-portal .picker-view{justify-self:start}}
 @media(max-width:680px){.ff-admin-portal #portalSearchResults{grid-template-columns:1fr!important}.ff-admin-portal .picker-header{align-items:flex-start}.ff-admin-portal .picker-heading p{font-size:12px}.ff-customer .auth-onboard-steps{grid-template-columns:1fr}.ff-customer .auth-onboard-steps span{flex-direction:row;align-items:center}.ff-customer .completion-frame{padding:16px;gap:12px}.ff-customer .completion-mark{width:40px;height:40px;font-size:24px}}
 @media(max-width:440px){.ff-admin-portal .picker-tools{grid-template-columns:1fr}.ff-admin-portal .picker-tools .picker-search{grid-column:auto}.ff-admin-portal .picker-view{justify-self:start}.ff-admin-portal .picker-heading .picker-icon{display:none}.ff-customer .photo-limits{justify-content:flex-start}}
+
+/* v6 · Säkra kundåtgärder och utökad förberedelselista */
+.ff-customer .job-tile{background:#fff;border:1px solid #dde7ed;border-radius:18px;padding:8px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.ff-customer .job-tile>.job-card{box-shadow:none!important;border:0!important;min-width:0;width:100%;text-align:left}
+.ff-customer .job-visibility{align-self:flex-start;padding:9px 13px!important;margin:0 0 4px 6px!important;border:0!important;background:#f2f6fa!important;color:#526a7f!important;border-radius:9px!important;font-size:12px!important;font-weight:700!important;cursor:pointer}
+.ff-customer .job-visibility:hover{background:#e7eef6!important;color:#143555!important}
+.ff-customer .hidden-jobs-tools{margin-top:15px;border-top:1px solid #e5ebef;padding-top:15px}
+.ff-customer .hidden-jobs-tools>.secondary{width:auto!important;padding:10px 16px!important}
+.ff-customer #hiddenJobCards{margin-top:12px}
+.ff-customer .ff-photo-card{border:1px solid #dce6ed;border-radius:15px;padding:9px;background:#fff;min-width:0;display:flex;flex-direction:column;gap:9px}
+.ff-customer .ff-photo-preview{display:flex;flex-direction:column;gap:7px;overflow-wrap:anywhere;font-size:12px;color:#29465c}
+.ff-customer .ff-photo-preview img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.ff-customer .ff-photo-remove{background:#fff2f1!important;color:#a9362d!important;border:1px solid #f4d4d0!important;border-radius:10px!important;padding:10px!important;font-size:12px!important;font-weight:750!important;width:100%;cursor:pointer}
+.ff-customer .ff-photo-remove:hover{background:#ffe4e0!important}
+.ff-customer .ff-check-group{margin:23px 0 9px!important;font-size:13px!important;color:#d65e12!important;text-transform:uppercase;letter-spacing:.07em}
+.ff-customer #checklist{display:block!important}
+.ff-customer .ff-check-row{display:flex!important;align-items:flex-start!important;gap:12px!important;padding:15px 12px!important;margin:0 0 8px!important;border:1px solid #e4ebf0!important;border-radius:13px!important;background:#f8fafc!important;cursor:pointer!important}
+.ff-customer .ff-check-row.complete{background:#fff7f0!important;border-color:#ffe4ce!important}
+.ff-customer .ff-check-row input{width:19px!important;height:19px!important;flex:none;margin:3px 0 0!important;accent-color:#ff741c}
+.ff-customer .ff-check-copy{display:flex;flex-direction:column;gap:4px;flex:1;min-width:0}
+.ff-customer .ff-check-copy strong{font-size:13px;color:#18344e;line-height:1.45}
+.ff-customer .ff-check-copy small{font-size:12px;color:#657d90;line-height:1.45}
+.ff-customer .ff-check-state{color:#5e7485;font-size:11px;font-weight:750;white-space:nowrap;padding:5px 8px;border-radius:20px;background:#eaf0f8}
+.ff-customer .ff-check-row.complete .ff-check-state{color:#146747;background:#daf3e5}
+.ff-decision-dialog{border:none;border-radius:22px;padding:28px;max-width:min(440px,calc(100vw - 30px));width:100%;background:#fff;color:#19324b;box-shadow:0 25px 90px #081f3650}
+.ff-decision-dialog::backdrop{background:#06192b9e;backdrop-filter:blur(4px)}
+.ff-decision-dialog h2{font-size:23px;margin:12px 0!important}
+.ff-decision-dialog p{line-height:1.6;color:#5b7182}
+.ff-dialog-icon{width:52px;height:52px;border-radius:15px;background:#fff0e9;color:#c7442d;font-size:30px;font-weight:bold;display:grid;place-items:center}
+.ff-dialog-buttons{display:flex;gap:12px;margin-top:23px}
+.ff-dialog-buttons button{flex:1;border-radius:11px;padding:13px;font-weight:750;cursor:pointer}
+.ff-danger-action{background:#bb342d;color:#fff;border:0}
+@media(max-width:640px){.ff-dialog-buttons{flex-direction:column-reverse}.ff-customer .ff-check-state{font-size:10px}}
