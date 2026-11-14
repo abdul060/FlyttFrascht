@@ -20,8 +20,10 @@ function sl(){$('mv').textContent=m.value;m.style.setProperty('--p',((m.value-m.
 m.addEventListener('input',sl);sl();
 // Dynamiska frågor. Inga extra databasfält krävs – svaren följer med i meddelandet.
 var serviceNames={flytt:'Komplett flytt & transport',flyttstad:'Flyttstädning',hemstad:'Hemstädning',fonster:'Fönsterputs',bar:'Bärhjälp & packning'};
+var snowDetails=$('snow-details');
+if(snowDetails)serviceNames.sno='Snöskottning';
 function isMulti(){return $('s').value==='Flera tjänster';}
-function wants(type){return isMulti()? $('multi-'+type).checked : $('s').value===serviceNames[type];}
+function wants(type){return !!serviceNames[type] && (isMulti()? $('multi-'+type).checked : $('s').value===serviceNames[type]);}
 function isMovingService(){return wants('flytt');}
 function housingRelevant(){return wants('flytt')||wants('flyttstad')||wants('hemstad');}
 function chosenServices(){return Object.keys(serviceNames).filter(function(key){return $('multi-'+key).checked;}).map(function(key){return serviceNames[key];});}
@@ -33,6 +35,7 @@ function updateMoveFields(){
  $('home-details').hidden=!wants('hemstad');
  $('window-details').hidden=!wants('fonster');
  $('carry-details').hidden=!wants('bar');
+ if(snowDetails)snowDetails.hidden=!wants('sno');
  $('size-block').hidden=!housing;
  $('rooms-block').hidden=!housing;
  $('single-address').hidden=moving;
@@ -43,10 +46,11 @@ function updateMoveFields(){
  if(multi)help='Välj minst två tjänster nedan. Frågorna anpassas efter dina val.';
  else if(wants('fonster'))help='Berätta hur många fönster du vill putsa. Du behöver inte ange bostadens storlek.';
  else if(wants('bar'))help='Beskriv vad du vill bära eller packa. Du behöver inte ange flyttadresser.';
+ else if(wants('sno'))help='Ange var du behöver hjälp, vilka ytor som ska skottas och önskat datum.';
  $('service-help').textContent=help;
 }
 $('s').addEventListener('change',updateMoveFields);
-['flytt','flyttstad','hemstad','fonster','bar'].forEach(function(key){$('multi-'+key).addEventListener('change',updateMoveFields);});
+Object.keys(serviceNames).forEach(function(key){$('multi-'+key).addEventListener('change',updateMoveFields);});
 $('move-clean').addEventListener('change',updateMoveFields);
 updateMoveFields();
 function serviceDetails(){
@@ -76,6 +80,10 @@ function serviceDetails(){
   'Bärhjälp/packning – typ: '+($('carry-type').value||'Ej angivet'),
   'Transport behövs: '+($('carry-transport').value||'Ej angivet'),
   'Saker att bära/packa: '+($('carry-items').value.trim()||'Ej angivet')
+ );
+ if(wants('sno'))parts.push(
+  'Ytor att skotta: '+($('snow-area').value.trim()||'Ej angivet'),
+  'Detaljer om snöskottningen: '+($('snow-notes').value.trim()||'Ej angivet')
  );
  return parts.join('\n');
 }
@@ -154,6 +162,10 @@ function fillReview(){
   addReviewRow('Hjälp med',reviewValue('carry-type'));
   addReviewRow('Transport',reviewValue('carry-transport'));
   addReviewRow('Att bära/packa',reviewValue('carry-items'));
+ }
+ if(wants('sno')){
+  addReviewRow('Ytor att skotta',reviewValue('snow-area'));
+  addReviewRow('Detaljer om snöskottningen',reviewValue('snow-notes'));
  }
  if(housingRelevant()){
   addReviewRow('Bostadens storlek',m.value+' m²');

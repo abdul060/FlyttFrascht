@@ -6,7 +6,8 @@
     flyttstadning: 'Flyttstädning',
     hemstadning: 'Hemstädning',
     fonsterputs: 'Fönsterputs',
-    barhjalp: 'Bärhjälp & packning'
+    barhjalp: 'Bärhjälp & packning',
+    snoskottning: 'Snöskottning'
   };
   var code = new URLSearchParams(window.location.search).get('tjanst');
   if (!code || !Object.prototype.hasOwnProperty.call(names, code)) return;
