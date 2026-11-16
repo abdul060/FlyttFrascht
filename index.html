@@ -98,33 +98,55 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 </style>
 <style>
 #hem .ff-first-job-offer {
-  display: inline-flex;
+  display: inline-grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
+  gap: clamp(10px, 1.5vw, 18px);
+  box-sizing: border-box;
   max-width: 100%;
-  margin: 0 0 18px;
-  padding: 8px 12px 8px 8px;
-  border: 1px solid #ffae64;
-  border-radius: 14px;
-  background: #ffe0bf;
+  margin: 0 0 clamp(20px, 3vw, 28px);
+  padding: clamp(10px, 1.5vw, 17px) clamp(10px, 1.6vw, 19px);
+  border: 1px solid #ffcc91;
+  border-radius: 16px;
+  background: linear-gradient(110deg, #ff830f 0%, #ffb352 100%);
+  box-shadow: 0 9px 28px rgba(3, 10, 28, .32);
   color: #0b1b3f;
   text-decoration: none;
-  font-weight: 700;
-  line-height: 1.3;
 }
-#hem .ff-first-job-offer:hover { background: #ffeddb; }
+#hem .ff-first-job-offer:hover {
+  background: linear-gradient(110deg, #ff982c 0%, #ffc16d 100%);
+}
 #hem .ff-first-job-offer:focus-visible {
   outline: 3px solid #fff;
-  outline-offset: 3px;
+  outline-offset: 4px;
 }
-#hem .ff-first-job-offer strong {
-  flex: none;
-  padding: 5px 8px;
-  border-radius: 8px;
+#hem .ff-first-job-offer .ff-offer-value {
+  padding-inline-end: clamp(10px, 1.5vw, 18px);
+  border-inline-end: 1px dashed rgba(11, 27, 63, .52);
+  font-size: clamp(35px, 5vw, 62px);
+  letter-spacing: -.035em;
+  white-space: nowrap;
+}
+#hem .ff-first-job-offer .ff-offer-copy {
+  font-size: clamp(14px, 2vw, 18px);
+  font-weight: 700;
+  line-height: 1.2;
+}
+#hem .ff-first-job-offer .ff-offer-copy strong {
+  display: block;
+  margin-bottom: 3px;
+  font-size: clamp(18px, 2.3vw, 25px);
+}
+#hem .ff-first-job-offer .ff-offer-arrow {
+  display: grid;
+  place-items: center;
+  width: clamp(30px, 3.3vw, 41px);
+  aspect-ratio: 1;
+  border-radius: 50%;
   background: #0b1b3f;
   color: #fff;
-  font-size: clamp(20px, 4vw, 25px);
-  white-space: nowrap;
+  font-size: 19px;
+  line-height: 1;
 }
 </style>
 </head>
@@ -169,12 +191,12 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 <div>
 <div class="pill">✦ Flytt · Städ · Transport i Stockholm</div>
 <h1 class="h"><span class="ln"><span>Hjälp med</span></span><span class="ln"><span>flytt &amp; städ</span></span><span class="ln"><span>i Stockholm</span></span></h1>
-<p class="sub">Flytthjälp, transport och städning med personlig kontakt. Berätta kort vad du behöver – vi återkommer med ett prisförslag.</p><div class="hero-tags"><span>Flytt &amp; transport</span><span>Flyttstädning</span><span>Bärhjälp</span></div>
 <a class="ff-first-job-offer" href="#offert">
-  <strong>20&nbsp;%</strong>
-  <span>rabatt på ditt första uppdrag</span>
-  <span aria-hidden="true">→</span>
+  <span class="h ff-offer-value">20&nbsp;%</span>
+  <span class="ff-offer-copy"><strong>rabatt</strong>på ditt första uppdrag</span>
+  <span class="ff-offer-arrow" aria-hidden="true">→</span>
 </a>
+<p class="sub">Flytthjälp, transport och städning med personlig kontakt. Berätta kort vad du behöver – vi återkommer med ett prisförslag.</p><div class="hero-tags"><span>Flytt &amp; transport</span><span>Flyttstädning</span><span>Bärhjälp</span></div>
 <div class="cta"><a class="btn" href="#offert" id="ff-ab-hero-cta">Få offert på din flytt →</a><a class="btn ghost" href="#tjanster">Se våra tjänster →</a></div><p class="hero-note"><span aria-hidden="true">✓</span> Kostnadsfri förfrågan · Inte en bindande bokning</p>
 </div>
 <div style="position:relative">
