@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Flytt &amp; Fräscht öppnar 25 november</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      color: #fff;
+      background: radial-gradient(ellipse at top, #1b3260, #0b1731 65%);
+      font-family: system-ui, sans-serif;
+      text-align: center;
+    }
+    main { width: min(100%, 680px); }
+    .brand { font-weight: 800; letter-spacing: .08em; }
+    .brand span, a { color: #ff9b45; }
+    h1 { margin: 18px 0 12px; font-size: clamp(2rem, 7vw, 4rem); }
+    .timer {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: clamp(6px, 2vw, 14px);
+      margin: 32px 0;
+    }
+    .timer div {
+      padding: 18px 2px;
+      border: 1px solid #415577;
+      border-radius: 14px;
+      background: #142648;
+    }
+    .timer strong {
+      display: block;
+      font-size: clamp(1.45rem, 6vw, 3rem);
+      font-variant-numeric: tabular-nums;
+    }
+    .timer span { color: #d8e2f5; font-size: clamp(.7rem, 2.5vw, 1rem); }
+    [hidden] { display: none !important; }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="brand">FLYTT &amp; <span>FRÄSCHT</span></p>
+    <h1>Vi öppnar 25 november</h1>
+    <p>Onsdag 25 november 2026 kl. 00.00 svensk tid</p>
+
+    <div class="timer" id="timer" aria-label="Tid kvar till öppning" hidden>
+      <div><strong id="days">00</strong><span>Dagar</span></div>
+      <div><strong id="hours">00</strong><span>Timmar</span></div>
+      <div><strong id="minutes">00</strong><span>Minuter</span></div>
+      <div><strong id="seconds">00</strong><span>Sekunder</span></div>
+    </div>
+
+    <p id="launch-status" hidden>
+      Hemsidan publiceras nu. <a href="/">Uppdatera sidan</a> om några minuter.
+    </p>
+  </main>
+
+  <script>
+    const launch = Date.parse('2026-11-25T00:00:00+01:00');
+    const timer = document.getElementById('timer');
+    const status = document.getElementById('launch-status');
+
+    function updateCountdown() {
+      const remaining = Math.max(0, Math.ceil((launch - Date.now()) / 1000));
+      if (remaining === 0) {
+        timer.hidden = true;
+        status.hidden = false;
+        return;
+      }
+
+      const values = {
+        days: Math.floor(remaining / 86400),
+        hours: Math.floor(remaining / 3600) % 24,
+        minutes: Math.floor(remaining / 60) % 60,
+        seconds: remaining % 60
+      };
+
+      for (const [id, value] of Object.entries(values)) {
+        document.getElementById(id).textContent = String(value).padStart(2, '0');
+      }
+
+      timer.hidden = false;
+      setTimeout(updateCountdown, 250);
+    }
+
+    updateCountdown();
+  </script>
+</body>
+</html>
