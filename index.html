@@ -64,7 +64,39 @@ header#top nav .ff-account-link .ff-account-icon{width:19px!important;height:19p
 header#top nav .ff-account-link:hover,header#top nav .ff-account-link:focus-visible{background:rgba(249,115,22,.12)!important;border-color:#ff9b4a!important;color:#fff!important}
 header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 @media(max-width:1150px){header#top nav .ff-account-link{padding:7px 9px!important;font-size:12px!important}header#top nav .ff-account-link .ff-account-icon{width:18px!important;height:18px!important}}
-</style></head>
+</style><style>
+.mq.ff-service-marquee > .h {
+  display: flex;
+  width: max-content;
+  gap: 0;
+  padding-right: 0;
+}
+.ff-service-marquee-group {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-around;
+  gap: 44px;
+  min-width: 100vw;
+  padding-inline: 22px;
+  box-sizing: border-box;
+}
+.ff-service-marquee:hover > .h {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mq.ff-service-marquee > .h { display: block; width: auto; }
+  .ff-service-marquee-group {
+    min-width: 0;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: clamp(18px, 3vw, 30px);
+  }
+  .ff-service-marquee-group + .ff-service-marquee-group { display: none; }
+}
+</style>
+</head>
 <body>
 <a class="ff-skip-link" href="#huvudinnehall">Hoppa till innehållet</a>
 <svg aria-hidden="true" height="0" style="position:absolute" width="0"><defs>
@@ -119,6 +151,24 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 </div></div>
 </div>
 </section>
+<div class="mq ff-service-marquee" aria-hidden="true">
+  <div class="h">
+    <span class="ff-service-marquee-group">
+      <span>Flyttbil</span><span>✦</span>
+      <span>Transport</span><span>✦</span>
+      <span>Bärhjälp</span><span>✦</span>
+      <span>Flyttstädning</span><span>✦</span>
+      <span>Snöskottning</span><span>✦</span>
+    </span>
+    <span class="ff-service-marquee-group">
+      <span>Flyttbil</span><span>✦</span>
+      <span>Transport</span><span>✦</span>
+      <span>Bärhjälp</span><span>✦</span>
+      <span>Flyttstädning</span><span>✦</span>
+      <span>Snöskottning</span><span>✦</span>
+    </span>
+  </div>
+</div>
 <section aria-labelledby="ff-quick-title" class="ff-quick">
 <div class="wrap">
 <div class="ff-quick-head"><div><span class="ff-mini-eyebrow">BÖRJA HÄR</span><h2 id="ff-quick-title">Vad behöver du hjälp med?</h2><p>Välj tjänst och gå direkt till offerten.</p></div><a class="ff-quick-phone" href="tel:0793596556">Ring oss <span aria-hidden="true">↗</span></a></div>
