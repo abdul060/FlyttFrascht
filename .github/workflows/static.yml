@@ -1,10 +1,9 @@
+
 name: Deploy static content to Pages
 
 on:
   push:
     branches: ["main"]
-  schedule:
-    - cron: '7 23 24 11 *'
   workflow_dispatch:
 
 permissions:
@@ -18,10 +17,11 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -30,26 +30,18 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      - name: Choose what to publish
-        id: launch
-        shell: bash
+      - name: Kontrollera startsidan
         run: |
-          launch=$(date -u -d '2026-11-24 23:00:00 UTC' +%s)
-          if [ "$(date -u +%s)" -lt "$launch" ]; then
-            if [ ! -f .github/launch/index.html ]; then
-              echo "Nedräkningsfilen saknas: .github/launch/index.html"
-              exit 1
-            fi
-            echo "path=.github/launch" >> "$GITHUB_OUTPUT"
-          else
-            echo "path=." >> "$GITHUB_OUTPUT"
+          if [ ! -f index.html ]; then
+            echo "FEL: index.html saknas i huvudmappen!"
+            exit 1
           fi
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
         with:
-          path: ${{ steps.launch.outputs.path }}
+          path: .
 
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
