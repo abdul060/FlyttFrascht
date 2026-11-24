@@ -35,6 +35,7 @@
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,700;1,800&amp;family=Barlow:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="startsida-optimerad.css" rel="stylesheet"/>
+<link href="ff-nya-funktioner.css" rel="stylesheet"/>
 <meta content="https://flyttfrascht.se/" property="og:url"/>
 <script type="application/ld+json">
 {
@@ -158,7 +159,7 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 </defs></svg>
 <header id="top"><div class="wrap bar">
 <a aria-label="Flytt &amp; Fräscht – till toppen" class="brand h" href="#top"><svg aria-hidden="true"><use href="#mark"></use></svg><span>Flytt &amp; <span style="color:var(--or2)">Fräscht</span></span></a>
-<nav aria-label="Huvudmeny"><a class="l" href="#tjanster">Tjänster</a><a class="l" href="#om-oss">Om oss</a><a class="l" href="#offert">Begär offert</a><a class="l" href="#fragor">Frågor &amp; svar</a><a class="ff-account-link" href="minasidor.html" aria-label="Logga in på Mina sidor"><svg class="ff-account-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21v-1.5a7.5 7.5 0 0 1 15 0V21H4.5Z"/></svg><span>Mina sidor</span></a><a class="btn sm" href="#offert">Få offert</a></nav>
+<nav aria-label="Huvudmeny"><a class="l" href="#tjanster">Tjänster</a><a class="l" href="#om-oss">Om oss</a><a class="l" href="#offert">Begär offert</a><a class="l" href="#fragor">Frågor &amp; svar</a><a class="l" href="verktyg.html">Smarta verktyg</a><a class="ff-account-link" href="minasidor.html" aria-label="Logga in på Mina sidor"><svg class="ff-account-icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4.5 21v-1.5a7.5 7.5 0 0 1 15 0V21H4.5Z"/></svg><span>Mina sidor</span></a><a class="btn sm" href="#offert">Få offert</a></nav>
 <button aria-controls="ff-mobile-menu" aria-expanded="false" aria-label="Öppna menyn" class="ff-menu-toggle" type="button">
 <span aria-hidden="true" class="ff-menu-lines"><span></span><span></span><span></span></span>
 <span class="ff-menu-label">Meny</span>
@@ -174,6 +175,7 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 <a href="#tjanster"><span>Våra tjänster</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
 <a href="#om-oss"><span>Om oss</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
 <a href="#offert"><span>Begär offert</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
+<a href="verktyg.html"><span>🧮 Flyttkalkylator & smarta verktyg</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
 <a href="#sa-funkar-det"><span>Så fungerar det</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
 <a href="#fragor"><span>Frågor &amp; svar</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
 <a href="#kontakt"><span>Kontakta oss</span><span aria-hidden="true" class="ff-menu-chevron"></span></a>
@@ -198,6 +200,7 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 </a>
 <p class="sub">Flytthjälp, transport och städning med personlig kontakt. Berätta kort vad du behöver – vi återkommer med ett prisförslag.</p><div class="hero-tags"><span>Flytt &amp; transport</span><span>Flyttstädning</span><span>Bärhjälp</span></div>
 <div class="cta"><a class="btn" href="#offert" id="ff-ab-hero-cta">Få offert på din flytt →</a><a class="btn ghost" href="#tjanster">Se våra tjänster →</a></div><p class="hero-note"><span aria-hidden="true">✓</span> Kostnadsfri förfrågan · Inte en bindande bokning</p>
+<a class="ff-hero-tools-link" href="verktyg.html#flyttkalkylator">🧮 Testa flyttkalkylatorn – se prisexempel ↗</a>
 </div>
 <div style="position:relative">
 <div class="badge"><div class="orbit"></div>
@@ -297,6 +300,22 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 <div class="step rv"><b>3. Du tar ställning</b><span>Om du vill gå vidare kommer vi överens om bokning och detaljer.</span></div>
 </div>
 </div></section>
+
+<section class="ff-smarttools" id="smarta-verktyg" aria-labelledby="ff-smarttools-title">
+  <div class="wrap"><div class="ff-smarttools-heading"><div><span class="ff-smarttools-kicker">NYHET · SMARTARE PLANERING</span>
+    <h2 id="ff-smarttools-title">Allt för en smidigare flytt.</h2>
+    <p>Planera, räkna och förbered i lugn och ro – innan du bestämmer dig.</p></div>
+    <a class="ff-smarttools-all" href="verktyg.html">Utforska alla verktyg ↗</a></div>
+  <div class="ff-smarttools-grid">
+    <a href="verktyg.html#flyttkalkylator"><span>🚚</span><strong>Flyttkalkylator</strong><small>Se ett illustrativt prisintervall.</small></a>
+    <a href="verktyg.html#fotooffert"><span>📸</span><strong>Foto-offert</strong><small>Visa oss rummen i Mina sidor.</small></a>
+    <a href="verktyg.html#rut"><span>🧮</span><strong>RUT-räknare</strong><small>Se hur avdrag kan påverka priset.</small></a>
+    <a href="verktyg.html#flyttpaket"><span>📦</span><strong>Bygg ditt paket</strong><small>Flera tjänster i en enda förfrågan.</small></a>
+    <a href="verktyg.html#checklista"><span>✅</span><strong>Flyttchecklista</strong><small>Håll koll på nästa steg.</small></a>
+    <a href="minasidor.html"><span>📱</span><strong>Följ uppdraget</strong><small>Se riktiga uppdateringar och tider.</small></a>
+    <a href="verktyg.html#tipsa"><span>🎁</span><strong>Tipsa en vän</strong><small>Dela Flytt & Fräscht med fler.</small></a>
+  </div></div>
+</section>
 <!-- Tjänster i praktiken – inga låtsade kundbilder -->
 
 <section aria-labelledby="ff-rut-title" class="ff-up-section ff-rut ff-rut-simple" id="rut-avdrag"><div class="wrap">
@@ -516,6 +535,7 @@ header#top nav .ff-account-link + .btn{margin-left:-4px!important}
 <script src="script.js?v=snoskottning"></script>
 <script src="site-extras.js"></script>
 <script defer="" src="service-prefill.js?v=snoskottning"></script>
+<script defer src="ff-offert-koppling.js"></script>
 <!-- Cloudflare Web Analytics -->
 <script data-cf-beacon='{"token":"607491e0988b44e18d6959e32c16d67f"}' src="https://static.cloudflareinsights.com/beacon.min.js" type="module"></script>
 <!-- End Cloudflare Web Analytics -->

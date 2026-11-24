@@ -239,11 +239,13 @@ form.addEventListener('submit',async function(ev){
  var address=isMovingService() ?
   ('Från: '+$('move-from').value.trim()+' | Till: '+$('move-to').value.trim()) : $('a').value.trim();
  // Enkel kampanjhänvisning utan cookies, tredjepartsspårning eller kund-ID.
- var allowedSources={facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',qr:'QR-affisch',flyer:'Tryckt affisch',partner:'Samarbetspartner'};
+ var allowedSources={facebook:'Facebook',instagram:'Instagram',tiktok:'TikTok',qr:'QR-affisch',flyer:'Tryckt affisch',partner:'Samarbetspartner',referral:'Rekommendation'};
  var sourceKey=new URLSearchParams(location.search).get('utm_source')||'';
  var sourceLabel=allowedSources[sourceKey.toLowerCase()]||'';
  var msg=($('g').value.trim()+(extraInfo?'\n\n'+extraInfo:'')).trim();
  if(sourceLabel)msg+=(msg?'\n\n':'')+'Inkom via: '+sourceLabel;
+ var referral=(new URLSearchParams(location.search).get('ff_ref')||'').toUpperCase();
+ if(/^FF-[A-F0-9]{12}$/.test(referral))msg+=(msg?'\n\n':'')+'Rekommendationskod: '+referral+' (verifieras manuellt)';
  msg=msg.slice(0,3000);
  var fields=new FormData();
  fields.append('Namn',n);
