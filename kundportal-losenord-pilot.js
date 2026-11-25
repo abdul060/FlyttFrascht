@@ -154,14 +154,41 @@ function renderFfProgress(p){
 }
 async function generateFfReferral(){
  const button=$('ffReferralGenerate'),status=$('ffReferralStatus'),copy=$('ffReferralCopy'),out=$('ffReferralLink');if(!button)return;
- button.disabled=true;status.textContent='Hämtar din personliga länk…';
+ button.disabled=true;status.textContent='Hämtar din personliga länk och QR-kod…';
  try{
   const code=await request('/rest/v1/rpc/ff_mitt_referenskod',{method:'POST',body:'{}'});
   if(typeof code!=='string'||!/^FF-[A-F0-9]{12}$/.test(code))throw Error('Ogiltig rekommendationskod.');
   const url='https://flyttfrascht.se/?utm_source=referral&ff_ref='+encodeURIComponent(code)+'#offert';
-  out.textContent=url;copy.hidden=false;copy.dataset.url=url;status.textContent='Länken är klar! Vi kontrollerar varje rekommendation innan någon eventuell förmån godkänns.';
- }catch(err){status.textContent='Personliga länkar behöver först aktiveras i Supabase enligt installationsguiden. Du kan fortfarande dela den vanliga hemsidan.';out.textContent='';copy.hidden=true;}
+  out.textContent=url;copy.hidden=false;copy.dataset.url=url;const test=$('ffReferralTryLink');if(test){test.href=url;test.hidden=false;}
+  const canvas=$('ffReferralQR'),qrBox=$('ffReferralQRBox');
+  if(!window.FFQRCode)throw Error('QR-biblioteket kunde inte laddas. Uppdatera sidan.');
+  window.FFQRCode.paint(canvas,url);
+  qrBox.hidden=false;
+  const share=$('ffReferralShare');if(share)share.dataset.url=url;
+  const down=$('ffReferralQRDownload');if(down)down.dataset.code=code;
+  status.textContent='Klart! Länken och QR-koden är personliga för ditt konto. En förfrågan registreras när din vän skickar in en offertförfrågan.';
+  const own=$('ffReferralOwnStats');if(own){
+   own.textContent='Hämtar antal inkomna offertförfrågningar…';
+   try{
+    const count=await request('/rest/v1/rpc/ff_mina_rekommendationer_antal',{method:'POST',body:'{}'});
+    own.textContent=Number(count)===1?'1 offertförfrågan registrerad via din länk.':(Number(count)||0)+' offertförfrågningar registrerade via din länk.';
+   }catch{own.textContent='Statistik aktiveras när rekommendationsspårning är installerad.';}
+  }
+ }catch(err){status.textContent=err?.message||'Personliga länkar behöver aktiveras i Supabase.';out.textContent='';copy.hidden=true;const test=$('ffReferralTryLink');if(test)test.hidden=true;$('ffReferralQRBox').hidden=true;}
  finally{button.disabled=false;}
+}
+async function downloadFfReferralQR(){
+ const canvas=$('ffReferralQR'),status=$('ffReferralStatus'),code=$('ffReferralQRDownload').dataset.code;
+ if(!canvas||!/^FF-[A-F0-9]{12}$/.test(code||''))return;
+ const blob=await new Promise(resolve=>canvas.toBlob(resolve,'image/png'));
+ if(!blob){status.textContent='Kunde inte ladda ner bilden. Försök igen.';return;}
+ const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='FlyttFrascht-QR-'+code+'.png';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
+}
+async function shareFfReferral(){
+ const url=$('ffReferralShare')?.dataset.url;if(!url)return;
+ if(navigator.share){try{await navigator.share({title:'Tipsa om Flytt & Fräscht',text:'Här kan du begära offert hos Flytt & Fräscht:',url});return;}catch(e){if(e.name==='AbortError')return;}}
+ try{await navigator.clipboard.writeText(url);txt('ffReferralStatus','Din rekommendationslänk är kopierad – skicka den till din vän.');}
+ catch{txt('ffReferralStatus','Kopiera länken ovan och skicka den till din vän.');}
 }
 async function load(){await request('/rest/v1/rpc/ff_portal_auto_synka',{method:'POST',body:JSON.stringify({})});const items=await request('/rest/v1/ff_kundportaler?select=*&order=skapad.desc');state.portals=items||[];await loadHiddenJobs();$('login').hidden=true;$('portalApp').hidden=false;
  if($('jobCount'))$('jobCount').textContent=String(visiblePortals().length);
@@ -210,6 +237,8 @@ function renderChecklist(){const root=$('checklist');root.replaceChildren();cons
  c.addEventListener('change',()=>{let stored=[];try{stored=JSON.parse(localStorage.getItem(k)||'[]');if(!Array.isArray(stored))stored=[];}catch{}stored=stored.filter(x=>x!==i);if(c.checked)stored.push(i);localStorage.setItem(k,JSON.stringify(stored));status.textContent=c.checked?'Klart':'Återstår';l.classList.toggle('complete',c.checked);});root.append(l);});}
 async function start(){if(!base.startsWith('https://')||!key){txt('loginStatus','Supabase-konfiguration saknas.');return;}try{const fromLink=await consumeCallback();if(!fromLink){const saved=JSON.parse(sessionStorage.getItem('ff_customer_password_pilot_session')||'null');if(saved){state.token=saved.token;state.refresh=saved.refresh;state.expires=saved.expires;}}if(state.token&&!state.resetting){await load();}}catch(err){showLogin();txt('loginStatus',err.message);}}
 $('ffReferralGenerate')?.addEventListener('click',generateFfReferral);
+$('ffReferralQRDownload')?.addEventListener('click',downloadFfReferralQR);
+$('ffReferralShare')?.addEventListener('click',shareFfReferral);
 $('ffReferralCopy')?.addEventListener('click',async()=>{const b=$('ffReferralCopy'),url=b.dataset.url;if(!url)return;try{await navigator.clipboard.writeText(url);txt('ffReferralStatus','Länken kopierad!');}catch{txt('ffReferralStatus','Kopiera länken som visas ovan.');}});
 $('loginForm').addEventListener('submit',e=>{e.preventDefault();signIn();});$('signupForm').addEventListener('submit',e=>{e.preventDefault();signUp();});$('verifyForm').addEventListener('submit',verifySignUp);$('resendVerify').addEventListener('click',resendVerification);$('forgotForm').addEventListener('submit',e=>{e.preventDefault();recover();});$('resetForm').addEventListener('submit',saveNewPassword);$('resetBackButton').addEventListener('click',()=>{$('resetPanel').hidden=true;$('login').hidden=false;});$('logout').addEventListener('click',async()=>{const token=state.token;showLogin();if(token)fetch(base+'/auth/v1/logout',{method:'POST',headers:{apikey:key,Authorization:'Bearer '+token}}).catch(()=>{});});$('portalSelect').addEventListener('change',e=>openPortal(e.target.value).catch(err=>txt('appStatus',err.message)));$('changeForm').addEventListener('submit',submitChange);$('photoForm').addEventListener('submit',submitPhotos);$('toggleHiddenJobs')?.addEventListener('click',()=>{state.hidePanelOpen=!state.hidePanelOpen;renderJobCards();});start();
 })();

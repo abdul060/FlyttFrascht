@@ -244,8 +244,13 @@ form.addEventListener('submit',async function(ev){
  var sourceLabel=allowedSources[sourceKey.toLowerCase()]||'';
  var msg=($('g').value.trim()+(extraInfo?'\n\n'+extraInfo:'')).trim();
  if(sourceLabel)msg+=(msg?'\n\n':'')+'Inkom via: '+sourceLabel;
- var referral=(new URLSearchParams(location.search).get('ff_ref')||'').toUpperCase();
- if(/^FF-[A-F0-9]{12}$/.test(referral))msg+=(msg?'\n\n':'')+'Rekommendationskod: '+referral+' (verifieras manuellt)';
+ var referral=(window.FFReferral?.getCode?.()||(new URLSearchParams(location.search).get('ff_ref')||'')).toUpperCase();
+ if(/^FF-[A-F0-9]{12}$/.test(referral)){
+  if(!sourceLabel)msg+=(msg?'\n\n':'')+'Inkom via: Rekommendation';
+  // Lägg rekommendationskoden FÖRST, så att den aldrig försvinner
+  // om ett långt kundmeddelande kortas till 3 000 tecken.
+  msg='Rekommendationskod: '+referral+' (verifieras manuellt)\n\n'+msg;
+ }
  msg=msg.slice(0,3000);
  var fields=new FormData();
  fields.append('Namn',n);

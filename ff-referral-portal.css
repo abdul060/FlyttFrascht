@@ -1,0 +1,11 @@
+/* Flytt & Fräscht – personlig QR-kod, endast lokala resurser. */
+.ff-referral-qr[hidden]{display:none!important}
+.ff-referral-qr{margin-top:14px;padding:18px 12px;border:1px solid #d8e4ee;border-radius:18px;background:#f6f9fb;display:flex;align-items:center;flex-direction:column;gap:9px;text-align:center;color:#142942}
+.ff-referral-qr canvas{display:block;max-width:210px;width:100%;height:auto;border:1px solid #edf0f3;background:#fff;padding:6px;border-radius:10px;image-rendering:pixelated}
+.ff-referral-qr strong{font-weight:850;font-size:16px}.ff-referral-qr small{color:#60758b;font-size:12px;line-height:1.5;max-width:260px}
+.ff-referral-qr button{width:100%;max-width:280px;min-height:40px}
+.ff-referral-count{margin:3px 0 0;font-weight:700;font-size:13px;color:#245b52;line-height:1.45}
+#ffReferralLink{display:block;overflow-wrap:anywhere;word-break:break-word;font-size:12px;line-height:1.4}
+
+.ff-referral-test{display:block;color:#175886!important;text-decoration:underline!important;text-underline-offset:3px;font-weight:750;font-size:13px;padding:5px 0}
+.ff-referral-test[hidden]{display:none!important}

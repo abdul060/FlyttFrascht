@@ -100,7 +100,9 @@ async function login(username,password){if(username.trim().toLowerCase()!==(cfg.
 function saveSession(){sessionStorage.setItem('flytt_admin_session',JSON.stringify({token,refreshToken}));}
 async function refresh(){if(!refreshToken)return false;try{const r=await fetch(authUrl('refresh_token'),{method:'POST',headers:headers(),body:JSON.stringify({refresh_token:refreshToken})});if(!r.ok)return false;const j=await r.json();token=j.access_token;refreshToken=j.refresh_token;saveSession();return true;}catch{return false;}}
 async function api(path,method='GET',body,retry=true){const r=await fetch(url+'/rest/v1/'+path,{method,headers:{...headers(token),...(method==='POST'?{'Prefer':'return=representation'}:{}),...(method==='PATCH'?{'Prefer':'return=minimal'}:{})},...(body!==undefined?{body:JSON.stringify(body)}:{})});if(r.status===401&&retry&&await refresh())return api(path,method,body,false);if(!r.ok){if(r.status===401)showLogin();const info=await r.json().catch(()=>({}));throw Error(info.message||'Databasen svarade med HTTP '+r.status+'. Kontrollera SQL-reglerna.');}return method==='GET'||method==='POST'?r.json():null;}
-function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['overview','requests','customers','offers','bookings','today'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();}
+function switchTab(tab){if(tab==='bookings')setTimeout(scheduleAvailability,0);currentTab=tab;document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));['overview','requests','customers','offers','bookings','today','referrals'].forEach(t=>$(t+'Panel').hidden=t!==tab);render();if(tab==='referrals')window.FFLoadReferrals?.();}
+// Endast läsning av rekommendationsrapporten. Supabase/RPC kontrollerar adminrollen igen på serversidan.
+window.FFAdminFetchReferrals=()=>api('rpc/ff_admin_rekommendationer','POST',{});
 function updateInbox(){
  const pending=records.filter(r=>r.status==='ny');
  const count=pending.length;

@@ -1,0 +1,18 @@
+/* Endast administratörens rekommendationsöversikt. */
+.ff-admin-referrals{max-width:1100px;margin:0 auto;padding:12px 0 35px}
+.ff-rek-title{display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;margin:8px 0 18px}
+.ff-rek-title h2{margin:0 0 8px}.ff-rek-title p{margin:0;max-width:640px}
+.ff-rek-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-bottom:18px}
+.ff-rek-stats>div{border-radius:14px;border:1px solid #dfE6ef;background:#fff;padding:16px;display:flex;flex-direction:column;gap:4px}
+.ff-rek-stats strong{color:#142943;font-size:26px}.ff-rek-stats span{color:#627389;font-size:13px}
+#ffReferralAdminSearch{display:block;width:100%;max-width:440px;margin:8px 0 14px}
+.ff-rek-list{display:grid;gap:14px;margin:12px 0}
+.ff-rek-entry{background:white;border:1px solid #dae4ee;border-radius:16px;padding:18px 20px}
+.ff-rek-entry header{display:flex;flex-direction:column;gap:4px;padding:0!important;background:transparent!important;position:static!important;color:#142943!important;border:0!important;box-shadow:none!important}
+.ff-rek-entry header strong{font-size:17px;overflow-wrap:anywhere}.ff-rek-code{font-family:ui-monospace,monospace;color:#b45f17;font-size:13px}
+.ff-rek-count{font-weight:800;font-size:13px;display:inline-block;margin-top:10px;color:#315a6c}
+.ff-rek-entry ul{margin:10px 0 0;padding-left:18px;display:grid;gap:10px}
+.ff-rek-entry li{line-height:1.5;font-size:13px;overflow-wrap:anywhere}
+.ff-rek-entry li b{display:block}
+.ff-rek-quiet{color:#66798b;font-size:13px;line-height:1.5}
+@media(max-width:650px){.ff-rek-stats{grid-template-columns:1fr}.ff-rek-entry{padding:16px}}

@@ -15,7 +15,7 @@ function prefill(){
  else notes.push('Förfrågan gäller ett kombinerat flyttpaket ('+tag.replace(/-/g,' ')+').');
  const g=document.getElementById('g');if(g&&!g.value.trim())g.value=notes.join('\n');
  }
- const ref=toText(qs.get('ff_ref')).toUpperCase();if(/^FF-[A-F0-9]{12}$/.test(ref)){
+ const ref=toText(window.FFReferral?.getCode?.()||qs.get('ff_ref')).toUpperCase();if(/^FF-[A-F0-9]{12}$/.test(ref)){
  const form=document.getElementById('f');if(form&&!document.getElementById('ffReferralAlert')){const p=document.createElement('p');p.className='ff-referral-note';p.id='ffReferralAlert';p.textContent='Du kom via en personlig rekommendation ('+ref+'). Koden följer med din offertförfrågan. Eventuella erbjudanden bekräftas separat.';form.prepend(p);}
  }
 }
