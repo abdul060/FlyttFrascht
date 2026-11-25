@@ -16,12 +16,8 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout
@@ -33,15 +29,25 @@ jobs:
       - name: Kontrollera startsidan
         run: |
           if [ ! -f index.html ]; then
-            echo "FEL: index.html saknas i huvudmappen!"
+            echo "FEL: index.html saknas!"
             exit 1
           fi
 
       - name: Upload website
         uses: actions/upload-pages-artifact@v4
         with:
+          name: github-pages
           path: .
 
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
