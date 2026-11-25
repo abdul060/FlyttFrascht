@@ -1,0 +1,49 @@
+/* Enhetligt mörkt kundläge. Laddas sist: löser krockar med äldre vita kort. */
+body.ff-customer{color-scheme:dark;--ff-bg:#0a162a;--ff-panel:#132943;--ff-raised:#193452;--ff-border:#38516d;--ff-strong:#f3f8ff;--ff-subtle:#c0d0e3;--ff-accent:#ff9a57;background:#081427!important;color:#f3f8ff!important}
+.ff-customer #portalApp .card,.ff-customer #portalApp .job-tile,.ff-customer #portalApp .job-hub,.ff-customer #details .card,.ff-customer .hidden-jobs-tools,.ff-customer .select-fallback{background:#12263e!important;color:#f3f8ff!important;border-color:#354b67!important}
+.ff-customer #portalApp .job-tile{padding:10px!important;box-shadow:none!important}
+.ff-customer #portalApp .job-card{background:#1a3554!important;border-color:#365878!important;color:#f3f8ff!important}
+.ff-customer #portalApp .job-card.selected{background:#244467!important;border:2px solid #ff974d!important}
+.ff-customer #portalApp .job-card .job-name,.ff-customer #portalApp .job-name{color:#fff!important}
+.ff-customer #portalApp .job-visibility,.ff-customer #portalApp .hidden-jobs-tools button,.ff-customer #portalApp #toggleHiddenJobs{background:#284464!important;color:#f6fbff!important;border:1px solid #476888!important}
+.ff-customer #portalApp .job-visibility:hover{background:#365a7c!important}
+.ff-customer #details .section-helper,.ff-customer #portalApp .hint,.ff-customer #portalApp .small-note,.ff-customer #portalApp .fieldnote{color:#c0cee0!important}
+.ff-customer #portalApp .kv,.ff-customer #portalApp .entry{background:transparent!important;border-color:#47617d!important;color:#edf6ff!important}
+.ff-customer #portalApp .kv span:first-child,.ff-customer #portalApp .entry small{color:#bbcde2!important}
+.ff-customer #portalApp .kv span:last-child,.ff-customer #portalApp .kv strong,.ff-customer #portalApp .entry strong,.ff-customer #portalApp #offerDetails,.ff-customer #portalApp #bookingDetails{color:#f6faff!important}
+.ff-customer #portalApp #offerDetails span,.ff-customer #portalApp #bookingDetails span{color:#dae8fa!important}
+.ff-customer #portalApp .pill{background:#224b53!important;color:#d3fff4!important}
+.ff-customer #portalApp .status,.ff-customer #portalApp .job-meta{color:#d9e6f6!important}
+.ff-customer #portalApp #changeForm label,.ff-customer #portalApp #changeForm p{color:#f0f6ff!important}
+.ff-customer #portalApp #changeForm input,.ff-customer #portalApp #changeForm textarea,.ff-customer #portalApp #changeForm select{background:#0a1a2e!important;color:#f6faff!important;border:1px solid #48607b!important}
+.ff-customer #portalApp .photo-dropzone,.ff-customer #portalApp .photo-dropzone:hover{background:#1a3554!important;color:#f1f7ff!important;border:2px dashed #5b7899!important}
+.ff-customer #portalApp .photo-dropzone strong,.ff-customer #portalApp .photo-dropzone .photo-selection{color:#f3f8ff!important}
+.ff-customer #portalApp .photo-dropzone>span,.ff-customer #portalApp .photo-limits{color:#c2d3e6!important}
+.ff-customer #portalApp .upload-symbol{background:#273f59!important;color:#ffab71!important}
+.ff-customer #portalApp .photo-picker,.ff-customer #portalApp .photo-submit{background:#ff872a!important;color:#102035!important}
+.ff-customer #portalApp #photoForm input[type=file]{color:#dce7f7!important}
+.ff-customer #portalApp .ff-photo-card{background:#1b3550!important;border-color:#45617e!important;color:#edf4ff!important}
+.ff-customer #portalApp .ff-photo-preview,.ff-customer #portalApp .ff-photo-preview small{color:#d4e4f7!important}
+.ff-customer #portalApp .ff-photo-remove{background:#4a292d!important;color:#ffe1e0!important;border:1px solid #a3545d!important}
+.ff-customer #portalApp .check-progress{background:#1b3654!important;color:#f3f8ff!important;border:1px solid #385775!important}
+.ff-customer #portalApp .check-progress-top,.ff-customer #portalApp .check-progress-top strong{color:#f8fbff!important}
+.ff-customer #portalApp .check-progress-top span{color:#d1deee!important}
+.ff-customer #portalApp .check-progress-track{background:#47607b!important}
+.ff-customer #portalApp #checklistSection .checklist,.ff-customer #portalApp #checklist{background:transparent!important}
+.ff-customer #portalApp #checklistSection .checklist label,.ff-customer #portalApp #checklistSection .ff-check-row,.ff-customer #portalApp .ff-check-row,.ff-customer #portalApp .ff-check-row.complete{background:#1b3551!important;color:#eef5ff!important;border:1px solid #3d5a78!important;box-shadow:none!important}
+.ff-customer #portalApp .ff-check-row.complete,.ff-customer #portalApp #checklistSection .checklist label:has(input:checked){background:#243d42!important;border-color:#4c8171!important}
+.ff-customer #portalApp .ff-check-row strong,.ff-customer #portalApp #checklistSection .checklist label strong,.ff-customer #portalApp .ff-check-row span{color:#f5f9ff!important}
+.ff-customer #portalApp .ff-check-row small,.ff-customer #portalApp #checklistSection .checklist label small{color:#c3d3e8!important}
+.ff-customer #portalApp .ff-check-row input,.ff-customer #portalApp #checklistSection input[type=checkbox]{accent-color:#ff8b39!important}
+.ff-customer #portalApp .completion-frame{background:linear-gradient(120deg,#193554,#152b46)!important;border:1px solid #3d5a77!important;color:#f4f8ff!important}
+.ff-customer #portalApp .completion-frame strong,.ff-customer #portalApp #completion{color:#f5f9ff!important}
+.ff-customer #portalApp .completion-frame p{color:#c1d3e8!important}
+.ff-customer #portalApp .completion-mark{background:#4e3b31!important;color:#ffb076!important}
+.ff-customer #portalApp .ff-referral-card,.ff-customer #portalApp .ff-referral-qr{background:#172e4b!important;color:#f4f8ff!important}
+.ff-customer #portalApp .ff-customer-activity-item,.ff-customer #portalApp .ff-activity-empty{color:#f3f8ff!important}
+.ff-customer #portalApp a:not(.btn){text-underline-offset:3px}
+.ff-customer #portalApp a:focus-visible,.ff-customer #portalApp button:focus-visible,.ff-customer #portalApp input:focus-visible{outline:3px solid #ffb674!important;outline-offset:3px}
+.ff-customer #portalApp .hidden-jobs-tools .hint{color:#becfe1!important}
+.ff-customer .status,.ff-customer footer,.ff-customer footer a{color:#ccdcec!important}
+.ff-customer .ff-decision-dialog,.ff-customer .ff-decision-dialog p{background:#13283f!important;color:#f1f7ff!important}
+@media(max-width:700px){.ff-customer #portalApp .job-cards{grid-template-columns:1fr!important}.ff-customer #portalApp .job-tile{padding:7px!important}.ff-customer #portalApp .check-progress{padding:12px!important}}

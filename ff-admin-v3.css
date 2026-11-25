@@ -1,0 +1,52 @@
+/* Flytt & Fräscht – enkel ärendehantering v3 */
+.ff-admin-portal{--ff-action:#ff791f}
+.ff-admin-portal .page-intro{padding:25px 30px!important}
+.ff-admin-portal .page-intro h1{font-size:clamp(31px,4vw,46px)!important;line-height:1.15!important}
+.ff-admin-portal .admin-workflow,.ff-admin-portal .admin-jump,.ff-admin-portal .info-note{display:none!important}
+.ff-admin-portal .ff-priority,.ff-admin-portal .inbox-hub{max-width:100%;margin:16px 0 24px;padding:clamp(20px,2.5vw,32px);border:1px solid #d9e3ec;border-radius:24px;box-shadow:0 15px 42px #19304708;background:#fff;color:#152f48}
+.ff-admin-portal .ff-priority{background:linear-gradient(125deg,#0e2442,#193953);color:white;border-color:#355473}
+.ff-admin-portal .ff-priority-head{display:flex;justify-content:space-between;align-items:start;gap:18px;flex-wrap:wrap}
+.ff-admin-portal .ff-priority-head h2{color:white;font-size:clamp(25px,3vw,34px)!important;margin:7px 0 8px!important}
+.ff-admin-portal .ff-priority-head p{color:#c3d4e9!important;max-width:780px;line-height:1.6;font-size:14px}
+.ff-admin-portal .ff-priority-badge{display:inline-block;white-space:nowrap;padding:10px 16px;border-radius:40px;background:#ff8e36;color:#091e32;font-weight:900;font-size:13px}
+.ff-admin-portal .ff-priority-badge.is-clear{background:#1d614e;color:#d3ffed}
+.ff-admin-portal .ff-priority-list{margin:21px 0 19px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.ff-admin-portal .ff-priority-card{min-width:0;padding:19px;border:1px solid #476582;background:#152f4d;border-radius:17px}
+.ff-admin-portal .ff-priority-top{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.ff-admin-portal .ff-priority-top strong{font-size:19px;color:#fff}
+.ff-admin-portal .ff-priority-state{font-size:10px;font-weight:900;letter-spacing:.04em;background:#ffede0;color:#8b3f0d;border-radius:80px;padding:7px 10px}
+.ff-admin-portal .ff-priority-type{color:#bbd3ef;font-size:13px;margin:8px 0 12px}
+.ff-admin-portal .ff-priority-dates{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.ff-admin-portal .ff-priority-dates div{font-weight:750;font-size:13px;padding:12px;background:#243f5d;border-radius:11px;color:#fff;overflow-wrap:anywhere}
+.ff-admin-portal .ff-priority-dates div:nth-child(2){background:#3e3026;color:#ffbc86}
+.ff-admin-portal .ff-priority-message{color:#d4dfed!important;font-size:13px;line-height:1.65;margin:13px 0}
+.ff-admin-portal .ff-priority-open{width:100%;background:#ff862c!important;color:#0d1c30!important;border:0!important;font-weight:850!important;margin-top:9px!important;min-height:44px!important;border-radius:10px!important}
+.ff-admin-portal .ff-priority-open:hover{background:#ffb066!important}
+.ff-admin-portal .ff-priority-steps{display:flex;gap:11px;flex-wrap:wrap;padding-top:13px;border-top:1px solid #385371}
+.ff-admin-portal .ff-priority-steps span{font-size:12px;color:#c7d8ea;display:inline-flex;align-items:center;gap:8px}
+.ff-admin-portal .ff-priority-steps b{display:grid;place-items:center;width:23px;height:23px;border-radius:50%;background:#355674;color:#fff}
+.ff-admin-portal .ff-priority-clear{background:#163c37;border:1px solid #307966;border-radius:14px;padding:20px;grid-column:1/-1}
+.ff-admin-portal .ff-priority-clear strong{font-size:19px;color:#b6ffdc}
+.ff-admin-portal .ff-priority-clear p,.ff-admin-portal .ff-priority-more{font-size:13px;color:#d1e2f4}
+.ff-admin-portal .inbox-hub .inbox-title h2{font-size:clamp(25px,3vw,32px)!important}
+.ff-admin-portal .inbox-item{scroll-margin-top:25px;border-color:#dce5ed!important;box-shadow:0 6px 20px #102a4909}
+.ff-admin-portal .ff-request-highlight{outline:4px solid #ff8e31;outline-offset:3px}
+.ff-admin-portal .ff-inbox-next{padding:12px;background:#fff2e5;border-left:4px solid #ff8e35;border-radius:10px;font-size:12px;color:#583822!important;line-height:1.6}
+.ff-admin-portal .ff-more-events,.ff-admin-portal .ff-advanced{margin:20px 0;border:1px solid #d7e1ea;border-radius:20px;background:#fff;overflow:hidden;box-shadow:0 10px 24px #12283e09}
+.ff-admin-portal .ff-more-events>summary,.ff-admin-portal .ff-advanced>summary{display:flex;align-items:center;justify-content:space-between;gap:18px;cursor:pointer;list-style:none;padding:22px 25px;background:#f5f8fb;color:#15334d;font-size:17px;font-weight:850}
+.ff-admin-portal .ff-more-events>summary::-webkit-details-marker,.ff-admin-portal .ff-advanced>summary::-webkit-details-marker{display:none}
+.ff-admin-portal .ff-advanced>summary span:first-child{display:grid;gap:5px}
+.ff-admin-portal .ff-more-events>summary small,.ff-admin-portal .ff-advanced>summary small{color:#63788d;font-weight:550;font-size:12px}
+.ff-admin-portal .ff-advanced>summary span:last-child{font-size:27px;color:#fa7621}
+.ff-admin-portal .ff-advanced[open]>summary span:last-child{transform:rotate(45deg)}
+.ff-admin-portal .ff-more-events[open]>summary,.ff-admin-portal .ff-advanced[open]>summary{border-bottom:1px solid #dfe8f0}
+.ff-admin-portal .ff-advanced-content{padding:18px}
+.ff-admin-portal .ff-ops-hub{margin:14px!important;box-shadow:none!important}
+.ff-admin-portal .admin-columns{gap:20px!important}
+@media(max-width:840px){.ff-admin-portal .ff-priority-list{grid-template-columns:1fr}.ff-admin-portal .ff-priority-dates{grid-template-columns:1fr}.ff-admin-portal .ff-advanced-content{padding:8px}.ff-admin-portal .ff-priority,.ff-admin-portal .inbox-hub{padding:18px}}
+@media(max-width:480px){.ff-admin-portal .ff-priority-head h2{font-size:25px!important}.ff-admin-portal .ff-priority-card{padding:14px}.ff-admin-portal .ff-priority-steps{display:grid}.ff-admin-portal .ff-priority-badge{font-size:11px}}
+
+.ff-admin-portal #ffPriority .ff-priority-head h2{color:#fff!important;text-shadow:none!important}
+.ff-admin-portal #ffPriority .ff-priority-head p{color:#d4e3f4!important}
+.ff-admin-portal .ff-priority .eyebrow{color:#ffb881!important}
+.ff-admin-portal .stats-strip{margin:18px 0 24px!important}

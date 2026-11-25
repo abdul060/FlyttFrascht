@@ -1,0 +1,41 @@
+/* Alla smarta verktyg i ett konsekvent dark mode */
+:root{color-scheme:dark;--paper:#0e1e34;--ink:#eef5ff;--muted:#c1d0e3;--line:#34516f;--navy:#07152b;--navylight:#122a48}
+body{background:#081528!important;color:#eef5ff!important;color-scheme:dark}
+.sitebar{background:#081427!important;border-bottom:1px solid #304966!important}
+.hero{background:radial-gradient(ellipse at 75% 15%,#19406a,transparent 60%),linear-gradient(115deg,#0b1832,#0d2647)!important}
+.quicknav{background:#142c4d!important;border-top:1px solid #284366;border-bottom:1px solid #284366}
+.block,.block.alt{background:#081528!important;color:#f2f7ff!important}
+.block.alt{background:#0d2038!important}
+.sectionhead h2,.photo-explain h3,.portal-info h3,.custom-pack h3,.referral-panel h3,.portal-demo h3{color:#f4f8ff!important}
+.sectionhead p,.portal-info p,.sectionhead p strong,.fieldnote,.formpanel label span,.portal-demo small,.footer-row,.referral-panel p{color:#c5d4e8!important}
+.section-icon{background:#193451!important;border:1px solid #385877!important;color:#f9faff!important}
+.panel,.custom-pack.panel,.portal-demo.panel,.check-settings.panel,.photo-explain.panel,.checklist.panel,.formpanel.panel,.referral-panel.panel{background:#142944!important;border:1px solid #395775!important;color:#eff7ff!important;box-shadow:0 14px 45px #0002}
+.resultpanel.panel{background:linear-gradient(135deg,#132e51,#0b1e36)!important;color:#fff!important;border-color:#3b6485!important}
+.formpanel label,.check-settings label,.package-choices label,.checkrow,.checkrow strong,.howsteps strong,.portal-info li,.custom-pack p{color:#edf5ff!important}
+.formpanel input:not([type=checkbox]),.formpanel select,.check-settings input{background:#0b1d34!important;color:#f8fbff!important;border:1px solid #486484!important;box-shadow:none!important}
+.formpanel input:focus-visible,.formpanel select:focus-visible,.check-settings input:focus-visible{outline:2px solid #ffa369!important;border-color:#ff9f5c!important}
+input::placeholder{color:#aebfd5!important}
+.fieldnote,.howsteps small,.checkrow small,.portal-demo .demo-head,.portal-demo small,.check-counter,.portal-demo .demo-line span,.referral-panel .fieldnote{color:#c1d1e5!important}
+.callout{background:#2b332f!important;border-left-color:#ffa267!important;color:#f6dfcb!important}
+.howsteps b,.referral-star{background:#443526!important;color:#ffbd8d!important}
+.button.outline,.button.subtle{background:#244363!important;border:1px solid #53769a!important;color:#f4f8ff!important}
+.button.quiet{background:#1d395a!important;color:#f2f9ff!important;border-color:#54728f!important}
+.resultpanel .resultline strong,.resultpanel .bigprice{color:#fff!important}
+.checkrow,.checkrow.checked{background:#193451!important;border:1px solid #3b5b7a!important;color:#f3f8ff!important}
+.checkrow.checked{background:#20443d!important;border-color:#3d806b!important}
+.checkgroup{color:#ffae76!important}
+.progress{background:#3a5879!important}
+.demo-stages span{background:#254364!important;color:#e4effd!important}
+.demo-stages span.complete{background:#1e4d40!important;color:#bff7e1!important}
+.demo-line{background:#1c3855!important;color:#f8fbff!important}
+.demo-line span{color:#d2e1f3!important}
+.package{background:#18324e!important;border:1px solid #3d5d7c!important;color:#f7faff!important}
+.package strong{color:#f5f9ff!important}.package small{color:#cbd9ec!important}
+.package:hover{border-color:#ff9f59!important;background:#214261!important}
+.package-choices label{background:#1c3551!important;border-color:#47627e!important;color:#eef7ff!important}
+.referral-panel .referral-star{color:#ffb887!important}
+.finalcta{background:linear-gradient(110deg,#132e51,#071b32)!important;border-top:1px solid #385371!important}
+.finalcta p{color:#c4d6ed!important}
+footer{background:#071326!important;color:#c6d8ed!important;border-top:1px solid #304b68!important}
+footer a{color:#c9e4ff!important}
+@media(max-width:760px){.container{width:min(100% - 28px,1170px)!important}.block{padding:60px 0!important}.hero{padding:53px 0!important}.bigprice{font-size:clamp(34px,9vw,65px)!important}.sectionhead h2{font-size:clamp(34px,9vw,58px)!important}}
