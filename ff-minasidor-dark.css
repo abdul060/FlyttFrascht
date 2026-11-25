@@ -1,0 +1,88 @@
+/* Flytt & Fräscht – komplett mörkt kundläge. Sista stilmallen avsiktligt. */
+body.ff-customer{--v4-ink:#f2f5ff;--v4-muted:#adbed4;--v4-orange:#ff8736;--ff-ink:#f2f5ff;--ff-muted:#adbed4;--ff-line:#2d3e59;--ff-border:#2d3e59;--ff-surface:#13243d;--ff-soft:#182a45;--ff-navy:#f2f5ff;--ff-activity-bg:#0a1428;background:radial-gradient(ellipse 880px 560px at 50% -90px,rgba(25,67,126,.5),transparent 75%),linear-gradient(180deg,#0a1429,#0c1729 60%,#081325)!important;color:#eef3ff!important;min-height:100vh}
+.ff-customer header{background:rgba(8,19,38,.97)!important;border-bottom:1px solid #30435f!important;color:#f6f8ff!important;box-shadow:0 8px 30px #020a183d!important}
+.ff-customer header strong{color:#f7f9ff!important}.ff-customer header strong span:not(.brand-mark){color:#ff964e!important}.ff-customer header strong small{color:#a7b9d1!important}
+.ff-customer header a{color:#eef4ff!important;background:#132845!important;border-color:#405577!important}
+.ff-customer header a:hover{background:#1e3657!important}
+.ff-customer main,.ff-customer h1,.ff-customer h2,.ff-customer h3,.ff-customer h4{color:#f3f7ff!important}
+.ff-customer main{max-width:1200px}
+.ff-customer .page-intro,.ff-customer .card,.ff-customer #portalApp .dashboard-head,.ff-customer #portalApp .stats-strip>div,.ff-customer .stats-strip>div,.ff-customer .welcome-shell,.ff-customer #login:not([hidden]),.ff-customer #resetPanel,.ff-customer #details .card,.ff-customer .job-hub{background:#13243e!important;color:#eef5ff!important;border-color:#30435c!important;box-shadow:0 14px 32px rgba(2,7,21,.21)!important}
+.ff-customer .page-intro .sub,.ff-customer .sub,.ff-customer .hint,.ff-customer .section-helper,.ff-customer .small-note,.ff-customer p,.ff-customer .dashboard-lead{color:#adbed4!important}
+.ff-customer .eyebrow,.ff-customer .section-kicker{color:#ffa363!important}
+.ff-customer .benefits-row span{background:#182c48!important;color:#d9e7fc!important;border-color:#34506f!important}
+.ff-customer .welcome-shell{border:1px solid #354763!important;background:#10223a!important}
+.ff-customer .welcome-story{background:radial-gradient(circle at 93% 6%,#25486d,#0c2340 65%,#0a1c32)!important}
+.ff-customer .welcome-story .story-label{color:#ffb68c!important}
+.ff-customer .welcome-story .story-top>p,.ff-customer .welcome-story .story-steps p{color:#c4d6e9!important}
+.ff-customer .welcome-story .story-steps strong{color:#fff!important}
+.ff-customer .welcome-shell #login:not([hidden]){background:#13243e!important;color:#eef5ff!important}
+.ff-customer .auth-heading h2,.ff-customer #portalApp .dashboard-head h2{color:#f7faff!important}
+.ff-customer .auth-heading p,.ff-customer .auth-support,.ff-customer .auth-extra p{color:#aec2dc!important}
+.ff-customer .auth-heading .auth-icon{background:#263851!important;color:#ff9657!important}
+.ff-customer input,.ff-customer textarea,.ff-customer select,.ff-customer #loginForm input,.ff-customer #editor input{background:#0c1a30!important;color:#f3f7ff!important;border:1px solid #3b526e!important;box-shadow:none!important}
+.ff-customer input::placeholder,.ff-customer textarea::placeholder{color:#90a1b7!important}
+.ff-customer label,.ff-customer .auth-card label{color:#e1eaf6!important}
+.ff-customer input:focus,.ff-customer textarea:focus,.ff-customer select:focus{border-color:#ffab75!important;outline:2px solid #ffa3637d!important}
+.ff-customer .auth-extra,.ff-customer .auth-extra[open]{background:#192c46!important;border-color:#3a526d!important}
+.ff-customer .auth-extra summary{color:#e9f1ff!important}
+.ff-customer .auth-option-label small{color:#b8c7da!important}
+.ff-customer .auth-divider{color:#aebed4!important}
+.ff-customer button.secondary,.ff-customer .secondary,.ff-customer a.btn.secondary,.ff-customer .job-visibility{background:#243a57!important;color:#ecf4ff!important;border-color:#425a75!important}
+.ff-customer button.secondary:hover,.ff-customer a.btn.secondary:hover{background:#2c4769!important}
+.ff-customer #portalApp .dashboard-head{background:linear-gradient(130deg,#193454,#12233b)!important;border:1px solid #304c70!important}
+.ff-customer .portal-shortcuts a{background:#172a46!important;border-color:#304763!important;color:#e5efff!important}
+.ff-customer .portal-shortcuts a:hover{background:#213a5d!important;border-color:#ff9c5c!important}
+.ff-customer .portal-shortcuts a strong{color:#f3f7ff!important}.ff-customer .portal-shortcuts a small{color:#b3c3d7!important}
+.ff-customer .portal-guide{background:#17334a!important;border-color:#2a5667!important;color:#d3edeb!important}
+.ff-customer .portal-guide p{color:#b9d9df!important}
+.ff-customer .portal-guide-icon{background:#275d55!important;color:#a5ffe1!important}
+.ff-customer .stats-strip strong,.ff-customer #portalApp .stats-strip strong{color:#fafcff!important}
+.ff-customer .stats-strip span,.ff-customer #portalApp .stats-strip span{color:#b2c3d9!important}
+.ff-customer .job-card,.ff-customer #portalApp .job-card{background:#182d4a!important;color:#ecf2ff!important;border-color:#3a526c!important}
+.ff-customer .job-card:hover{background:#1c3859!important;border-color:#ffa161!important}
+.ff-customer .job-card.selected,.ff-customer #portalApp .job-card.selected{background:#27334a!important;border:2px solid #ff8e42!important;box-shadow:0 0 0 2px #f97c1b24!important}
+.ff-customer .job-name,.ff-customer #portalApp .job-name{color:#f0f6ff!important}.ff-customer .job-meta{color:#b3c7dd!important;border-color:#3b506b!important}
+.ff-customer .job-status{background:#274c6b!important;color:#cde5ff!important}.ff-customer .job-status.completed{background:#1a4e40!important;color:#a9f0d2!important}
+.ff-customer .selected-summary{background:linear-gradient(115deg,#183a5c,#102944)!important;border:1px solid #476184!important}
+.ff-customer .quick-actions a,.ff-customer #portalApp .quick-actions a{background:#1b3150!important;border:1px solid #3a5372!important;color:#e6f0ff!important}
+.ff-customer .quick-actions a:hover{background:#2a4164!important;border-color:#ffa46b!important}
+.ff-customer .ff-portal-progress{background:#172b47!important;border-color:#3a516d!important}
+.ff-customer .ff-progress-head strong{color:#f5f8ff!important}.ff-customer .ff-progress-track li{background:#1d3551!important;border-color:#3c5572!important;color:#bdcede!important}.ff-customer .ff-progress-track li b{background:#385471!important;color:#ecf3ff!important}
+.ff-customer .ff-progress-track li.is-active{background:#473222!important;border-color:#ce8551!important;color:#ffc28d!important}.ff-customer .ff-progress-track li.is-active b{background:#fc8737!important;color:#0a1830!important}
+.ff-customer .ff-progress-track li.is-done{background:#1b4c3d!important;border-color:#3b846a!important;color:#b3edc9!important}
+.ff-customer .ff-portal-progress p{color:#bac8dc!important}
+.ff-customer .ff-referral-card{background:linear-gradient(125deg,#182c46,#203249)!important;border-color:#3b506c!important}
+.ff-customer .ff-referral-buttons output{color:#bcd8fa!important}.ff-customer .ff-referral-qr{background:#182a43!important;border-color:#405a78!important;color:#f1f7ff!important}.ff-customer .ff-referral-qr small{color:#bfd0e5!important}
+.ff-customer .ff-referral-test{color:#a7ccff!important}.ff-customer .ff-referral-count{color:#a4e2ce!important}
+.ff-customer .kv{border-color:#33475e!important}.ff-customer .kv span:first-child{color:#b9c9df!important}.ff-customer .kv span:last-child{color:#eff5ff!important}
+.ff-customer .entry{border-color:#394c64!important;background:transparent!important}.ff-customer .entry small{color:#a5b9cf!important}
+.ff-customer .status{color:#a0d5ff!important}.ff-customer .action-intro{color:#b0c3d9!important}
+.ff-customer .help,.ff-customer .hint.help{background:#27334a!important;color:#ffd1ac!important;border-color:#815c44!important}
+.ff-customer .ff-decision-dialog{background:#142741!important;color:#f2f7ff!important;border-color:#405772!important}
+.ff-customer .ff-customer-activity{background:linear-gradient(140deg,#17314f,#122641)!important;border:1px solid #395875;border-radius:23px;padding:clamp(18px,3vw,31px);margin:23px 0;box-shadow:0 16px 36px #01081638}
+.ff-customer .ff-customer-activity-head{display:flex;gap:18px;align-items:start;justify-content:space-between;flex-wrap:wrap}
+.ff-customer .ff-customer-activity-head h2{margin:6px 0 9px;font-size:clamp(22px,2.7vw,30px)}
+.ff-customer .ff-customer-activity-head p{font-size:13px;max-width:660px;line-height:1.6}
+.ff-customer .ff-customer-activity-head>a{display:inline-block;padding:11px 15px;border:1px solid #526782;border-radius:10px;text-decoration:none;color:#eaf3ff;font-weight:800;font-size:12px}
+.ff-customer .ff-customer-activity-summary{font-size:13px;font-weight:700;background:#203850;padding:12px 16px;border:1px solid #476781;border-radius:11px;margin:15px 0 17px;color:#dbecff}
+.ff-customer .ff-customer-activity-feed{display:grid;gap:11px;grid-template-columns:repeat(2,minmax(0,1fr))}
+.ff-customer .ff-customer-activity-item{display:flex;gap:13px;padding:17px;border-radius:14px;background:#101f36;border:1px solid #344c67;min-width:0}
+.ff-customer .ff-activity-symbol{width:35px;height:35px;background:#253b59;color:#ffb083;border-radius:11px;display:grid;place-items:center;flex:none;font-size:20px}
+.ff-customer .ff-activity-content{min-width:0;display:grid;gap:5px}.ff-customer .ff-activity-content strong{font-size:14px;color:#f4f8ff}.ff-customer .ff-activity-content>p{font-size:12px;margin:0;line-height:1.55;color:#bacce3!important;overflow-wrap:anywhere}.ff-customer .ff-activity-type{color:#ffb780;font-size:10px;font-weight:850;letter-spacing:1px;text-transform:uppercase}.ff-customer .ff-activity-content>small{color:#c5d6ec;font-size:12px}.ff-customer .ff-activity-reply{background:#1a3e39;padding:9px;border-radius:8px;color:#c1f9e5!important}
+.ff-customer .ff-activity-foot{display:flex;gap:9px;align-items:center;flex-wrap:wrap}.ff-customer .ff-activity-foot time{font-size:11px;color:#96acc9}.ff-customer .ff-activity-status{color:#bee2d5;background:#26483f;border-radius:40px;padding:3px 8px;font-size:10px;font-weight:800}.ff-customer .ff-activity-status-ny,.ff-customer .ff-activity-status-behandlas{color:#ffcd97;background:#4c3826}
+.ff-customer .ff-activity-empty{grid-column:1/-1;background:#13283f;padding:15px;color:#bdd0e8;border-radius:12px;font-size:13px}
+.ff-customer ::selection{background:#f88c42;color:#08162b}
+@media(max-width:780px){.ff-customer .ff-customer-activity-feed{grid-template-columns:1fr}.ff-customer main{width:calc(100% - 24px)!important}.ff-customer .welcome-shell{grid-template-columns:1fr!important;min-height:auto}.ff-customer .welcome-story{padding:27px!important}.ff-customer .story-steps{margin:18px 0}.ff-customer .ff-customer-activity{padding:19px}}
+@media(max-width:440px){.ff-customer #portalApp .stats-strip>div{padding:11px!important}.ff-customer #portalApp .stats-strip strong{font-size:22px!important}.ff-customer .ff-customer-activity-head{gap:8px}}
+/* Finslipning av registrering och lösenordsåterställning */
+.ff-customer .auth-extra summary,.ff-customer .auth-extra[open] summary{background:#1b304d!important;color:#f0f5ff!important;border-radius:11px!important}
+.ff-customer .auth-extra summary:hover{background:#264264!important}
+.ff-customer .auth-option-label strong{color:#f4f8ff!important}
+.ff-customer .auth-option-label small{color:#c5d2e6!important}
+.ff-customer .auth-option-icon{background:#2b4567!important;color:#ffac76!important}
+.ff-customer .auth-divider span{background:#13243e!important;color:#aebfd3!important;padding:0 9px}
+.ff-customer a:not(.btn):not(.job-card):not(.ff-referral-test){color:#b9ddff}
+.ff-customer header a{color:#f4f8ff!important}
+.ff-customer .auth-support a,.ff-customer footer a{color:#ffbc86!important;text-decoration:underline;text-underline-offset:3px}
+.ff-customer .auth-support,.ff-customer footer{color:#a7bad2!important}
+.ff-customer #verifyPanel{background:#142b47!important;border-color:#3a5879!important;color:#e9f5ff!important}

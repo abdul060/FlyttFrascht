@@ -1,0 +1,24 @@
+/* Diskreta förbättringar – utan att röra befintligt offertflöde. */
+html{scroll-padding-top:90px}
+#top{border-bottom:1px solid rgba(255,255,255,.10)}
+#top .wrap.bar{min-height:70px;gap:10px}
+#top nav>a{transition:color .15s,opacity .15s}
+#hem.hero{background:linear-gradient(119deg,#102554 0%,#0c1b3e 52%,#0c1634 100%)}
+#hem.hero .wrap.grid{align-items:center;gap:clamp(35px,6vw,100px)}
+#hem.hero h1{letter-spacing:.1px;text-wrap:balance}
+#hem.hero p.sub{color:#e1e8f9;line-height:1.65;max-width:470px}
+#hem.hero .ff-first-job-offer{box-shadow:0 12px 36px #040e2690}
+#hem.hero .hero-note{font-size:13px;color:#cbd8f0}
+#hem.hero .hero-tags{margin:0 0 18px}
+#hem.hero .cta .btn{box-shadow:0 6px 22px #07132935}
+#hem.hero .cta .btn:first-child{font-weight:800}
+.ff-tools-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;justify-content:flex-end}
+.ff-tools-actions .ff-smarttools-primary{display:inline-flex;align-items:center;gap:12px;background:#f97316;color:#fff!important;border-radius:12px;padding:12px 18px;text-decoration:none;font-weight:800;font-size:14px;box-shadow:0 5px 15px #e65e1b22;transition:transform .2s}
+.ff-tools-actions .ff-smarttools-primary:hover{transform:translateY(-2px)}
+.ff-tools-actions .ff-smarttools-all{margin:0}
+.ff-smarttools-grid>a{transition:transform .18s,box-shadow .18s,border-color .18s}
+.ff-smarttools-grid>a:hover{transform:translateY(-4px);box-shadow:0 14px 26px #0c24461c}
+#offert,#tjanster,#ff-smarttools{scroll-margin-top:100px}
+:focus-visible{outline:3px solid #ff9b44;outline-offset:3px}
+@media(max-width:720px){#hem.hero{padding-block:55px 80px}#hem.hero .wrap.grid{gap:20px}.ff-tools-actions{justify-content:flex-start}.ff-tools-actions .ff-smarttools-primary{font-size:13px}}
+@media(prefers-reduced-motion:reduce){.ff-tools-actions .ff-smarttools-primary,.ff-smarttools-grid>a{transition:none}}

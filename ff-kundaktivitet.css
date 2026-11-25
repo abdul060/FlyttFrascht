@@ -1,0 +1,31 @@
+/* Proffsig aktivitetsöversikt. Endast behöriga adminvyer. */
+.ff-ops-hub,.ff-admin-ops-preview{--fnavy:#102543;--ffmuted:#667992;--ffline:#dce5ef;border:1px solid #dbe4ee;border-radius:22px;padding:clamp(19px,3vw,31px);background:linear-gradient(140deg,#fff,#f7faff);box-shadow:0 12px 35px #1025430a;margin:23px 0;color:#152d45}
+.ff-ops-header,.ff-admin-ops-top{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;margin-bottom:18px}
+.ff-ops-header .eyebrow,.ff-admin-ops-eyebrow{font-size:11px!important;letter-spacing:2px;color:#bf531a!important;font-weight:850}
+.ff-ops-header h2,.ff-admin-ops-top h3{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.9px;margin:8px 0;color:#142a42}
+.ff-ops-header p,.ff-admin-ops-top p{font-size:13px;color:#5c7187;line-height:1.6;margin:3px 0;max-width:560px}
+.ff-ops-hub button{border-radius:11px;cursor:pointer}
+.ff-ops-kpis,.ff-admin-ops-metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0 25px}
+.ff-ops-metric{padding:18px;border:1px solid #e0e8f0;background:#fff;border-radius:15px;display:flex;flex-direction:column;gap:5px;min-width:0;position:relative;overflow:hidden}
+.ff-ops-metric:before{content:"";position:absolute;width:4px;left:0;top:15px;bottom:15px;background:#f97316;border-radius:3px}
+.ff-ops-metric.blue:before{background:#4386e4}.ff-ops-metric.teal:before{background:#12a790}
+.ff-ops-metric span{font-size:12px;color:#61748b;font-weight:750}.ff-ops-metric strong{font-size:29px;letter-spacing:-1px;color:#102543;font-weight:850}.ff-ops-metric small{color:#8391a4;font-size:11px;line-height:1.4}
+.ff-ops-inner{background:#fff;border:1px solid #e4eaf1;padding:20px;border-radius:18px}
+.ff-ops-section-title{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:17px}.ff-ops-section-title h3{font-size:20px;letter-spacing:-.5px;margin:0;color:#1a324b}.ff-ops-section-title span{font-size:12px;color:#8492a2}
+.ff-ops-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}.ff-ops-filters button{border:1px solid #d9e2eb;background:#f7f9fc;color:#31516d;padding:9px 14px;font-weight:750;font-size:12px}
+.ff-ops-filters button.selected,.ff-ops-filters button[aria-pressed="true"]{background:#132b4a;border-color:#132b4a;color:white}
+.ff-ops-search-label{font-weight:750;font-size:12px;display:block;margin-bottom:7px}
+#ffOpsSearch{width:100%;min-height:43px;max-width:480px;background:#fff;color:#132e48;border:1px solid #d4dfeb;border-radius:10px;padding:10px 13px}
+.ff-ops-note,.ff-ops-disclaimer{font-size:12px!important;color:#61758a!important;line-height:1.6!important}.ff-ops-disclaimer{margin:19px 0 0;padding:12px;background:#f2f6fb;border-radius:10px}
+.ff-ops-feed,.ff-admin-ops-recent{display:grid;gap:10px}.ff-ops-item{padding:16px 19px;border:1px solid #e2e9f0;background:#fafcff;border-radius:14px;min-width:0}.ff-ops-item.needs-attention{border-left:4px solid #f47926;background:#fffdfb}
+.ff-ops-row,.ff-ops-foot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}.ff-ops-who{display:flex;flex-direction:column;min-width:0}.ff-ops-who strong{font-size:14px;color:#152e47}.ff-ops-who small{font-size:11px;color:#718298;overflow-wrap:anywhere}
+.ff-ops-badge{padding:5px 10px;border-radius:999px;background:#e9f3ef;color:#197454;font-size:11px;font-weight:850;white-space:nowrap}.ff-ops-badge.pending{background:#fff0df;color:#a7510b}.ff-ops-badge.note{background:#edf3fb;color:#345e96}
+.ff-ops-item h4{font-size:14px;margin:11px 0 4px;color:#142942}.ff-ops-description{font-size:12px!important;line-height:1.6!important;color:#465f78!important;margin:5px 0}.ff-ops-change-date{font-size:12px;color:#a04c12;font-weight:700;margin:5px 0}.ff-ops-foot{margin-top:10px;border-top:1px solid #e4ebf1;padding-top:9px}.ff-ops-foot time{font-size:11px;color:#78879b}.ff-ops-open{color:#185ca1!important;font-size:12px!important;text-decoration:underline;text-underline-offset:3px;min-height:auto!important;background:transparent!important;padding:6px!important;border:0!important;box-shadow:none!important;font-weight:800!important}
+.ff-ops-admin-answer{margin:9px 0 0;font-size:12px;color:#23795b;padding:9px;background:#eaf6ef;border-radius:8px}.ff-ops-empty{color:#667991;padding:18px;font-size:13px}
+.ff-admin-ops-preview{margin-top:25px}.ff-admin-ops-link{display:inline-flex;text-decoration:none;background:#ff7822;color:#fff!important;padding:12px 18px;border-radius:10px;font-weight:850;font-size:12px;white-space:nowrap}.ff-admin-ops-preview .ff-ops-metric{padding:12px}.ff-admin-ops-preview .ff-ops-metric strong{font-size:24px}.ff-admin-ops-recent{grid-template-columns:repeat(2,minmax(0,1fr))}.ff-admin-ops-recent .ff-ops-item{padding:13px 15px}
+@media(max-width:950px){.ff-ops-kpis,.ff-admin-ops-metrics{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.ff-ops-hub,.ff-admin-ops-preview{padding:17px;border-radius:16px}.ff-ops-inner{padding:13px}.ff-ops-metric{padding:13px}.ff-ops-metric strong{font-size:25px}.ff-admin-ops-recent{grid-template-columns:1fr}.ff-ops-item{padding:13px}.ff-ops-header h2{font-size:26px}}
+/* Vinner över äldre generella knappstilar i kundportalens administration */
+.ff-admin-portal .ff-ops-filters button{background:#f3f6fa!important;color:#31516d!important;border:1px solid #d9e2eb!important;box-shadow:none!important}
+.ff-admin-portal .ff-ops-filters button.selected,.ff-admin-portal .ff-ops-filters button[aria-pressed="true"]{background:#132b4a!important;color:#fff!important;border-color:#132b4a!important}
+.ff-admin-portal .ff-ops-open{background:transparent!important;color:#185ca1!important;border:0!important}
